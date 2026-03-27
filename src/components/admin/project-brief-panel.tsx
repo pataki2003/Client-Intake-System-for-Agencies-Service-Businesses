@@ -21,13 +21,13 @@ function BriefNarrativeBlock({
   value: string;
 }) {
   return (
-    <section className="rounded-2xl border bg-secondary/15 p-4 sm:p-5 md:p-6">
+    <section className="rounded-2xl border border-border/70 bg-surface-cool p-4 sm:p-5 md:p-6">
       <div className="space-y-2.5 sm:space-y-3">
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">{title}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
-        <div className="rounded-xl border bg-background px-4 py-4">
+        <div className="rounded-xl border border-border/70 bg-background px-4 py-4 shadow-sm">
           <p className="whitespace-pre-wrap text-sm leading-7 text-foreground">{value}</p>
         </div>
       </div>
@@ -49,10 +49,10 @@ function BriefListBlock({
   itemLabel: "Scope" | "Question" | "Step";
 }) {
   return (
-    <section className="rounded-2xl border bg-secondary/10 p-4 sm:p-5 md:p-6">
+    <section className="rounded-2xl border border-border/70 bg-surface-sand p-4 sm:p-5 md:p-6">
       <div className="space-y-3 sm:space-y-4">
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">{title}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
 
@@ -63,9 +63,9 @@ function BriefListBlock({
         ) : (
           <ol className="space-y-3">
             {items.map((item, index) => (
-              <li key={`${item}-${index}`} className="rounded-xl border bg-background px-3.5 py-3.5 sm:px-4 sm:py-4">
+              <li key={`${item}-${index}`} className="rounded-xl border border-border/70 bg-background px-3.5 py-3.5 shadow-sm sm:px-4 sm:py-4">
                 <div className="flex gap-3">
-                  <div className="flex h-7 min-w-7 items-center justify-center rounded-full border bg-secondary/20 px-2 text-[11px] font-semibold text-muted-foreground">
+                  <div className="flex h-7 min-w-7 items-center justify-center rounded-full border border-primary/10 bg-surface-cool px-2 text-[11px] font-semibold text-primary/75">
                     {String(index + 1).padStart(2, "0")}
                   </div>
                   <div className="space-y-1">
@@ -94,7 +94,7 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
               <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs font-medium">
                 AI-assisted
               </Badge>
-              <Badge variant="outline" className="rounded-full px-3 py-1 text-xs font-medium">
+              <Badge variant="accent" className="rounded-full px-3 py-1 text-xs font-medium">
                 Internal use
               </Badge>
             </div>
@@ -108,9 +108,9 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
             />
           </div>
 
-          <div className="w-full rounded-2xl border bg-secondary/15 p-4 xl:max-w-[280px]">
+          <div className="w-full rounded-2xl border border-primary/10 bg-surface-layered p-4 xl:max-w-[280px]">
             <div className="space-y-1">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Brief action</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">Brief action</p>
               <p className="text-sm text-muted-foreground">
                 {brief ? "Regenerate the brief using the latest request details." : "Generate the first brief from the current request."}
               </p>
@@ -187,31 +187,31 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                   itemLabel="Step"
                 />
 
-                <details className="rounded-2xl border bg-secondary/10 px-4 py-4">
+                <details className="rounded-2xl border border-border/70 bg-surface-sand px-4 py-4">
                   <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
                     View stored markdown version
                   </summary>
-                  <div className="mt-3 sm:mt-4 rounded-xl border bg-background p-3.5 sm:p-4">
+                  <div className="mt-3 rounded-xl border border-border/70 bg-background p-3.5 shadow-sm sm:mt-4 sm:p-4">
                     <pre className="overflow-x-auto whitespace-pre-wrap text-sm leading-6">{brief.briefMarkdown}</pre>
                   </div>
                 </details>
               </div>
             ) : (
-              <div className="rounded-2xl border bg-secondary/10 p-4">
+              <div className="rounded-2xl border border-border/70 bg-surface-sand p-4">
                 <div className="space-y-1">
-                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Stored markdown</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">Stored markdown</p>
                   <p className="text-sm text-muted-foreground">
                     Structured brief data is not available for this record, so the stored markdown is shown below.
                   </p>
                 </div>
-                <div className="mt-4 rounded-xl border bg-background p-4">
+                <div className="mt-4 rounded-xl border border-border/70 bg-background p-4 shadow-sm">
                   <pre className="overflow-x-auto whitespace-pre-wrap text-sm leading-6">{brief.briefMarkdown}</pre>
                 </div>
               </div>
             )}
           </>
         ) : (
-          <div className="rounded-2xl border border-dashed px-5 py-7">
+          <div className="rounded-2xl border border-dashed bg-surface-cool px-5 py-7">
             <div className="space-y-2">
               <p className="text-sm font-medium">No project brief yet</p>
               <p className="text-sm text-muted-foreground">

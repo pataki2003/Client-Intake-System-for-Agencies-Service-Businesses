@@ -11,7 +11,7 @@ type PageHeaderProps = {
 
 export function PageHeader({ eyebrow, title, description, actions }: PageHeaderProps) {
   return (
-    <section className="border-b pb-6 md:pb-8">
+    <section className="rounded-[28px] border border-border/75 bg-surface-cool px-5 py-5 sm:px-6 sm:py-6 md:px-8 md:py-7">
       <SectionHeader
         eyebrow={eyebrow}
         title={title}

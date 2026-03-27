@@ -42,21 +42,21 @@ const statCardConfig = [
     key: "totalSubmissions",
     label: "Current queue",
     description: "Requests in the current view",
-    tone: "accent",
+    tone: "highlight",
     className: "xl:col-span-2"
   },
   {
     key: "needsReview",
     label: "Awaiting review",
     description: "New or currently in review",
-    tone: "muted",
+    tone: "accent",
     className: ""
   },
   {
     key: "readyOrContacted",
     label: "Ready to follow up",
     description: "Brief ready or already contacted",
-    tone: "default",
+    tone: "muted",
     className: ""
   },
   {

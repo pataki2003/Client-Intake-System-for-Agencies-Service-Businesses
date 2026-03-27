@@ -23,7 +23,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
   const router = useRouter();
 
   return (
-    <Card className="border-border/70 shadow-sm">
+    <Card className="overflow-hidden border-border/70 shadow-sm">
       <CardHeader className="space-y-4">
         <SectionHeader
           eyebrow="Submission queue"
@@ -36,13 +36,13 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
           titleClassName="text-2xl"
         />
         <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-          <span className="rounded-full border bg-secondary/20 px-3 py-1">Open any row to review the full submission.</span>
-          <span className="rounded-full border bg-background px-3 py-1 sm:hidden">Swipe to view all columns.</span>
+          <span className="rounded-full border border-border/70 bg-surface-cool px-3 py-1">Open any row to review the full submission.</span>
+          <span className="rounded-full border border-border/70 bg-surface-sand px-3 py-1 sm:hidden">Swipe to view all columns.</span>
         </div>
       </CardHeader>
       <CardContent className="pt-0">
         {items.length === 0 ? (
-          <div className="rounded-2xl border border-dashed px-6 py-12 text-center">
+          <div className="rounded-2xl border border-dashed bg-surface-cool px-6 py-12 text-center">
             <p className="text-base font-medium">
               {hasActiveFilters ? "No submissions match these filters." : "No submissions yet."}
             </p>
@@ -58,16 +58,16 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
             ) : null}
           </div>
         ) : (
-          <div className="-mx-4 overflow-hidden rounded-2xl border sm:mx-0">
+          <div className="-mx-4 overflow-x-auto rounded-2xl border border-border/70 bg-background sm:mx-0">
             <Table className="min-w-[760px] lg:min-w-[860px]">
-              <TableHeader className="bg-secondary/20">
+              <TableHeader className="bg-surface-cool">
                 <TableRow className="hover:bg-transparent">
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em]">Client</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em]">Company</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em]">Service</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em]">Status</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em]">Budget</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em]">Created</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Client</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Company</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Service</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Status</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Budget</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Created</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -87,7 +87,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                           router.push(detailHref);
                         }
                       }}
-                      className="group cursor-pointer outline-none transition-all hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring/70"
+                      className="group cursor-pointer outline-none transition-all hover:bg-secondary/30 focus-visible:bg-secondary/30 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring/70"
                     >
                       <TableCell className="py-4 sm:py-5">
                         <div className="rounded-xl px-2 py-1 transition-colors">

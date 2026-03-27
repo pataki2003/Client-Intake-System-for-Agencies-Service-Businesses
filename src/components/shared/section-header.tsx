@@ -27,7 +27,7 @@ export function SectionHeader({
     <div className={cn("flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-end sm:justify-between", className)}>
       <div className={cn("max-w-3xl space-y-1.5 sm:space-y-2", contentClassName)}>
         {eyebrow ? (
-          <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground sm:text-sm">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary/70 sm:text-sm">
             {eyebrow}
           </p>
         ) : null}

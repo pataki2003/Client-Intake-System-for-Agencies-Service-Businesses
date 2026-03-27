@@ -56,18 +56,18 @@ const flowSteps = [
 export default function StartProjectPage() {
   return (
     <div className="space-y-10 sm:space-y-12 md:space-y-14">
-      <section className="space-y-6 sm:space-y-8 border-b pb-8 sm:pb-10 md:pb-12">
+      <section className="space-y-6 rounded-[32px] border border-border/75 bg-surface-cool p-5 sm:space-y-8 sm:p-7 md:p-8">
         <div className="space-y-4 sm:space-y-5">
-            <Badge variant="outline" className="px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
-              Project request
-            </Badge>
+          <Badge variant="outline" className="border-primary/10 bg-background/90 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-primary/80">
+            Project request
+          </Badge>
 
-            <SectionHeader
-              title="Start your project inquiry with the right context"
-              description="Share the essentials once. We will review the request carefully and follow up with a clear next step."
-              titleClassName="text-3xl sm:text-4xl md:text-5xl"
-              descriptionClassName="max-w-2xl text-base sm:text-lg"
-            />
+          <SectionHeader
+            title="Start your project inquiry with the right context"
+            description="Share the essentials once. We will review the request carefully and follow up with a clear next step."
+            titleClassName="text-3xl sm:text-4xl md:text-5xl"
+            descriptionClassName="max-w-2xl text-base sm:text-lg"
+          />
         </div>
 
         <div className="grid gap-3 md:grid-cols-3">
@@ -83,43 +83,45 @@ export default function StartProjectPage() {
         </div>
       </section>
 
-      <div className="grid gap-5 sm:gap-6 xl:grid-cols-[minmax(0,1.15fr)_360px] xl:items-start">
-        <PublicIntakeForm />
+      <section className="rounded-[32px] bg-surface-sand p-3 sm:p-4 md:p-5">
+        <div className="grid gap-5 sm:gap-6 xl:grid-cols-[minmax(0,1.15fr)_360px] xl:items-start">
+          <PublicIntakeForm />
 
-        <div className="space-y-4 xl:sticky xl:top-6">
-          <Card className="border-border/70 bg-secondary/20 shadow-sm">
-            <CardContent className="space-y-4 sm:space-y-5 p-4 sm:p-6">
-              <SectionHeader
-                eyebrow="What to expect"
-                title="A practical review process"
-                description="This form helps us review the opportunity properly before we reply."
-                titleClassName="text-xl sm:text-2xl"
-              />
+          <div className="space-y-4 xl:sticky xl:top-6">
+            <Card variant="tinted" className="border-border/70 shadow-sm">
+              <CardContent className="space-y-4 sm:space-y-5 p-4 sm:p-6">
+                <SectionHeader
+                  eyebrow="What to expect"
+                  title="A practical review process"
+                  description="This form helps us review the opportunity properly before we reply."
+                  titleClassName="text-xl sm:text-2xl"
+                />
 
-              <div className="grid gap-3">
-                {expectationBlocks.map((item, index) => (
-                  <InfoTile
-                    key={item.title}
-                    title={item.title}
-                    description={item.description}
-                    variant={index === 0 ? "accent" : "muted"}
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                <div className="grid gap-3">
+                  {expectationBlocks.map((item, index) => (
+                    <InfoTile
+                      key={item.title}
+                      title={item.title}
+                      description={item.description}
+                      variant={index === 0 ? "accent" : index === 1 ? "muted" : "default"}
+                    />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
 
-          <InfoTile
-            eyebrow="Timing"
-            title="A best estimate is enough"
-            description="If a budget or deadline is still taking shape, you can still submit a useful request."
-            variant="muted"
-            className="sm:max-w-none"
-          />
+            <InfoTile
+              eyebrow="Timing"
+              title="A best estimate is enough"
+              description="If a budget or deadline is still taking shape, you can still submit a useful request."
+              variant="accent"
+              className="sm:max-w-none"
+            />
+          </div>
         </div>
-      </div>
+      </section>
 
-      <section className="space-y-5 sm:space-y-6">
+      <section className="space-y-5 rounded-[32px] border border-border/70 bg-background p-5 sm:space-y-6 sm:p-6">
         <SectionHeader
           eyebrow="How the flow works"
           title="A simple path from request to review"
@@ -134,7 +136,7 @@ export default function StartProjectPage() {
               step={item.step}
               title={item.title}
               description={item.description}
-              variant={index === 0 ? "accent" : index === 1 ? "muted" : "default"}
+              variant={index === 0 ? "highlight" : index === 1 ? "muted" : "accent"}
             />
           ))}
         </div>

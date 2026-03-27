@@ -10,19 +10,23 @@ import { cn } from "@/lib/utils";
 import type { BudgetRange, IntakeStatus, ProjectTimeline } from "@/types";
 
 const statusClassNameMap: Record<IntakeStatus, string> = {
-  new: "border-sky-200 bg-sky-50 text-sky-700",
-  reviewing: "border-amber-200 bg-amber-50 text-amber-700",
-  brief_ready: "border-emerald-200 bg-emerald-50 text-emerald-700",
-  contacted: "border-slate-200 bg-slate-100 text-slate-700",
-  archived: "border-zinc-200 bg-zinc-100 text-zinc-600"
+  new: "border-[hsl(var(--status-new-border))] bg-[hsl(var(--status-new-bg))] text-[hsl(var(--status-new-foreground))]",
+  reviewing:
+    "border-[hsl(var(--status-reviewing-border))] bg-[hsl(var(--status-reviewing-bg))] text-[hsl(var(--status-reviewing-foreground))]",
+  brief_ready:
+    "border-[hsl(var(--status-brief-ready-border))] bg-[hsl(var(--status-brief-ready-bg))] text-[hsl(var(--status-brief-ready-foreground))]",
+  contacted:
+    "border-[hsl(var(--status-contacted-border))] bg-[hsl(var(--status-contacted-bg))] text-[hsl(var(--status-contacted-foreground))]",
+  archived:
+    "border-[hsl(var(--status-archived-border))] bg-[hsl(var(--status-archived-bg))] text-[hsl(var(--status-archived-foreground))]"
 };
 
 const statusDotClassNameMap: Record<IntakeStatus, string> = {
-  new: "bg-sky-500",
-  reviewing: "bg-amber-500",
-  brief_ready: "bg-emerald-500",
-  contacted: "bg-slate-500",
-  archived: "bg-zinc-500"
+  new: "bg-[hsl(var(--status-new-dot))]",
+  reviewing: "bg-[hsl(var(--status-reviewing-dot))]",
+  brief_ready: "bg-[hsl(var(--status-brief-ready-dot))]",
+  contacted: "bg-[hsl(var(--status-contacted-dot))]",
+  archived: "bg-[hsl(var(--status-archived-dot))]"
 };
 
 type IntakeStatusBadgeProps = {
@@ -35,7 +39,7 @@ export function IntakeStatusBadge({ status, className }: IntakeStatusBadgeProps)
     <Badge
       variant="outline"
       className={cn(
-        "gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-[0.02em]",
+        "gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-[0.02em] shadow-sm",
         statusClassNameMap[status],
         className
       )}

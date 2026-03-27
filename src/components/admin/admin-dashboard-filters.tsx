@@ -52,7 +52,7 @@ export function AdminDashboardFilters({
   }
 
   return (
-    <Card className="border-border/70 bg-secondary/15 shadow-sm">
+    <Card variant="tinted" className="border-border/70 shadow-sm">
       <CardContent className="flex flex-col gap-4 sm:gap-5 p-4 sm:p-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-2.5 sm:space-y-3">
           <div className="space-y-1">
@@ -66,8 +66,8 @@ export function AdminDashboardFilters({
           </p>
           {hasActiveFilters ? (
             <div className="flex flex-wrap gap-2">
-              {selectedStatus ? <Badge variant="outline">Status: {formatIntakeStatus(selectedStatus)}</Badge> : null}
-              {selectedService ? <Badge variant="outline">Service: {selectedService}</Badge> : null}
+              {selectedStatus ? <Badge variant="secondary">Status: {formatIntakeStatus(selectedStatus)}</Badge> : null}
+              {selectedService ? <Badge variant="accent">Service: {selectedService}</Badge> : null}
             </div>
           ) : null}
         </div>

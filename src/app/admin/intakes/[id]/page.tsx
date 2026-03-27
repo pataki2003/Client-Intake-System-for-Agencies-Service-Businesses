@@ -54,7 +54,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      <section className="rounded-3xl border border-border/70 bg-secondary/15 p-4 sm:p-5 shadow-sm md:p-7">
+      <section className="rounded-3xl border border-border/70 bg-surface-cool p-4 shadow-sm sm:p-5 md:p-7">
         <div className="flex flex-col gap-5 sm:gap-6">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="space-y-4">
@@ -69,7 +69,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               </nav>
 
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full border bg-secondary/40 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                <span className="rounded-full border border-border/70 bg-background/85 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-primary/75">
                   Review workspace
                 </span>
                 <IntakeStatusBadge status={intake.status} />
@@ -97,7 +97,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
           </div>
 
           <div className="grid gap-3 md:grid-cols-3">
-            <InfoTile eyebrow="Service type" title={intake.serviceRequested} variant="accent" />
+            <InfoTile eyebrow="Service type" title={intake.serviceRequested} variant="highlight" />
             <InfoTile
               eyebrow="Budget range"
               title={
@@ -107,7 +107,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                   fallbackClassName="text-sm font-medium text-muted-foreground"
                 />
               }
-              variant="muted"
+              variant="accent"
             />
             <InfoTile
               eyebrow="Submitted"
@@ -119,6 +119,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                   valueClassName="font-medium text-foreground"
                 />
               }
+              variant="muted"
             />
           </div>
 
@@ -127,7 +128,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
       </section>
 
       <section className="xl:hidden">
-        <Card className="border-border/70 bg-secondary/10 shadow-sm">
+        <Card variant="tinted" className="border-border/70 shadow-sm">
           <CardHeader className="space-y-2">
             <div className="space-y-1">
               <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">Workflow</p>
@@ -136,7 +137,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
             <CardDescription>Update status before moving deeper into the request.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="rounded-2xl border bg-secondary/20 p-4">
+            <div className="rounded-2xl border border-border/70 bg-surface-sand p-4">
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-2">
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Current status</p>
@@ -163,13 +164,13 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                 <CardDescription>Primary contact and company details attached to this request.</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-3 sm:gap-4 md:grid-cols-2">
-                <div className="rounded-xl border bg-secondary/15 p-4">
+                <div className="rounded-xl border border-border/70 bg-surface-cool p-4">
                   <AdminDetailField label="Client name" value={intake.client.clientName} />
                 </div>
-                <div className="rounded-xl border bg-secondary/15 p-4">
+                <div className="rounded-xl border border-border/70 bg-surface-cool p-4">
                   <AdminDetailField label="Company" value={intake.client.companyName ?? "Not provided"} />
                 </div>
-                <div className="rounded-xl border bg-secondary/15 p-4">
+                <div className="rounded-xl border border-border/70 bg-surface-cool p-4">
                   <AdminDetailField
                     label="Email"
                     value={
@@ -179,10 +180,10 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                     }
                   />
                 </div>
-                <div className="rounded-xl border bg-secondary/15 p-4">
+                <div className="rounded-xl border border-border/70 bg-surface-cool p-4">
                   <AdminDetailField label="Phone" value={intake.client.phone ?? "Not provided"} />
                 </div>
-                <div className="rounded-xl border bg-secondary/15 p-4 md:col-span-2">
+                <div className="rounded-xl border border-border/70 bg-surface-cool p-4 md:col-span-2">
                   <AdminDetailField
                     label="Website"
                     value={
@@ -204,7 +205,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               </CardContent>
             </Card>
 
-            <Card className="border-border/70 bg-secondary/10 shadow-sm">
+            <Card variant="accent" className="border-border/70 shadow-sm">
               <CardHeader className="space-y-2">
                 <div className="space-y-1">
                   <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">Request</p>
@@ -215,26 +216,26 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               <CardContent className="space-y-5 sm:space-y-6">
                 <div className="grid gap-3 md:grid-cols-3">
                   <InfoTile eyebrow="Service type" title={intake.serviceRequested} />
-                  <InfoTile eyebrow="Budget range" title={<FormattedBudgetRange value={intake.budgetRange} />} variant="muted" />
-                  <InfoTile eyebrow="Timeline" title={<FormattedTimeline value={intake.timeline} />} />
+                  <InfoTile eyebrow="Budget range" title={<FormattedBudgetRange value={intake.budgetRange} />} variant="accent" />
+                  <InfoTile eyebrow="Timeline" title={<FormattedTimeline value={intake.timeline} />} variant="muted" />
                 </div>
 
                 <div className="grid gap-4 sm:gap-6">
-                  <div className="rounded-2xl border bg-background p-4 md:p-5">
+                  <div className="rounded-2xl border border-border/70 bg-background p-4 shadow-sm md:p-5">
                     <AdminDetailField
                       label="Goal"
                       value={intake.projectSummary}
                       valueClassName="whitespace-pre-wrap text-sm leading-7"
                     />
                   </div>
-                  <div className="rounded-2xl border bg-background p-4 md:p-5">
+                  <div className="rounded-2xl border border-border/70 bg-background p-4 shadow-sm md:p-5">
                     <AdminDetailField
                       label="Problem description"
                       value={intake.currentChallenges ?? "Not provided"}
                       valueClassName="whitespace-pre-wrap text-sm leading-7"
                     />
                   </div>
-                  <div className="rounded-2xl border bg-background p-4 md:p-5">
+                  <div className="rounded-2xl border border-border/70 bg-background p-4 shadow-sm md:p-5">
                     <AdminDetailField
                       label="Extra notes"
                       value={intake.additionalInfo ?? "Not provided"}
@@ -261,7 +262,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               </CardHeader>
               <CardContent>
                 {intake.answers.length === 0 ? (
-                  <div className="rounded-2xl border border-dashed px-4 py-6 text-sm text-muted-foreground">
+                  <div className="rounded-2xl border border-dashed bg-surface-cool px-4 py-6 text-sm text-muted-foreground">
                     No submitted answers were stored for this request.
                   </div>
                 ) : (
@@ -270,8 +271,8 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                       <div
                         key={answer.id}
                         className={cn(
-                          "grid gap-3 rounded-2xl border bg-background px-4 py-4 md:grid-cols-[220px_minmax(0,1fr)] md:gap-5",
-                          index === 0 && "border-primary/10 bg-primary/[0.03]"
+                          "grid gap-3 rounded-2xl border border-border/70 bg-background px-4 py-4 shadow-sm md:grid-cols-[220px_minmax(0,1fr)] md:gap-5",
+                          index === 0 && "border-[hsl(var(--surface-highlight-strong)/0.9)] bg-surface-highlight"
                         )}
                       >
                         <div className="space-y-1">
@@ -294,7 +295,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
 
         <div className="space-y-5 sm:space-y-6 xl:sticky xl:top-6">
           <section id="workflow" className="hidden scroll-mt-24 xl:block">
-            <Card className="border-border/70 bg-secondary/10 shadow-sm">
+            <Card variant="tinted" className="border-border/70 shadow-sm">
               <CardHeader className="space-y-2">
                 <div className="space-y-1">
                   <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">Workflow</p>
@@ -303,7 +304,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                 <CardDescription>Keep the current status aligned with the latest team action.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
-                <div className="rounded-2xl border bg-secondary/20 p-4">
+                <div className="rounded-2xl border border-border/70 bg-surface-sand p-4">
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-2">
                       <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Current status</p>
@@ -323,7 +324,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
           </section>
 
           <section id="metadata" className="scroll-mt-24">
-            <Card className="border-border/70 shadow-sm">
+            <Card variant="accent" className="border-border/70 shadow-sm">
               <CardHeader className="space-y-2">
                 <div className="space-y-1">
                   <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">Metadata</p>
@@ -357,7 +358,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
 
                 <div className="space-y-3">
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Source metadata</p>
-                  <div className="rounded-2xl border bg-secondary/20 p-4">
+                  <div className="rounded-2xl border border-border/70 bg-background p-4 shadow-sm">
                     <AdminJsonMetadata value={intake.sourceMetadata} />
                   </div>
                 </div>

@@ -29,10 +29,10 @@ export function AdminLoginForm() {
   const [state, formAction] = useActionState(loginAdmin, initialState);
 
   return (
-    <Card className="mx-auto w-full max-w-md border-border/80 shadow-sm">
-      <CardHeader className="space-y-2.5 sm:space-y-3">
+    <Card variant="tinted" className="mx-auto w-full max-w-md border-border/80 shadow-sm">
+      <CardHeader className="space-y-2.5 border-b border-border/60 sm:space-y-3">
         <div className="space-y-1">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Restricted access</p>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary/70">Restricted access</p>
           <CardTitle className="text-xl tracking-tight sm:text-2xl">Sign in to the intake workspace</CardTitle>
         </div>
         <CardDescription>Sign in with an approved admin account to review submissions, notes, statuses, and project briefs.</CardDescription>
