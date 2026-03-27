@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import {
@@ -29,6 +29,35 @@ function FieldError({ message }: { message?: string }) {
   }
 
   return <p className="text-sm text-destructive">{message}</p>;
+}
+
+function FieldHint({ children }: { children: string }) {
+  return <p className="text-xs leading-5 text-muted-foreground">{children}</p>;
+}
+
+function FormSection({
+  eyebrow,
+  title,
+  description,
+  children
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="space-y-5">
+      <div className="space-y-2 border-b pb-4">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">{eyebrow}</p>
+        <div className="space-y-1">
+          <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
+          <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
+      </div>
+      {children}
+    </section>
+  );
 }
 
 export function PublicIntakeForm() {
@@ -85,188 +114,232 @@ export function PublicIntakeForm() {
         setFormError(
           !responseBody.success
             ? responseBody.formError
-            : "We couldn't submit your request right now. Please try again."
+            : "We couldn't submit your request right now. Please try again in a moment."
         );
         return;
       }
 
       router.push("/success");
     } catch {
-      setFormError("We couldn't submit your request right now. Please try again.");
+      setFormError("We couldn't submit your request right now. Please try again in a moment.");
     }
   });
 
   return (
     <Card className="border-border/80 shadow-sm">
-      <CardHeader className="space-y-3">
-        <CardTitle>Project intake form</CardTitle>
+      <CardHeader className="space-y-4 pb-6">
+        <div className="space-y-2">
+          <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">Project request</p>
+          <CardTitle className="text-2xl tracking-tight md:text-3xl">Tell us what you&apos;re building and why it matters.</CardTitle>
+        </div>
         <CardDescription>
-          Share the essentials and we&apos;ll turn this into a structured intake for our team.
+          A few well-framed details help us review fit, scope, and the most useful next step before we follow up.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="space-y-6" onSubmit={onSubmit} noValidate>
+        <form className="space-y-8" onSubmit={onSubmit} noValidate>
           {formError ? (
-            <Alert variant="destructive">
-              <AlertTitle>Submission failed</AlertTitle>
+            <Alert variant="destructive" className="border-destructive/30 bg-destructive/5">
+              <AlertTitle>We couldn&apos;t send your request</AlertTitle>
               <AlertDescription>{formError}</AlertDescription>
             </Alert>
           ) : null}
 
-          <div className="grid gap-5 md:grid-cols-2">
+          <FormSection
+            eyebrow="Contact"
+            title="Who should we follow up with?"
+            description="These details give us the right point of contact once the request has been reviewed."
+          >
+            <div className="grid gap-5 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="name">Your name</Label>
+                <Input
+                  id="name"
+                  placeholder="Jane Smith"
+                  autoComplete="name"
+                  disabled={isSubmitting}
+                  {...register("name")}
+                />
+                <FieldHint>Use the name you&apos;d like us to address in follow-up.</FieldHint>
+                <FieldError message={errors.name?.message} />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Work email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="jane@northlane.com"
+                  autoComplete="email"
+                  disabled={isSubmitting}
+                  {...register("email")}
+                />
+                <FieldHint>We&apos;ll use this for confirmation and the next step only.</FieldHint>
+                <FieldError message={errors.email?.message} />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="company_name">Company name</Label>
+                <Input
+                  id="company_name"
+                  placeholder="Northlane Advisory"
+                  autoComplete="organization"
+                  disabled={isSubmitting}
+                  {...register("company_name")}
+                />
+                <FieldHint>Optional, but helpful if you&apos;re inquiring on behalf of a business.</FieldHint>
+                <FieldError message={errors.company_name?.message} />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="deadline">Preferred deadline</Label>
+                <Input id="deadline" type="date" disabled={isSubmitting} {...register("deadline")} />
+                <FieldHint>A target date is enough if your timing is still flexible.</FieldHint>
+                <FieldError message={errors.deadline?.message} />
+              </div>
+            </div>
+          </FormSection>
+
+          <FormSection
+            eyebrow="Scope"
+            title="What kind of project is this?"
+            description="We use this to understand the shape of the engagement before we evaluate the details."
+          >
+            <div className="grid gap-5 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="service_type">Service type</Label>
+                <Controller
+                  name="service_type"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      disabled={isSubmitting}
+                      onValueChange={field.onChange}
+                      value={field.value || undefined}
+                    >
+                      <SelectTrigger id="service_type">
+                        <SelectValue placeholder="Select the closest fit" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {PUBLIC_SERVICE_TYPE_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                <FieldHint>Choose the closest match. You can clarify below if needed.</FieldHint>
+                <FieldError message={errors.service_type?.message} />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="budget_range">Budget range</Label>
+                <Controller
+                  name="budget_range"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      disabled={isSubmitting}
+                      onValueChange={field.onChange}
+                      value={field.value || undefined}
+                    >
+                      <SelectTrigger id="budget_range">
+                        <SelectValue placeholder="Select a working range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {PUBLIC_BUDGET_RANGE_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                <FieldHint>A realistic range helps us assess fit and recommend the right next step.</FieldHint>
+                <FieldError message={errors.budget_range?.message} />
+              </div>
+            </div>
+
+            {selectedServiceType === "other" ? (
+              <div className="space-y-2">
+                <Label htmlFor="service_type_other">What service do you need?</Label>
+                <Input
+                  id="service_type_other"
+                  placeholder="Describe the kind of support you are looking for"
+                  disabled={isSubmitting}
+                  {...register("service_type_other")}
+                />
+                <FieldHint>A short description is enough. We&apos;ll use it to categorize the request internally.</FieldHint>
+                <FieldError message={errors.service_type_other?.message} />
+              </div>
+            ) : null}
+          </FormSection>
+
+          <FormSection
+            eyebrow="Context"
+            title="What should we understand before we review this?"
+            description="The strongest submissions explain both the opportunity and the friction behind the request."
+          >
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="Jane Smith"
-                autoComplete="name"
+              <Label htmlFor="goal">Primary goal</Label>
+              <Textarea
+                id="goal"
+                className="min-h-[140px] resize-y"
+                placeholder="For example: clarify our positioning and improve the site so qualified leads understand the offer faster."
                 disabled={isSubmitting}
-                {...register("name")}
+                {...register("goal")}
               />
-              <FieldError message={errors.name?.message} />
+              <FieldHint>Focus on the business outcome you want the project to create.</FieldHint>
+              <FieldError message={errors.goal?.message} />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="jane@company.com"
-                autoComplete="email"
+              <Label htmlFor="problem_description">Current challenge</Label>
+              <Textarea
+                id="problem_description"
+                className="min-h-[150px] resize-y"
+                placeholder="For example: inquiries are inconsistent, the current experience feels dated, or the offer is hard to understand."
                 disabled={isSubmitting}
-                {...register("email")}
+                {...register("problem_description")}
               />
-              <FieldError message={errors.email?.message} />
+              <FieldHint>Tell us what is not working today and why this feels important now.</FieldHint>
+              <FieldError message={errors.problem_description?.message} />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="company_name">Company name</Label>
-              <Input
-                id="company_name"
-                placeholder="Acme Studio"
-                autoComplete="organization"
+              <Label htmlFor="extra_notes">Extra notes</Label>
+              <Textarea
+                id="extra_notes"
+                className="min-h-[130px] resize-y"
+                placeholder="Share any additional context, constraints, stakeholders, or references that would help us review the request more thoughtfully."
                 disabled={isSubmitting}
-                {...register("company_name")}
+                {...register("extra_notes")}
               />
-              <FieldError message={errors.company_name?.message} />
+              <FieldHint>Optional. Include anything that would improve internal review quality.</FieldHint>
+              <FieldError message={errors.extra_notes?.message} />
             </div>
+          </FormSection>
 
-            <div className="space-y-2">
-              <Label htmlFor="deadline">Deadline</Label>
-              <Input id="deadline" type="date" disabled={isSubmitting} {...register("deadline")} />
-              <FieldError message={errors.deadline?.message} />
+          <div className="rounded-2xl border bg-secondary/30 p-4 md:p-5">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div className="space-y-2">
+                <p className="text-sm font-medium">What happens after you submit</p>
+                <p className="max-w-xl text-sm text-muted-foreground">
+                  Your request is saved immediately, reviewed internally in a structured format, and followed up with the
+                  appropriate next step. No obligation, no generic inbox handoff.
+                </p>
+                {isSubmitting ? (
+                  <p className="text-sm font-medium text-foreground/80">Submitting your request now...</p>
+                ) : null}
+              </div>
+
+              <Button className="w-full md:w-auto" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting your request..." : "Submit project request"}
+              </Button>
             </div>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="service_type">Service type</Label>
-              <Controller
-                name="service_type"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    disabled={isSubmitting}
-                    onValueChange={field.onChange}
-                    value={field.value || undefined}
-                  >
-                    <SelectTrigger id="service_type">
-                      <SelectValue placeholder="Select a service" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {PUBLIC_SERVICE_TYPE_OPTIONS.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              <FieldError message={errors.service_type?.message} />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="budget_range">Budget range</Label>
-              <Controller
-                name="budget_range"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    disabled={isSubmitting}
-                    onValueChange={field.onChange}
-                    value={field.value || undefined}
-                  >
-                    <SelectTrigger id="budget_range">
-                      <SelectValue placeholder="Select a budget range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {PUBLIC_BUDGET_RANGE_OPTIONS.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              <FieldError message={errors.budget_range?.message} />
-            </div>
-          </div>
-
-          {selectedServiceType === "other" ? (
-            <div className="space-y-2">
-              <Label htmlFor="service_type_other">What service do you need?</Label>
-              <Input
-                id="service_type_other"
-                placeholder="Describe the service you need"
-                disabled={isSubmitting}
-                {...register("service_type_other")}
-              />
-              <FieldError message={errors.service_type_other?.message} />
-            </div>
-          ) : null}
-
-          <div className="space-y-2">
-            <Label htmlFor="goal">Primary goal</Label>
-            <Textarea
-              id="goal"
-              placeholder="What outcome do you want this project to create for your business?"
-              disabled={isSubmitting}
-              {...register("goal")}
-            />
-            <FieldError message={errors.goal?.message} />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="problem_description">Problem description</Label>
-            <Textarea
-              id="problem_description"
-              placeholder="What is not working today, and what is prompting this project now?"
-              disabled={isSubmitting}
-              {...register("problem_description")}
-            />
-            <FieldError message={errors.problem_description?.message} />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="extra_notes">Extra notes</Label>
-            <Textarea
-              id="extra_notes"
-              placeholder="Anything else we should know before we review your request?"
-              disabled={isSubmitting}
-              {...register("extra_notes")}
-            />
-            <FieldError message={errors.extra_notes?.message} />
-          </div>
-
-          <div className="flex flex-col gap-3 border-t pt-6 md:flex-row md:items-center md:justify-between">
-            <p className="text-sm text-muted-foreground">
-              Your answers will be saved to our intake system and reviewed by the team.
-            </p>
-            <Button className="w-full md:w-auto" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting request..." : "Submit project request"}
-            </Button>
           </div>
         </form>
       </CardContent>
