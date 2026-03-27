@@ -21,8 +21,8 @@ function BriefNarrativeBlock({
   value: string;
 }) {
   return (
-    <section className="rounded-2xl border bg-secondary/15 p-5 md:p-6">
-      <div className="space-y-3">
+    <section className="rounded-2xl border bg-secondary/15 p-4 sm:p-5 md:p-6">
+      <div className="space-y-2.5 sm:space-y-3">
         <div className="space-y-1">
           <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
@@ -49,8 +49,8 @@ function BriefListBlock({
   itemLabel: "Scope" | "Question" | "Step";
 }) {
   return (
-    <section className="rounded-2xl border bg-secondary/10 p-5 md:p-6">
-      <div className="space-y-4">
+    <section className="rounded-2xl border bg-secondary/10 p-4 sm:p-5 md:p-6">
+      <div className="space-y-3 sm:space-y-4">
         <div className="space-y-1">
           <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
@@ -63,7 +63,7 @@ function BriefListBlock({
         ) : (
           <ol className="space-y-3">
             {items.map((item, index) => (
-              <li key={`${item}-${index}`} className="rounded-xl border bg-background px-4 py-4">
+              <li key={`${item}-${index}`} className="rounded-xl border bg-background px-3.5 py-3.5 sm:px-4 sm:py-4">
                 <div className="flex gap-3">
                   <div className="flex h-7 min-w-7 items-center justify-center rounded-full border bg-secondary/20 px-2 text-[11px] font-semibold text-muted-foreground">
                     {String(index + 1).padStart(2, "0")}
@@ -87,9 +87,9 @@ function BriefListBlock({
 export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
   return (
     <Card className="border-border/70 shadow-sm">
-      <CardHeader className="space-y-5">
+      <CardHeader className="space-y-4 sm:space-y-5">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs font-medium">
                 AI-assisted
@@ -103,7 +103,7 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
               eyebrow="Project brief"
               title="Working brief"
               description="Summarize the request into a cleaner internal brief the team can scan quickly."
-              titleClassName="text-2xl md:text-3xl"
+              titleClassName="text-xl sm:text-2xl md:text-3xl"
               descriptionClassName="max-w-2xl text-sm"
             />
           </div>
@@ -122,10 +122,10 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-5 sm:space-y-6">
         {brief ? (
           <>
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
               <InfoTile
                 eyebrow="Model"
                 title={brief.model ?? "Not recorded"}
@@ -191,7 +191,7 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                   <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
                     View stored markdown version
                   </summary>
-                  <div className="mt-4 rounded-xl border bg-background p-4">
+                  <div className="mt-3 sm:mt-4 rounded-xl border bg-background p-3.5 sm:p-4">
                     <pre className="overflow-x-auto whitespace-pre-wrap text-sm leading-6">{brief.briefMarkdown}</pre>
                   </div>
                 </details>

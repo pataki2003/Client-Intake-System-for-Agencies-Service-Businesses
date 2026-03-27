@@ -37,6 +37,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
         />
         <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
           <span className="rounded-full border bg-secondary/20 px-3 py-1">Open any row to review the full submission.</span>
+          <span className="rounded-full border bg-background px-3 py-1 sm:hidden">Swipe to view all columns.</span>
         </div>
       </CardHeader>
       <CardContent className="pt-0">
@@ -57,8 +58,8 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
             ) : null}
           </div>
         ) : (
-          <div className="overflow-hidden rounded-2xl border">
-            <Table className="min-w-[860px]">
+          <div className="-mx-4 overflow-hidden rounded-2xl border sm:mx-0">
+            <Table className="min-w-[760px] lg:min-w-[860px]">
               <TableHeader className="bg-secondary/20">
                 <TableRow className="hover:bg-transparent">
                   <TableHead className="h-11 text-xs uppercase tracking-[0.16em]">Client</TableHead>
@@ -88,7 +89,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                       }}
                       className="group cursor-pointer outline-none transition-all hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring/70"
                     >
-                      <TableCell className="py-5">
+                      <TableCell className="py-4 sm:py-5">
                         <div className="rounded-xl px-2 py-1 transition-colors">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-foreground transition-colors group-hover:text-primary group-focus-visible:text-primary">
@@ -111,7 +112,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="py-5">
+                      <TableCell className="py-4 sm:py-5">
                         <div className="space-y-1">
                           <p className={cn("text-sm font-medium", !item.companyName && "text-muted-foreground")}>
                             {item.companyName ?? "Not provided"}
@@ -121,7 +122,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                           </p>
                         </div>
                       </TableCell>
-                      <TableCell className="max-w-[260px] py-5">
+                      <TableCell className="max-w-[240px] py-4 sm:max-w-[260px] sm:py-5">
                         <div className="space-y-1">
                           <p className="text-sm font-medium text-foreground">{item.serviceRequested}</p>
                           <p className="text-xs text-muted-foreground">
@@ -129,10 +130,10 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                           </p>
                         </div>
                       </TableCell>
-                      <TableCell className="py-5">
+                      <TableCell className="py-4 sm:py-5">
                         <IntakeStatusBadge status={item.status} />
                       </TableCell>
-                      <TableCell className="py-5">
+                      <TableCell className="py-4 sm:py-5">
                         <div className="space-y-1">
                           <FormattedBudgetRange
                             value={item.budgetRange}
@@ -144,7 +145,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                           </p>
                         </div>
                       </TableCell>
-                      <TableCell className="py-5">
+                      <TableCell className="py-4 sm:py-5">
                         <FormattedDateTime
                           value={item.createdAt}
                           showRelative

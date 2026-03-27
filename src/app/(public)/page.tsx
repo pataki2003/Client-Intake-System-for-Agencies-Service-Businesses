@@ -50,29 +50,29 @@ export default async function HomePage() {
   const secondaryCtaLabel = adminUser ? "Open workspace" : "Admin sign in";
 
   return (
-    <div className="space-y-14 md:space-y-16">
-      <section className="grid gap-8 border-b pb-12 lg:grid-cols-[minmax(0,1.15fr)_360px] lg:items-start">
-        <div className="space-y-8">
-          <div className="space-y-4">
+    <div className="space-y-10 sm:space-y-12 md:space-y-16">
+      <section className="grid gap-6 border-b pb-10 sm:gap-8 md:pb-12 lg:grid-cols-[minmax(0,1.15fr)_360px] lg:items-start">
+        <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-3 sm:space-y-4">
             <Badge variant="outline" className="px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
               Client Intake System
             </Badge>
-            <div className="space-y-4">
-              <h1 className="max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+            <div className="space-y-3 sm:space-y-4">
+              <h1 className="max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
                 A more deliberate front door for project requests.
               </h1>
-              <p className="max-w-2xl text-lg text-muted-foreground md:text-xl">
+              <p className="max-w-2xl text-base text-muted-foreground sm:text-lg md:text-xl">
                 Capture the right context, review requests as a team, and move promising opportunities forward with a
                 clear internal brief.
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <Link href="/start-project">Start a project request</Link>
             </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
               <Link href={secondaryCtaHref}>{secondaryCtaLabel}</Link>
             </Button>
           </div>
@@ -127,14 +127,14 @@ export default async function HomePage() {
         </Card>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_0.95fr]">
+      <section className="grid gap-5 sm:gap-6 xl:grid-cols-[minmax(0,1.15fr)_0.95fr]">
         <Card className="border-border/70 shadow-sm">
-          <CardContent className="space-y-6 p-5 sm:p-6">
+          <CardContent className="space-y-5 sm:space-y-6 p-4 sm:p-6">
             <SectionHeader
               eyebrow="What it does"
               title="Turn new inquiries into a reviewable workflow"
               description="The intake stays straightforward for the client while giving the team more useful context on day one."
-              titleClassName="text-2xl"
+              titleClassName="text-xl sm:text-2xl"
             />
 
             <div className="grid gap-3">
@@ -152,12 +152,12 @@ export default async function HomePage() {
 
         <div className="grid gap-6">
           <Card className="border-border/70 bg-secondary/15 shadow-sm">
-            <CardContent className="space-y-5 p-5 sm:p-6">
+            <CardContent className="space-y-4 sm:space-y-5 p-4 sm:p-6">
               <SectionHeader
                 eyebrow="Who it is for"
                 title="A practical fit for lean teams"
                 description="Best suited to teams that want a more intentional front door for new business."
-                titleClassName="text-xl"
+                titleClassName="text-lg sm:text-xl"
               />
 
               <div className="grid gap-3">
@@ -169,12 +169,12 @@ export default async function HomePage() {
           </Card>
 
           <Card className="border-border/70 shadow-sm">
-            <CardContent className="space-y-5 p-5 sm:p-6">
+            <CardContent className="space-y-4 sm:space-y-5 p-4 sm:p-6">
               <SectionHeader
                 eyebrow="Why it works better"
                 title="More context, less avoidable follow-up"
                 description="A standard contact form captures interest. This captures the information the team actually needs."
-                titleClassName="text-xl"
+                titleClassName="text-lg sm:text-xl"
               />
 
               <div className="grid gap-3">
@@ -187,7 +187,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="space-y-6">
+      <section className="space-y-5 sm:space-y-6">
         <SectionHeader
           eyebrow="How the flow works"
           title="A simple path from request to review"

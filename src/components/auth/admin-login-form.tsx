@@ -30,15 +30,15 @@ export function AdminLoginForm() {
 
   return (
     <Card className="mx-auto w-full max-w-md border-border/80 shadow-sm">
-      <CardHeader className="space-y-3">
+      <CardHeader className="space-y-2.5 sm:space-y-3">
         <div className="space-y-1">
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Restricted access</p>
-          <CardTitle className="text-2xl tracking-tight">Sign in to the intake workspace</CardTitle>
+          <CardTitle className="text-xl tracking-tight sm:text-2xl">Sign in to the intake workspace</CardTitle>
         </div>
         <CardDescription>Sign in with an approved admin account to review submissions, notes, statuses, and project briefs.</CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={formAction} className="space-y-5">
+        <form action={formAction} className="space-y-4 sm:space-y-5">
           {state.error ? (
             <FeedbackNotice tone="error" title="Unable to sign in" description={state.error} />
           ) : null}

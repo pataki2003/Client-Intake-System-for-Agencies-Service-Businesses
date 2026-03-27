@@ -12,7 +12,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <PageHeader
         eyebrow="Admin workspace"
         title="Sign in to continue"

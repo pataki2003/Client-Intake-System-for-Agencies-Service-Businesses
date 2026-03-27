@@ -53,9 +53,9 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
   }
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-3xl border border-border/70 bg-secondary/15 p-5 shadow-sm md:p-7">
-        <div className="flex flex-col gap-6">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="rounded-3xl border border-border/70 bg-secondary/15 p-4 sm:p-5 shadow-sm md:p-7">
+        <div className="flex flex-col gap-5 sm:gap-6">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="space-y-4">
               <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
@@ -76,15 +76,15 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               </div>
 
               <div className="space-y-2">
-                <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">{intake.client.clientName}</h1>
-                <p className="max-w-3xl text-base text-muted-foreground md:text-lg">
+                <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">{intake.client.clientName}</h1>
+                <p className="max-w-3xl text-sm text-muted-foreground sm:text-base md:text-lg">
                   Review the request, internal brief, follow-up status, and team notes in one workspace.
                 </p>
               </div>
             </div>
 
             <div className="flex flex-col items-start gap-3 lg:items-end">
-              <Button asChild variant="outline" className="rounded-full px-4">
+              <Button asChild variant="outline" className="w-full rounded-full px-4 sm:w-auto">
                 <Link href="/admin">
                   <span aria-hidden="true" className="mr-2 text-muted-foreground">
                     &lt;-
@@ -126,8 +126,33 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
         </div>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_380px] xl:items-start">
-        <div className="space-y-6">
+      <section className="xl:hidden">
+        <Card className="border-border/70 bg-secondary/10 shadow-sm">
+          <CardHeader className="space-y-2">
+            <div className="space-y-1">
+              <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">Workflow</p>
+              <CardTitle className="text-xl">Review workflow</CardTitle>
+            </div>
+            <CardDescription>Update status before moving deeper into the request.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="rounded-2xl border bg-secondary/20 p-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Current status</p>
+                  <p className="text-sm text-muted-foreground">Use this status to show where the request currently sits.</p>
+                </div>
+                <IntakeStatusBadge status={intake.status} />
+              </div>
+            </div>
+
+            <StatusUpdateForm intakeId={intake.id} currentStatus={intake.status} idPrefix="mobile-intake-status" />
+          </CardContent>
+        </Card>
+      </section>
+
+      <div className="grid gap-5 sm:gap-6 xl:grid-cols-[minmax(0,1.3fr)_380px] xl:items-start">
+        <div className="space-y-5 sm:space-y-6">
           <section id="overview" className="scroll-mt-24 space-y-6">
             <Card className="border-border/70 shadow-sm">
               <CardHeader className="space-y-2">
@@ -137,7 +162,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                 </div>
                 <CardDescription>Primary contact and company details attached to this request.</CardDescription>
               </CardHeader>
-              <CardContent className="grid gap-4 md:grid-cols-2">
+              <CardContent className="grid gap-3 sm:gap-4 md:grid-cols-2">
                 <div className="rounded-xl border bg-secondary/15 p-4">
                   <AdminDetailField label="Client name" value={intake.client.clientName} />
                 </div>
@@ -187,14 +212,14 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                 </div>
                 <CardDescription>Core request details used for review, scoping, and follow-up.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-5 sm:space-y-6">
                 <div className="grid gap-3 md:grid-cols-3">
                   <InfoTile eyebrow="Service type" title={intake.serviceRequested} />
                   <InfoTile eyebrow="Budget range" title={<FormattedBudgetRange value={intake.budgetRange} />} variant="muted" />
                   <InfoTile eyebrow="Timeline" title={<FormattedTimeline value={intake.timeline} />} />
                 </div>
 
-                <div className="grid gap-6">
+                <div className="grid gap-4 sm:gap-6">
                   <div className="rounded-2xl border bg-background p-4 md:p-5">
                     <AdminDetailField
                       label="Goal"
@@ -267,8 +292,8 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
           </section>
         </div>
 
-        <div className="space-y-6 xl:sticky xl:top-6">
-          <section id="workflow" className="scroll-mt-24">
+        <div className="space-y-5 sm:space-y-6 xl:sticky xl:top-6">
+          <section id="workflow" className="hidden scroll-mt-24 xl:block">
             <Card className="border-border/70 bg-secondary/10 shadow-sm">
               <CardHeader className="space-y-2">
                 <div className="space-y-1">
@@ -288,7 +313,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                   </div>
                 </div>
 
-                <StatusUpdateForm intakeId={intake.id} currentStatus={intake.status} />
+                <StatusUpdateForm intakeId={intake.id} currentStatus={intake.status} idPrefix="desktop-intake-status" />
               </CardContent>
             </Card>
           </section>

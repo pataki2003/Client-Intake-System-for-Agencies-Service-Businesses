@@ -55,10 +55,9 @@ const flowSteps = [
 
 export default function StartProjectPage() {
   return (
-    <div className="space-y-12 md:space-y-14">
-      <section className="space-y-8 border-b pb-10 md:pb-12">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_320px] lg:items-start">
-          <div className="space-y-5">
+    <div className="space-y-10 sm:space-y-12 md:space-y-14">
+      <section className="space-y-6 sm:space-y-8 border-b pb-8 sm:pb-10 md:pb-12">
+        <div className="space-y-4 sm:space-y-5">
             <Badge variant="outline" className="px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
               Project request
             </Badge>
@@ -66,27 +65,9 @@ export default function StartProjectPage() {
             <SectionHeader
               title="Start your project inquiry with the right context"
               description="Share the essentials once. We will review the request carefully and follow up with a clear next step."
-              titleClassName="text-4xl md:text-5xl"
-              descriptionClassName="max-w-2xl text-lg"
+              titleClassName="text-3xl sm:text-4xl md:text-5xl"
+              descriptionClassName="max-w-2xl text-base sm:text-lg"
             />
-          </div>
-
-          <Card className="border-border/70 bg-secondary/20 shadow-sm">
-            <CardContent className="space-y-4 p-5 sm:p-6">
-              <SectionHeader
-                eyebrow="Before you begin"
-                title="A thoughtful first step"
-                description="You do not need every detail finalized. A practical working estimate is enough."
-                titleClassName="text-xl"
-              />
-
-              <InfoTile
-                title="Most teams finish this in a few minutes"
-                description="If timing or scope is still forming, your best estimate is completely fine."
-                variant="accent"
-              />
-            </CardContent>
-          </Card>
         </div>
 
         <div className="grid gap-3 md:grid-cols-3">
@@ -102,17 +83,17 @@ export default function StartProjectPage() {
         </div>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_360px] xl:items-start">
+      <div className="grid gap-5 sm:gap-6 xl:grid-cols-[minmax(0,1.15fr)_360px] xl:items-start">
         <PublicIntakeForm />
 
         <div className="space-y-4 xl:sticky xl:top-6">
           <Card className="border-border/70 bg-secondary/20 shadow-sm">
-            <CardContent className="space-y-5 p-5 sm:p-6">
+            <CardContent className="space-y-4 sm:space-y-5 p-4 sm:p-6">
               <SectionHeader
                 eyebrow="What to expect"
                 title="A practical review process"
                 description="This form helps us review the opportunity properly before we reply."
-                titleClassName="text-2xl"
+                titleClassName="text-xl sm:text-2xl"
               />
 
               <div className="grid gap-3">
@@ -133,11 +114,12 @@ export default function StartProjectPage() {
             title="A best estimate is enough"
             description="If a budget or deadline is still taking shape, you can still submit a useful request."
             variant="muted"
+            className="sm:max-w-none"
           />
         </div>
       </div>
 
-      <section className="space-y-6">
+      <section className="space-y-5 sm:space-y-6">
         <SectionHeader
           eyebrow="How the flow works"
           title="A simple path from request to review"

@@ -11,13 +11,13 @@ type PageHeaderProps = {
 
 export function PageHeader({ eyebrow, title, description, actions }: PageHeaderProps) {
   return (
-    <section className="border-b pb-7 md:pb-8">
+    <section className="border-b pb-6 md:pb-8">
       <SectionHeader
         eyebrow={eyebrow}
         title={title}
         description={description}
         action={actions}
-        titleClassName="text-3xl md:text-4xl"
+        titleClassName="text-2xl sm:text-3xl md:text-4xl"
       />
     </section>
   );

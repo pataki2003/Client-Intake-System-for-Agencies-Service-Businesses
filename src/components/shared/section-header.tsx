@@ -24,17 +24,17 @@ export function SectionHeader({
   contentClassName
 }: SectionHeaderProps) {
   return (
-    <div className={cn("flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between", className)}>
-      <div className={cn("max-w-3xl space-y-2", contentClassName)}>
+    <div className={cn("flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-end sm:justify-between", className)}>
+      <div className={cn("max-w-3xl space-y-1.5 sm:space-y-2", contentClassName)}>
         {eyebrow ? (
-          <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted-foreground sm:text-sm">
+          <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground sm:text-sm">
             {eyebrow}
           </p>
         ) : null}
-        <div className="space-y-2">
-          <h2 className={cn("text-2xl font-semibold tracking-tight md:text-3xl", titleClassName)}>{title}</h2>
+        <div className="space-y-1.5 sm:space-y-2">
+          <h2 className={cn("text-xl font-semibold tracking-tight sm:text-2xl md:text-3xl", titleClassName)}>{title}</h2>
           {description ? (
-            <div className={cn("max-w-2xl text-sm leading-6 text-muted-foreground md:text-base", descriptionClassName)}>
+            <div className={cn("max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base", descriptionClassName)}>
               {description}
             </div>
           ) : null}

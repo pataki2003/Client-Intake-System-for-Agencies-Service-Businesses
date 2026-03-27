@@ -9,7 +9,7 @@ type AdminDetailSectionNavProps = {
 
 export function AdminDetailSectionNav({ items }: AdminDetailSectionNavProps) {
   return (
-    <nav aria-label="Intake detail sections" className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+    <nav aria-label="Intake detail sections" className="-mx-1 hidden gap-2 overflow-x-auto px-1 pb-1 xl:flex">
       {items.map((item) => (
         <a
           key={item.id}

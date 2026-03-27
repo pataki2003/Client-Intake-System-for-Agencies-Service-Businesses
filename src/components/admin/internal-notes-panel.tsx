@@ -94,8 +94,8 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
           Capture follow-up context, decisions, and next steps for anyone picking up this request later.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <form className="space-y-4 rounded-2xl border bg-secondary/20 p-4 md:p-5" onSubmit={handleSubmit}>
+      <CardContent className="space-y-5 sm:space-y-6">
+        <form className="space-y-4 rounded-2xl border bg-secondary/20 p-4 sm:p-5" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label htmlFor="internal-note" className="text-sm font-medium">
               Add note
@@ -121,7 +121,7 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">Visible to admins only. New notes appear first.</p>
-            <Button type="submit" disabled={isSaving || noteBody.trim().length === 0} className="sm:min-w-[132px]">
+            <Button type="submit" disabled={isSaving || noteBody.trim().length === 0} className="w-full sm:min-w-[132px] sm:w-auto">
               {isSaving ? (
                 <LoadingIndicator size="sm" label="Saving note" textClassName="font-medium text-inherit" />
               ) : (
@@ -132,7 +132,7 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
         </form>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-1">
               <p className="text-sm font-medium">Notes history</p>
               <p className="text-xs text-muted-foreground">Chronological collaboration history, newest first.</p>

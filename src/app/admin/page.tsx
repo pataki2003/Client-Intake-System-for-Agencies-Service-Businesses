@@ -90,14 +90,14 @@ export default async function AdminDashboardPage({ searchParams }: AdminDashboar
   const hasActiveFilters = Boolean(requestedStatus || selectedService);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <PageHeader
         eyebrow="Admin dashboard"
         title="Operations dashboard"
         description="Review incoming requests, keep the queue moving, and open the full workspace when more context is needed."
       />
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-5">
         {statCardConfig.map((stat) => (
           <InfoTile
             key={stat.key}
@@ -106,7 +106,7 @@ export default async function AdminDashboardPage({ searchParams }: AdminDashboar
             description={stat.description}
             variant={stat.tone}
             className={stat.className}
-            titleClassName="text-4xl font-semibold tracking-tight md:text-[2.5rem]"
+            titleClassName="text-3xl font-semibold tracking-tight sm:text-4xl md:text-[2.5rem]"
             descriptionClassName="text-sm"
           />
         ))}
