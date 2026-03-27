@@ -167,6 +167,13 @@ supabase/
 `- migrations/             # Database schema and hardening migrations
 ```
 
+## Wiki
+
+The repo includes a ready-to-use internal wiki scaffold in [`wiki/`](./wiki/).
+
+- Start here: [`wiki/00 Home.md`](./wiki/00%20Home.md)
+- Navigation source: [`wiki/_Sidebar.md`](./wiki/_Sidebar.md)
+
 ## Roadmap
 
 - Richer admin filtering and search on the intake dashboard

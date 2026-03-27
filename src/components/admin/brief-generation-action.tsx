@@ -41,13 +41,19 @@ export function BriefGenerationAction({ intakeId, hasExistingBrief }: BriefGener
   }
 
   return (
-    <div className="space-y-3">
-      <Button type="button" onClick={handleClick} disabled={isSubmitting}>
-        {isSubmitting ? (hasExistingBrief ? "Regenerating..." : "Generating...") : hasExistingBrief ? "Regenerate Brief" : "Generate Brief"}
+    <div className="space-y-2 md:max-w-[260px] md:text-right">
+      <Button
+        type="button"
+        onClick={handleClick}
+        disabled={isSubmitting}
+        variant={hasExistingBrief ? "outline" : "secondary"}
+        size="sm"
+      >
+        {isSubmitting ? (hasExistingBrief ? "Regenerating..." : "Generating...") : hasExistingBrief ? "Regenerate brief" : "Generate brief"}
       </Button>
 
       {error ? (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="bg-destructive/5 text-left">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       ) : null}

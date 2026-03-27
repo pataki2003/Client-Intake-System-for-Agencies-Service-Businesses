@@ -3,7 +3,6 @@
 import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { IntakeStatusBadge } from "@/components/admin/intake-status-badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -60,36 +59,48 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="flex flex-wrap items-center gap-3">
-        <p className="text-sm text-muted-foreground">Current status</p>
-        <IntakeStatusBadge status={currentStatus} />
+      <div className="space-y-2">
+        <Label htmlFor="intake-status" className="text-sm font-medium">
+          Update workflow status
+        </Label>
+        <p className="text-sm text-muted-foreground">
+          Move the intake forward when the team has reviewed it, generated the brief, or followed up.
+        </p>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="intake-status">Update status</Label>
-        <Select value={selectedStatus} onValueChange={(value) => setSelectedStatus(value as IntakeStatus)}>
-          <SelectTrigger id="intake-status">
-            <SelectValue placeholder="Select a status" />
-          </SelectTrigger>
-          <SelectContent>
-            {INTAKE_STATUSES.map((status) => (
-              <SelectItem key={status} value={status}>
-                {formatIntakeStatus(status)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <div className="flex-1 space-y-2">
+          <Label htmlFor="intake-status" className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+            New status
+          </Label>
+          <Select
+            value={selectedStatus}
+            onValueChange={(value) => setSelectedStatus(value as IntakeStatus)}
+            disabled={isSaving}
+          >
+            <SelectTrigger id="intake-status">
+              <SelectValue placeholder="Select a status" />
+            </SelectTrigger>
+            <SelectContent>
+              {INTAKE_STATUSES.map((status) => (
+                <SelectItem key={status} value={status}>
+                  {formatIntakeStatus(status)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <Button type="submit" disabled={isSaving || selectedStatus === currentStatus} className="sm:min-w-[132px]">
+          {isSaving ? "Saving..." : "Save status"}
+        </Button>
       </div>
 
       {error ? (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="bg-destructive/5">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       ) : null}
-
-      <Button type="submit" disabled={isSaving || selectedStatus === currentStatus}>
-        {isSaving ? "Saving..." : "Save status"}
-      </Button>
     </form>
   );
 }
