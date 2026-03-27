@@ -18,6 +18,10 @@ type RawClientListRow = {
   company_name: string | null;
 };
 
+type RawBriefListRow = {
+  intake_id: string;
+};
+
 export async function getAdminIntakeList(): Promise<AdminIntakeListItem[]> {
   const supabase = createServiceRoleClient();
 
@@ -36,6 +40,7 @@ export async function getAdminIntakeList(): Promise<AdminIntakeListItem[]> {
     return [];
   }
 
+  const intakeIds = typedIntakes.map((row) => row.id);
   const clientIds = Array.from(new Set(typedIntakes.map((row) => row.client_id)));
   const { data: clientRows, error: clientError } = await supabase
     .from("clients")
@@ -44,6 +49,15 @@ export async function getAdminIntakeList(): Promise<AdminIntakeListItem[]> {
 
   if (clientError) {
     throw new Error(`Failed to load clients for intake submissions: ${clientError.message}`);
+  }
+
+  const { data: briefRows, error: briefError } = await supabase
+    .from("ai_briefs")
+    .select("intake_id")
+    .in("intake_id", intakeIds);
+
+  if (briefError) {
+    throw new Error(`Failed to load AI brief state for intake submissions: ${briefError.message}`);
   }
 
   const clientMap = new Map(
@@ -55,6 +69,7 @@ export async function getAdminIntakeList(): Promise<AdminIntakeListItem[]> {
       }
     ])
   );
+  const briefIntakeIds = new Set(((briefRows ?? []) as RawBriefListRow[]).map((brief) => brief.intake_id));
 
   return typedIntakes.map((row) => {
     const client = clientMap.get(row.client_id);
@@ -67,6 +82,7 @@ export async function getAdminIntakeList(): Promise<AdminIntakeListItem[]> {
       serviceRequested: row.service_requested,
       status: row.status,
       budgetRange: row.budget_range,
+      hasBrief: briefIntakeIds.has(row.id),
       createdAt: row.created_at
     };
   });
