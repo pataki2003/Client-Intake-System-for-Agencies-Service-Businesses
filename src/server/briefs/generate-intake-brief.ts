@@ -1,5 +1,6 @@
 import "server-only";
 
+import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 
 import {
@@ -64,26 +65,72 @@ function getRefusalMessage(response: {
   return null;
 }
 
-async function generateStructuredBrief(input: string): Promise<GeneratedProjectBrief> {
-  const client = createOpenAIClient();
-  const response = await client.responses.parse({
-    model: getOpenAIModel(),
-    instructions: INTERNAL_PROJECT_BRIEF_SYSTEM_PROMPT,
-    input,
-    text: {
-      format: zodTextFormat(generatedProjectBriefSchema, "generated_project_brief")
-    }
-  });
+function normalizeBriefGenerationError(error: unknown): IntakeBriefGenerationError {
+  if (error instanceof IntakeBriefGenerationError) {
+    return error;
+  }
 
-  if (!response.output_parsed) {
-    const refusal = getRefusalMessage(response);
-    throw new IntakeBriefGenerationError(
-      refusal ? `The model refused to generate a brief: ${refusal}` : "The model did not return a valid structured brief.",
+  if (error instanceof OpenAI.AuthenticationError) {
+    return new IntakeBriefGenerationError("OpenAI authentication failed. Check OPENAI_API_KEY.", 502);
+  }
+
+  if (error instanceof OpenAI.PermissionDeniedError) {
+    return new IntakeBriefGenerationError(
+      `OpenAI denied access to the configured model (${getOpenAIModel()}). Check OPENAI_MODEL and your project permissions.`,
       502
     );
   }
 
-  return response.output_parsed;
+  if (error instanceof OpenAI.RateLimitError) {
+    return new IntakeBriefGenerationError("OpenAI rate limits are being hit right now. Please try again in a moment.", 429);
+  }
+
+  if (error instanceof OpenAI.BadRequestError || error instanceof OpenAI.UnprocessableEntityError) {
+    return new IntakeBriefGenerationError(
+      `OpenAI rejected the brief generation request for model ${getOpenAIModel()}. Check OPENAI_MODEL and the request configuration.`,
+      502
+    );
+  }
+
+  if (error instanceof OpenAI.APIConnectionError || error instanceof OpenAI.APIConnectionTimeoutError) {
+    return new IntakeBriefGenerationError("We couldn't reach OpenAI right now. Please try again in a moment.", 502);
+  }
+
+  if (error instanceof Error && error.message) {
+    if (error.message.includes("OPENAI_API_KEY")) {
+      return new IntakeBriefGenerationError(error.message, 500);
+    }
+
+    return new IntakeBriefGenerationError(error.message, 500);
+  }
+
+  return new IntakeBriefGenerationError("We couldn't generate the project brief right now.", 500);
+}
+
+async function generateStructuredBrief(input: string): Promise<GeneratedProjectBrief> {
+  try {
+    const client = createOpenAIClient();
+    const response = await client.responses.parse({
+      model: getOpenAIModel(),
+      instructions: INTERNAL_PROJECT_BRIEF_SYSTEM_PROMPT,
+      input,
+      text: {
+        format: zodTextFormat(generatedProjectBriefSchema, "generated_project_brief")
+      }
+    });
+
+    if (!response.output_parsed) {
+      const refusal = getRefusalMessage(response);
+      throw new IntakeBriefGenerationError(
+        refusal ? `The model refused to generate a brief: ${refusal}` : "The model did not return a valid structured brief.",
+        502
+      );
+    }
+
+    return response.output_parsed;
+  } catch (error) {
+    throw normalizeBriefGenerationError(error);
+  }
 }
 
 export async function generateIntakeBrief(intakeId: string): Promise<ProjectBrief> {
@@ -116,7 +163,9 @@ export async function generateIntakeBrief(intakeId: string): Promise<ProjectBrie
     .single();
 
   if (error || !data) {
-    throw new IntakeBriefGenerationError("We couldn't save the generated brief right now.");
+    throw new IntakeBriefGenerationError(
+      error?.message ? `We couldn't save the generated brief in Supabase: ${error.message}` : "We couldn't save the generated brief right now."
+    );
   }
 
   return mapProjectBrief(data as RawBriefRow);
