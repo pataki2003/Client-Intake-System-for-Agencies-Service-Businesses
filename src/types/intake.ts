@@ -6,6 +6,14 @@ export const INTAKE_STATUSES = [
   "archived"
 ] as const;
 
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: JsonValue }
+  | JsonValue[];
+
 export type IntakeStatus = (typeof INTAKE_STATUSES)[number];
 
 export const BUDGET_RANGES = [
@@ -49,6 +57,7 @@ export interface IntakeRecord extends IntakeSubmission {
   id: string;
   status: IntakeStatus;
   confirmationSentAt: string | null;
+  sourceMetadata: JsonValue | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -67,6 +76,7 @@ export interface ProjectBrief {
   id: string;
   intakeId: string;
   briefMarkdown: string;
+  briefJson: JsonValue | null;
   model: string | null;
   createdAt: string;
   updatedAt: string;

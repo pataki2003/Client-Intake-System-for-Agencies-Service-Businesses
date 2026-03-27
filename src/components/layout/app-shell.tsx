@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 
 const navigationItems = [
-  { href: "/", label: "Intake" },
-  { href: "/success", label: "Success" },
+  { href: "/", label: "Home" },
+  { href: "/start-project", label: "Start Project" },
   { href: "/login", label: "Login" },
   { href: "/admin", label: "Dashboard" }
 ];

@@ -16,11 +16,11 @@ export default function HomePage() {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Public Route"
-        title="Client Intake Form"
-        description="Starter page for the external lead capture flow. This route is ready for form UI and validation wiring."
+        title="Client Intake System"
+        description="A lightweight intake flow for agencies and service businesses, now ready to capture real project requests."
         actions={
           <Button asChild>
-            <Link href="/success">View success page</Link>
+            <Link href="/start-project">Start a project</Link>
           </Button>
         }
       />
@@ -28,7 +28,7 @@ export default function HomePage() {
       <div className="grid gap-6 md:grid-cols-2">
         <PlaceholderPanel
           title="What this page will contain"
-          description="Keep the public experience focused on collecting the essentials without exposing internal workflows."
+          description="Use the dedicated start-project route for the live intake form while this page stays lightweight."
         >
           <ul className="space-y-2 text-sm text-muted-foreground">
             {publicPageHighlights.map((item) => (
@@ -42,7 +42,8 @@ export default function HomePage() {
           description="The scaffold is intentionally light so we can add business logic in clear server and client boundaries later."
         >
           <p className="text-sm text-muted-foreground">
-            Use this route for the public intake form only. Admin actions, AI generation, and email sending should stay in server-only layers.
+            Public intake submissions now live at <span className="font-medium text-foreground">/start-project</span>. Admin
+            actions, AI generation, and email sending stay in server-only layers.
           </p>
         </PlaceholderPanel>
       </div>
