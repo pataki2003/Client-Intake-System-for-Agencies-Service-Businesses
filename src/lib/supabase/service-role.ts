@@ -6,7 +6,7 @@ function getRequiredEnv(name: "NEXT_PUBLIC_SUPABASE_URL" | "SUPABASE_SERVICE_ROL
   const value = process.env[name];
 
   if (!value) {
-    throw new Error(`${name} is required to submit public intake forms.`);
+    throw new Error(`${name} is required for server-side Supabase access.`);
   }
 
   return value;

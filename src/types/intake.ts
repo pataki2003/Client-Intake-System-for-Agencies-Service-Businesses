@@ -85,7 +85,7 @@ export interface ProjectBrief {
 export interface InternalNote {
   id: string;
   intakeId: string;
-  authorId: string;
+  authorId: string | null;
   body: string;
   createdAt: string;
   updatedAt: string;

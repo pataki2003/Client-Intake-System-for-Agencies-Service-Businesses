@@ -1,23 +1,25 @@
-import { PageHeader } from "@/components/shared/page-header";
-import { PlaceholderPanel } from "@/components/shared/placeholder-panel";
+import { redirect } from "next/navigation";
 
-export default function LoginPage() {
+import { AdminLoginForm } from "@/components/auth/admin-login-form";
+import { PageHeader } from "@/components/shared/page-header";
+import { getAdminSessionUser } from "@/server/auth/require-admin";
+
+export default async function LoginPage() {
+  const adminUser = await getAdminSessionUser();
+
+  if (adminUser) {
+    redirect("/admin");
+  }
+
   return (
     <div className="space-y-8">
       <PageHeader
         eyebrow="Admin Route"
-        title="Admin Login"
-        description="Placeholder entry point for authenticated admin access."
+        title="Admin access"
+        description="Use your admin credentials to access intake submissions, project notes, and status updates."
       />
 
-      <PlaceholderPanel
-        title="Planned scope"
-        description="This page will host Supabase authentication UI for agency admins."
-      >
-        <p className="text-sm text-muted-foreground">
-          Keep authentication isolated from the public intake flow and use this route as the single login entry for the dashboard.
-        </p>
-      </PlaceholderPanel>
+      <AdminLoginForm />
     </div>
   );
 }

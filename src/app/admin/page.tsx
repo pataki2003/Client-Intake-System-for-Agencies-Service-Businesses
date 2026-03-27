@@ -1,52 +1,54 @@
-import Link from "next/link";
-
+import { IntakesTable } from "@/components/admin/intakes-table";
 import { PageHeader } from "@/components/shared/page-header";
-import { PlaceholderPanel } from "@/components/shared/placeholder-panel";
-import { Button } from "@/components/ui/button";
-import { INTAKE_STATUSES } from "@/types";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getAdminIntakeList } from "@/server/admin-intakes/get-admin-intake-list";
 
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  const intakes = await getAdminIntakeList();
+  const totalSubmissions = intakes.length;
+  const activeReviews = intakes.filter((intake) => intake.status === "new" || intake.status === "reviewing").length;
+  const readyOrContacted = intakes.filter(
+    (intake) => intake.status === "brief_ready" || intake.status === "contacted"
+  ).length;
+
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Admin Route"
+        eyebrow="Admin Dashboard"
         title="Intake Dashboard"
-        description="Placeholder dashboard for reviewing incoming client submissions."
-        actions={
-          <Button asChild>
-            <Link href="/admin/intakes/demo-intake">Open sample intake</Link>
-          </Button>
-        }
+        description="View incoming project requests, keep them moving through the intake pipeline, and jump into the full submission detail when you need more context."
       />
 
-      <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-        <PlaceholderPanel
-          title="Dashboard responsibilities"
-          description="This page should surface the most important intake information first."
-        >
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>Recent intake submissions</li>
-            <li>Status overview and lightweight filtering</li>
-            <li>Fast access to a detail page for each submission</li>
-          </ul>
-        </PlaceholderPanel>
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Total submissions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-semibold tracking-tight">{totalSubmissions}</p>
+          </CardContent>
+        </Card>
 
-        <PlaceholderPanel
-          title="Suggested status pipeline"
-          description="Shared status values are already typed for the rest of the app."
-        >
-          <div className="flex flex-wrap gap-2">
-            {INTAKE_STATUSES.map((status) => (
-              <span
-                key={status}
-                className="rounded-full border bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground"
-              >
-                {status}
-              </span>
-            ))}
-          </div>
-        </PlaceholderPanel>
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Needs review</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-semibold tracking-tight">{activeReviews}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Ready or contacted</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-semibold tracking-tight">{readyOrContacted}</p>
+          </CardContent>
+        </Card>
       </div>
+
+      <IntakesTable items={intakes} />
     </div>
   );
 }
