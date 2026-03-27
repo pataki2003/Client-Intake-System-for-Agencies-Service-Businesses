@@ -1,11 +1,10 @@
 import Link from "next/link";
 
-import { IntakeStatusBadge } from "@/components/admin/intake-status-badge";
+import { FormattedBudgetRange, FormattedDateTime, IntakeStatusBadge } from "@/components/shared/intake-display";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { formatBudgetRange, formatDateTime, formatRelativeTimeToNow } from "@/lib/intake/formatters";
 import { cn } from "@/lib/utils";
 import type { AdminIntakeListItem } from "@/types";
 
@@ -102,17 +101,23 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                   </TableCell>
                   <TableCell className="py-5">
                     <div className="space-y-1">
-                      <p className="text-sm font-medium text-foreground">{formatBudgetRange(item.budgetRange)}</p>
+                      <FormattedBudgetRange
+                        value={item.budgetRange}
+                        className="text-sm font-medium text-foreground"
+                        fallbackClassName="text-sm font-medium text-muted-foreground"
+                      />
                       <p className="text-xs text-muted-foreground">
                         {item.budgetRange ? "Budget guidance provided" : "Needs confirmation"}
                       </p>
                     </div>
                   </TableCell>
                   <TableCell className="py-5">
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium text-foreground">{formatDateTime(item.createdAt)}</p>
-                      <p className="text-xs text-muted-foreground">{formatRelativeTimeToNow(item.createdAt)}</p>
-                    </div>
+                    <FormattedDateTime
+                      value={item.createdAt}
+                      showRelative
+                      className="space-y-1"
+                      valueClassName="font-medium text-foreground"
+                    />
                   </TableCell>
                 </TableRow>
               ))}
