@@ -5,6 +5,7 @@ import {
   type PublicServiceTypeValue
 } from "@/lib/intake/public-intake-options";
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
+import { sendIntakeConfirmationEmail } from "@/server/email/send-intake-confirmation-email";
 import {
   normalizePublicIntakeFormValues,
   publicIntakeSchema,
@@ -161,6 +162,22 @@ function genericFailureResult(): PublicIntakeSubmissionResult {
   };
 }
 
+function getSafeErrorMessage(error: unknown) {
+  if (error && typeof error === "object" && "message" in error && typeof error.message === "string") {
+    return error.message;
+  }
+
+  return "Unknown error";
+}
+
+function logConfirmationTimestampUpdateError(context: { intakeId: string; recipientEmail: string }, error: unknown) {
+  console.error("Failed to mark intake confirmation email as sent.", {
+    intakeId: context.intakeId,
+    recipientEmail: context.recipientEmail,
+    errorMessage: getSafeErrorMessage(error)
+  });
+}
+
 export async function createPublicIntakeSubmission(
   input: unknown,
   requestContext: PublicIntakeRequestContext = {}
@@ -240,6 +257,39 @@ export async function createPublicIntakeSubmission(
     if (createAnswersError) {
       console.error("Failed to create intake answers.", createAnswersError);
       return genericFailureResult();
+    }
+
+    try {
+      const confirmationEmailResult = await sendIntakeConfirmationEmail({
+        intakeId: createdIntake.id,
+        recipientEmail: values.email,
+        recipientName: values.name
+      });
+
+      if (confirmationEmailResult.success) {
+        const { error: updateConfirmationError } = await supabase
+          .from("intakes")
+          .update({
+            confirmation_sent_at: new Date().toISOString()
+          })
+          .eq("id", createdIntake.id);
+
+        if (updateConfirmationError) {
+          logConfirmationTimestampUpdateError(
+            {
+              intakeId: createdIntake.id,
+              recipientEmail: values.email
+            },
+            updateConfirmationError
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Unexpected intake confirmation email failure.", {
+        intakeId: createdIntake.id,
+        recipientEmail: values.email,
+        errorMessage: getSafeErrorMessage(error)
+      });
     }
 
     return {
