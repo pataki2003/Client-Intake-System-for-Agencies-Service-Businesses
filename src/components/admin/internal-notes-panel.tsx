@@ -3,12 +3,12 @@
 import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { FormattedDateTime } from "@/components/shared/intake-display";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { formatDateTime, formatRelativeTimeToNow } from "@/lib/intake/formatters";
 import { cn } from "@/lib/utils";
 import type { AdminIntakeNote } from "@/types";
 
@@ -124,12 +124,14 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
                   key={note.id}
                   className={cn("space-y-3 bg-background px-4 py-4", index > 0 && "border-t", index % 2 === 1 && "bg-secondary/10")}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium">{getNoteAuthorLabel(note, currentAdminUserId)}</p>
-                      <p className="text-xs text-muted-foreground">{formatDateTime(note.createdAt)}</p>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{formatRelativeTimeToNow(note.createdAt)}</p>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium">{getNoteAuthorLabel(note, currentAdminUserId)}</p>
+                    <FormattedDateTime
+                      value={note.createdAt}
+                      showRelative
+                      valueClassName="text-xs text-muted-foreground"
+                      relativeClassName="text-xs text-muted-foreground"
+                    />
                   </div>
                   <p className="whitespace-pre-wrap text-sm leading-6">{note.body}</p>
                 </div>

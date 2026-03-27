@@ -4,19 +4,18 @@ import { notFound } from "next/navigation";
 import { AdminDetailField } from "@/components/admin/admin-detail-field";
 import { AdminJsonMetadata } from "@/components/admin/admin-json-metadata";
 import { AdminDetailSectionNav } from "@/components/admin/admin-detail-section-nav";
-import { IntakeStatusBadge } from "@/components/admin/intake-status-badge";
 import { InternalNotesPanel } from "@/components/admin/internal-notes-panel";
 import { ProjectBriefPanel } from "@/components/admin/project-brief-panel";
+import {
+  FormattedBudgetRange,
+  FormattedDateTime,
+  FormattedTimeline,
+  IntakeStatusBadge
+} from "@/components/shared/intake-display";
 import { StatusUpdateForm } from "@/components/admin/status-update-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  extractAnswerValue,
-  formatBudgetRange,
-  formatDateTime,
-  formatProjectTimeline,
-  formatRelativeTimeToNow
-} from "@/lib/intake/formatters";
+import { extractAnswerValue } from "@/lib/intake/formatters";
 import { adminIntakeIdSchema } from "@/lib/validations/admin-intakes";
 import { cn } from "@/lib/utils";
 import { requireAdminUser } from "@/server/auth/require-admin";
@@ -86,12 +85,20 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
             </div>
             <div className="rounded-xl border bg-background px-4 py-4">
               <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Budget range</p>
-              <p className="mt-2 text-sm font-medium">{formatBudgetRange(intake.budgetRange)}</p>
+              <FormattedBudgetRange
+                value={intake.budgetRange}
+                className="mt-2 text-sm font-medium text-foreground"
+                fallbackClassName="mt-2 text-sm font-medium text-muted-foreground"
+              />
             </div>
             <div className="rounded-xl border bg-background px-4 py-4">
               <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Submitted</p>
-              <p className="mt-2 text-sm font-medium">{formatDateTime(intake.createdAt)}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{formatRelativeTimeToNow(intake.createdAt)}</p>
+              <FormattedDateTime
+                value={intake.createdAt}
+                showRelative
+                className="mt-2 space-y-1"
+                valueClassName="font-medium text-foreground"
+              />
             </div>
           </div>
 
@@ -154,8 +161,8 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               <CardContent className="space-y-6">
                 <div className="grid gap-5 md:grid-cols-3">
                   <AdminDetailField label="Service type" value={intake.serviceRequested} />
-                  <AdminDetailField label="Budget range" value={formatBudgetRange(intake.budgetRange)} />
-                  <AdminDetailField label="Timeline" value={formatProjectTimeline(intake.timeline)} />
+                  <AdminDetailField label="Budget range" value={<FormattedBudgetRange value={intake.budgetRange} />} />
+                  <AdminDetailField label="Timeline" value={<FormattedTimeline value={intake.timeline} />} />
                 </div>
 
                 <div className="grid gap-6">
@@ -271,19 +278,22 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                 <div className="grid gap-5">
                   <AdminDetailField
                     label="Created at"
-                    value={formatDateTime(intake.createdAt)}
-                    helper={formatRelativeTimeToNow(intake.createdAt)}
+                    value={<FormattedDateTime value={intake.createdAt} showRelative valueClassName="leading-6 text-foreground" />}
                   />
                   <AdminDetailField
                     label="Last updated"
-                    value={formatDateTime(intake.updatedAt)}
-                    helper={formatRelativeTimeToNow(intake.updatedAt)}
+                    value={<FormattedDateTime value={intake.updatedAt} showRelative valueClassName="leading-6 text-foreground" />}
                   />
                   <AdminDetailField
                     label="Confirmation email"
-                    value={intake.confirmationSentAt ? formatDateTime(intake.confirmationSentAt) : "Not sent yet"}
-                    helper={
-                      intake.confirmationSentAt ? formatRelativeTimeToNow(intake.confirmationSentAt) : "No confirmation email timestamp recorded yet."
+                    value={
+                      <FormattedDateTime
+                        value={intake.confirmationSentAt}
+                        showRelative
+                        fallback="Not sent yet"
+                        fallbackClassName="text-sm text-muted-foreground"
+                        valueClassName="leading-6 text-foreground"
+                      />
                     }
                   />
                 </div>

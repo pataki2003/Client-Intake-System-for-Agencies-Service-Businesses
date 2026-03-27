@@ -1,7 +1,7 @@
 import { BriefGenerationAction } from "@/components/admin/brief-generation-action";
+import { FormattedDateTime } from "@/components/shared/intake-display";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatDateTime } from "@/lib/intake/formatters";
 import type { ProjectBrief } from "@/types";
 
 type ProjectBriefPanelProps = {
@@ -91,7 +91,7 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                 Model: {brief.model ?? "Not recorded"}
               </Badge>
               <Badge variant="outline" className="rounded-full px-3 py-1 text-xs font-medium">
-                Updated {formatDateTime(brief.updatedAt)}
+                Updated <FormattedDateTime value={brief.updatedAt} />
               </Badge>
             </div>
 
