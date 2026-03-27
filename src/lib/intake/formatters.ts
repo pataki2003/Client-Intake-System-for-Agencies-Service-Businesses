@@ -28,6 +28,10 @@ const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
   timeStyle: "short"
 });
 
+const relativeTimeFormatter = new Intl.RelativeTimeFormat("en-US", {
+  numeric: "auto"
+});
+
 function getValidDate(value: string) {
   const date = new Date(value);
 
@@ -74,9 +78,42 @@ export function formatDateTime(value: string) {
   return date ? dateTimeFormatter.format(date) : value;
 }
 
+export function formatRelativeTimeToNow(value: string) {
+  const date = getValidDate(value);
+
+  if (!date) {
+    return value;
+  }
+
+  const diffMs = date.getTime() - Date.now();
+  const minuteMs = 60 * 1000;
+  const hourMs = 60 * minuteMs;
+  const dayMs = 24 * hourMs;
+  const weekMs = 7 * dayMs;
+  const monthMs = 30 * dayMs;
+
+  if (Math.abs(diffMs) < hourMs) {
+    return relativeTimeFormatter.format(Math.round(diffMs / minuteMs), "minute");
+  }
+
+  if (Math.abs(diffMs) < dayMs) {
+    return relativeTimeFormatter.format(Math.round(diffMs / hourMs), "hour");
+  }
+
+  if (Math.abs(diffMs) < weekMs) {
+    return relativeTimeFormatter.format(Math.round(diffMs / dayMs), "day");
+  }
+
+  if (Math.abs(diffMs) < monthMs) {
+    return relativeTimeFormatter.format(Math.round(diffMs / weekMs), "week");
+  }
+
+  return relativeTimeFormatter.format(Math.round(diffMs / monthMs), "month");
+}
+
 export function formatJsonValue(value: JsonValue | null | undefined): string {
   if (value == null || value === "") {
-    return "—";
+    return "Not provided";
   }
 
   if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
@@ -84,7 +121,7 @@ export function formatJsonValue(value: JsonValue | null | undefined): string {
   }
 
   if (Array.isArray(value)) {
-    return value.length > 0 ? value.map((entry) => formatJsonValue(entry)).join(", ") : "—";
+    return value.length > 0 ? value.map((entry) => formatJsonValue(entry)).join(", ") : "Not provided";
   }
 
   return JSON.stringify(value, null, 2);

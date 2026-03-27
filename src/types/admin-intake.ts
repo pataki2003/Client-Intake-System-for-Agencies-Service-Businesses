@@ -8,6 +8,7 @@ export interface AdminIntakeListItem {
   serviceRequested: string;
   status: IntakeStatus;
   budgetRange: BudgetRange | null;
+  hasBrief: boolean;
   createdAt: string;
 }
 

@@ -1,54 +1,132 @@
+import { AdminDashboardFilters } from "@/components/admin/admin-dashboard-filters";
 import { IntakesTable } from "@/components/admin/intakes-table";
 import { PageHeader } from "@/components/shared/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAdminIntakeList } from "@/server/admin-intakes/get-admin-intake-list";
+import { INTAKE_STATUSES, type AdminIntakeListItem, type IntakeStatus } from "@/types";
 
-export default async function AdminDashboardPage() {
+type AdminDashboardPageProps = {
+  searchParams?: Promise<{
+    status?: string | string[];
+    service?: string | string[];
+  }>;
+};
+
+function getSingleSearchParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function getSelectedStatus(value: string | undefined): IntakeStatus | null {
+  if (!value) {
+    return null;
+  }
+
+  return INTAKE_STATUSES.includes(value as IntakeStatus) ? (value as IntakeStatus) : null;
+}
+
+function getServiceOptions(items: AdminIntakeListItem[]) {
+  return Array.from(new Set(items.map((item) => item.serviceRequested))).sort((left, right) => left.localeCompare(right));
+}
+
+function getDashboardStats(items: AdminIntakeListItem[]) {
+  return {
+    totalSubmissions: items.length,
+    needsReview: items.filter((item) => item.status === "new" || item.status === "reviewing").length,
+    readyOrContacted: items.filter((item) => item.status === "brief_ready" || item.status === "contacted").length,
+    briefsGenerated: items.filter((item) => item.hasBrief).length
+  };
+}
+
+const statCardConfig = [
+  {
+    key: "totalSubmissions",
+    label: "Total submissions",
+    description: "Matching the current view",
+    tone: "border-border/70"
+  },
+  {
+    key: "needsReview",
+    label: "Needs review",
+    description: "New or actively being reviewed",
+    tone: "border-sky-200/70 bg-sky-50/40"
+  },
+  {
+    key: "readyOrContacted",
+    label: "Ready or contacted",
+    description: "Ready for action or already followed up",
+    tone: "border-emerald-200/70 bg-emerald-50/40"
+  },
+  {
+    key: "briefsGenerated",
+    label: "Briefs generated",
+    description: "Submissions with stored AI briefs",
+    tone: "border-amber-200/70 bg-amber-50/40"
+  }
+] as const;
+
+export default async function AdminDashboardPage({ searchParams }: AdminDashboardPageProps) {
+  const resolvedSearchParams = searchParams ? await searchParams : {};
   const intakes = await getAdminIntakeList();
-  const totalSubmissions = intakes.length;
-  const activeReviews = intakes.filter((intake) => intake.status === "new" || intake.status === "reviewing").length;
-  const readyOrContacted = intakes.filter(
-    (intake) => intake.status === "brief_ready" || intake.status === "contacted"
-  ).length;
+  const serviceOptions = getServiceOptions(intakes);
+  const requestedStatus = getSelectedStatus(getSingleSearchParam(resolvedSearchParams.status));
+  const requestedService = getSingleSearchParam(resolvedSearchParams.service);
+  const selectedService = requestedService && serviceOptions.includes(requestedService) ? requestedService : null;
+  const filteredIntakes = intakes.filter((item) => {
+    if (requestedStatus && item.status !== requestedStatus) {
+      return false;
+    }
+
+    if (selectedService && item.serviceRequested !== selectedService) {
+      return false;
+    }
+
+    return true;
+  });
+  const stats = getDashboardStats(filteredIntakes);
+  const hasActiveFilters = Boolean(requestedStatus || selectedService);
 
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Admin Dashboard"
-        title="Intake Dashboard"
-        description="View incoming project requests, keep them moving through the intake pipeline, and jump into the full submission detail when you need more context."
+        eyebrow="Admin dashboard"
+        title="Operations dashboard"
+        description="Monitor incoming requests, scan the active queue quickly, and move into full submission detail when the team needs more context."
       />
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">Total submissions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold tracking-tight">{totalSubmissions}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">Needs review</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold tracking-tight">{activeReviews}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">Ready or contacted</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold tracking-tight">{readyOrContacted}</p>
-          </CardContent>
-        </Card>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {statCardConfig.map((stat) => (
+          <Card key={stat.key} className={stat.tone}>
+            <CardHeader className="space-y-3 pb-3">
+              <div className="space-y-1">
+                <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{stat.label}</p>
+                <CardTitle className="text-4xl font-semibold tracking-tight">
+                  {stats[stat.key]}
+                </CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <p className="text-sm text-muted-foreground">{stat.description}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      <IntakesTable items={intakes} />
+      {intakes.length > 0 ? (
+        <AdminDashboardFilters
+          totalCount={intakes.length}
+          filteredCount={filteredIntakes.length}
+          selectedStatus={requestedStatus}
+          selectedService={selectedService}
+          serviceOptions={serviceOptions}
+        />
+      ) : null}
+
+      <IntakesTable
+        items={filteredIntakes}
+        totalCount={intakes.length}
+        hasActiveFilters={hasActiveFilters}
+        clearHref="/admin"
+      />
     </div>
   );
 }
