@@ -17,6 +17,7 @@ import {
 import type { PublicIntakeSubmissionResult } from "@/types";
 import { FeedbackNotice } from "@/components/shared/feedback-notice";
 import { LoadingIndicator } from "@/components/shared/loading-indicator";
+import { SectionHeader } from "@/components/shared/section-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -48,15 +49,17 @@ function FormSection({
   children: ReactNode;
 }) {
   return (
-    <section className="space-y-5">
-      <div className="space-y-2 border-b pb-4">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">{eyebrow}</p>
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
-          <p className="text-sm text-muted-foreground">{description}</p>
-        </div>
+    <section className="rounded-2xl border border-border/70 bg-secondary/15 p-5 md:p-6">
+      <div className="space-y-5">
+        <SectionHeader
+          eyebrow={eyebrow}
+          title={title}
+          description={description}
+          titleClassName="text-xl"
+          descriptionClassName="max-w-2xl text-sm"
+        />
+        {children}
       </div>
-      {children}
     </section>
   );
 }
@@ -137,7 +140,7 @@ export function PublicIntakeForm() {
           A few clear details help us review fit, scope, and the right next step before we reply.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-8">
         <form className="space-y-8" onSubmit={onSubmit} noValidate>
           {formError ? (
             <FeedbackNotice tone="error" title="Unable to submit request" description={formError} />
@@ -262,16 +265,18 @@ export function PublicIntakeForm() {
             </div>
 
             {selectedServiceType === "other" ? (
-              <div className="space-y-2">
-                <Label htmlFor="service_type_other">What kind of support do you need?</Label>
-                <Input
-                  id="service_type_other"
-                  placeholder="Describe the kind of support you need"
-                  disabled={isSubmitting}
-                  {...register("service_type_other")}
-                />
-                <FieldHint>A short description is enough. We&apos;ll use it to categorize the request correctly.</FieldHint>
-                <FieldError message={errors.service_type_other?.message} />
+              <div className="rounded-xl border bg-background p-4">
+                <div className="space-y-2">
+                  <Label htmlFor="service_type_other">What kind of support do you need?</Label>
+                  <Input
+                    id="service_type_other"
+                    placeholder="Describe the kind of support you need"
+                    disabled={isSubmitting}
+                    {...register("service_type_other")}
+                  />
+                  <FieldHint>A short description is enough. We&apos;ll use it to categorize the request correctly.</FieldHint>
+                  <FieldError message={errors.service_type_other?.message} />
+                </div>
               </div>
             ) : null}
           </FormSection>
@@ -281,47 +286,55 @@ export function PublicIntakeForm() {
             title="What should we know before we review this?"
             description="The strongest requests explain both the outcome they want and what is getting in the way today."
           >
-            <div className="space-y-2">
-              <Label htmlFor="goal">Primary goal</Label>
-              <Textarea
-                id="goal"
-                className="min-h-[140px] resize-y"
-                placeholder="Describe the outcome you want this project to create."
-                disabled={isSubmitting}
-                {...register("goal")}
-              />
-              <FieldHint>Focus on the business result you want from the project.</FieldHint>
-              <FieldError message={errors.goal?.message} />
-            </div>
+            <div className="grid gap-4">
+              <div className="rounded-xl border bg-background p-4 md:p-5">
+                <div className="space-y-2">
+                  <Label htmlFor="goal">Primary goal</Label>
+                  <Textarea
+                    id="goal"
+                    className="min-h-[140px] resize-y"
+                    placeholder="Describe the result you want this project to create."
+                    disabled={isSubmitting}
+                    {...register("goal")}
+                  />
+                  <FieldHint>Focus on the business outcome you want from the work.</FieldHint>
+                  <FieldError message={errors.goal?.message} />
+                </div>
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="problem_description">Current challenge</Label>
-              <Textarea
-                id="problem_description"
-                className="min-h-[150px] resize-y"
-                placeholder="Describe what is not working today, what feels unclear, or what is creating urgency."
-                disabled={isSubmitting}
-                {...register("problem_description")}
-              />
-              <FieldHint>Tell us what is making the request important now.</FieldHint>
-              <FieldError message={errors.problem_description?.message} />
-            </div>
+              <div className="rounded-xl border bg-background p-4 md:p-5">
+                <div className="space-y-2">
+                  <Label htmlFor="problem_description">Current challenge</Label>
+                  <Textarea
+                    id="problem_description"
+                    className="min-h-[150px] resize-y"
+                    placeholder="Describe what is not working today, what feels unclear, or what is creating urgency."
+                    disabled={isSubmitting}
+                    {...register("problem_description")}
+                  />
+                  <FieldHint>Tell us what is making the request important now.</FieldHint>
+                  <FieldError message={errors.problem_description?.message} />
+                </div>
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="extra_notes">Extra notes</Label>
-              <Textarea
-                id="extra_notes"
-                className="min-h-[130px] resize-y"
-                placeholder="Add any stakeholders, constraints, references, or context that would help us review the request well."
-                disabled={isSubmitting}
-                {...register("extra_notes")}
-              />
-              <FieldHint>Optional. Add any detail that would help us review the request well.</FieldHint>
-              <FieldError message={errors.extra_notes?.message} />
+              <div className="rounded-xl border bg-background p-4 md:p-5">
+                <div className="space-y-2">
+                  <Label htmlFor="extra_notes">Extra notes</Label>
+                  <Textarea
+                    id="extra_notes"
+                    className="min-h-[130px] resize-y"
+                    placeholder="Add any stakeholders, constraints, references, or context that would help us review the request well."
+                    disabled={isSubmitting}
+                    {...register("extra_notes")}
+                  />
+                  <FieldHint>Optional. Add anything that would make the review more useful.</FieldHint>
+                  <FieldError message={errors.extra_notes?.message} />
+                </div>
+              </div>
             </div>
           </FormSection>
 
-          <div className="rounded-2xl border bg-secondary/30 p-4 md:p-5">
+          <div className="rounded-2xl border border-primary/10 bg-primary/[0.04] p-5 md:p-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div className="space-y-3">
                 <div className="space-y-2">
@@ -348,7 +361,7 @@ export function PublicIntakeForm() {
                 </div>
               </div>
 
-              <Button className="w-full md:min-w-[220px] md:w-auto" type="submit" disabled={isSubmitting}>
+              <Button className="w-full md:min-w-[220px] md:w-auto" size="lg" type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <LoadingIndicator size="sm" label="Submitting request" textClassName="font-medium text-inherit" />
                 ) : (

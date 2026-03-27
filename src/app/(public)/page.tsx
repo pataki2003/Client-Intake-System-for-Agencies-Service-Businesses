@@ -1,42 +1,46 @@
 import Link from "next/link";
 
+import { InfoTile } from "@/components/shared/info-tile";
+import { SectionHeader } from "@/components/shared/section-header";
+import { StepCard } from "@/components/shared/step-card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { getAdminSessionUser } from "@/server/auth/require-admin";
 
 const productCapabilities = [
-  "Capture structured project requests instead of open-ended inquiry messages.",
-  "Keep client details, submitted answers, notes, and status in one review workspace.",
-  "Generate a concise project brief without rewriting the original request by hand."
+  "Capture structured project requests instead of sorting through vague inquiry messages.",
+  "Keep submitted answers, notes, status, and follow-up context in one review workspace.",
+  "Turn strong requests into concise working briefs without rewriting the original submission."
 ];
 
 const whoItsFor = [
-  "Agencies qualifying new project inquiries before the first call.",
-  "Service businesses that need a more structured intake and follow-up process.",
-  "Small teams that want more structure than a contact form without adopting a full CRM."
+  "Agencies qualifying serious new business inquiries before the first call.",
+  "Service businesses that need more structure than a contact form and less weight than a full CRM.",
+  "Small teams that want better review discipline without adding a complicated sales stack."
 ];
 
 const reasonsToChooseIt = [
-  "A standard contact form creates avoidable follow-up. This captures budget, goals, challenges, and project context from the start.",
-  "Requests move into a shared review workspace instead of getting buried in an inbox.",
-  "The project brief turns submitted details into a concise working summary for the team."
+  "The team gets scope, budget, goals, and constraints up front instead of chasing context later.",
+  "Every request lands in a shared review flow instead of disappearing into one inbox.",
+  "The brief gives the team a clean internal summary while preserving the original submission."
 ];
 
 const flowSteps = [
   {
     step: "01",
     title: "Submit request",
-    description: "Clients complete a focused intake form that captures the information your team needs from the start."
+    description: "Clients complete a focused request form that captures the essentials from the start."
   },
   {
     step: "02",
     title: "Review internally",
-    description: "Your team reviews the submission, updates status, and adds internal notes before responding."
+    description: "The team updates status, adds notes, and reviews the opportunity with full context."
   },
   {
     step: "03",
     title: "Generate brief",
-    description: "Turn the request into a concise project brief that sharpens scope, questions, and next steps."
+    description: "Turn the request into a concise working brief with scope, questions, and next steps."
   }
 ];
 
@@ -46,19 +50,22 @@ export default async function HomePage() {
   const secondaryCtaLabel = adminUser ? "Open workspace" : "Admin sign in";
 
   return (
-    <div className="space-y-12 md:space-y-16">
-      <section className="grid gap-8 border-b pb-10 lg:grid-cols-[minmax(0,1.2fr)_360px] lg:items-start">
-        <div className="max-w-3xl space-y-6">
-          <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">Client Intake System</p>
-
+    <div className="space-y-14 md:space-y-16">
+      <section className="grid gap-8 border-b pb-12 lg:grid-cols-[minmax(0,1.15fr)_360px] lg:items-start">
+        <div className="space-y-8">
           <div className="space-y-4">
-            <h1 className="max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
-              A better way to collect project requests and review them as a team.
-            </h1>
-            <p className="max-w-2xl text-lg text-muted-foreground">
-              Capture the details that matter, keep follow-up organized, and turn every serious inquiry into a clear
-              next step.
-            </p>
+            <Badge variant="outline" className="px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
+              Client Intake System
+            </Badge>
+            <div className="space-y-4">
+              <h1 className="max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+                A more deliberate front door for project requests.
+              </h1>
+              <p className="max-w-2xl text-lg text-muted-foreground md:text-xl">
+                Capture the right context, review requests as a team, and move promising opportunities forward with a
+                clear internal brief.
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -69,106 +76,136 @@ export default async function HomePage() {
               <Link href={secondaryCtaHref}>{secondaryCtaLabel}</Link>
             </Button>
           </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            <InfoTile
+              eyebrow="Request"
+              title="Structured from the start"
+              description="Goals, budget, timing, and current challenges arrive together."
+              variant="accent"
+            />
+            <InfoTile
+              eyebrow="Review"
+              title="Built for team use"
+              description="Notes and workflow status stay attached to the original submission."
+              variant="muted"
+            />
+            <InfoTile
+              eyebrow="Brief"
+              title="Ready for follow-up"
+              description="Generate a working summary without losing the client's original wording."
+            />
+          </div>
         </div>
 
-        <Card className="border-border/80 bg-card/70">
-          <CardHeader>
-            <CardTitle className="text-xl">Built for a more deliberate intake process</CardTitle>
-            <CardDescription>
-              Replace vague contact-form submissions with a structured request flow your team can review with confidence.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="rounded-xl border bg-background px-4 py-3">
-              <p className="text-sm font-medium">Structured requests</p>
-              <p className="mt-1 text-sm text-muted-foreground">Collect scope, budget, goals, and context in one place.</p>
-            </div>
-            <div className="rounded-xl border bg-background px-4 py-3">
-              <p className="text-sm font-medium">Team review</p>
-              <p className="mt-1 text-sm text-muted-foreground">Status updates and notes stay attached to the original request.</p>
-            </div>
-            <div className="rounded-xl border bg-background px-4 py-3">
-              <p className="text-sm font-medium">Project brief</p>
-              <p className="mt-1 text-sm text-muted-foreground">Generate a concise working brief without reformatting the request.</p>
+        <Card className="border-border/70 bg-secondary/20 shadow-sm">
+          <CardContent className="space-y-5 p-5 sm:p-6">
+            <SectionHeader
+              eyebrow="Product overview"
+              title="Designed for a cleaner intake rhythm"
+              description="A focused public request flow, a clear review workspace, and a concise brief for internal alignment."
+              titleClassName="text-2xl"
+            />
+
+            <div className="grid gap-3">
+              <InfoTile
+                title="Structured requests"
+                description="Collect scope, budget, goals, and decision-making context in one place."
+                variant="accent"
+              />
+              <InfoTile
+                title="Shared review"
+                description="Keep status updates, notes, and submitted answers in one workspace."
+                variant="muted"
+              />
+              <InfoTile
+                title="Concise internal brief"
+                description="Create a working summary the team can use before responding."
+              />
             </div>
           </CardContent>
         </Card>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>What it does</CardTitle>
-            <CardDescription>Turns new inquiries into a clear review process without adding unnecessary overhead.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              {productCapabilities.map((item) => (
-                <li key={item} className="rounded-xl border bg-background px-4 py-3">
-                  {item}
-                </li>
+      <section className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_0.95fr]">
+        <Card className="border-border/70 shadow-sm">
+          <CardContent className="space-y-6 p-5 sm:p-6">
+            <SectionHeader
+              eyebrow="What it does"
+              title="Turn new inquiries into a reviewable workflow"
+              description="The intake stays straightforward for the client while giving the team more useful context on day one."
+              titleClassName="text-2xl"
+            />
+
+            <div className="grid gap-3">
+              {productCapabilities.map((item, index) => (
+                <InfoTile
+                  key={item}
+                  eyebrow={`Benefit ${index + 1}`}
+                  title={item}
+                  variant={index === 0 ? "accent" : "default"}
+                />
               ))}
-            </ul>
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Who it is for</CardTitle>
-            <CardDescription>Best suited to teams that want a more deliberate front door for new business.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              {whoItsFor.map((item) => (
-                <li key={item} className="rounded-xl border bg-background px-4 py-3">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <div className="grid gap-6">
+          <Card className="border-border/70 bg-secondary/15 shadow-sm">
+            <CardContent className="space-y-5 p-5 sm:p-6">
+              <SectionHeader
+                eyebrow="Who it is for"
+                title="A practical fit for lean teams"
+                description="Best suited to teams that want a more intentional front door for new business."
+                titleClassName="text-xl"
+              />
+
+              <div className="grid gap-3">
+                {whoItsFor.map((item) => (
+                  <InfoTile key={item} title={item} variant="muted" />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/70 shadow-sm">
+            <CardContent className="space-y-5 p-5 sm:p-6">
+              <SectionHeader
+                eyebrow="Why it works better"
+                title="More context, less avoidable follow-up"
+                description="A standard contact form captures interest. This captures the information the team actually needs."
+                titleClassName="text-xl"
+              />
+
+              <div className="grid gap-3">
+                {reasonsToChooseIt.map((item) => (
+                  <InfoTile key={item} title={item} />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </section>
 
-      <section className="space-y-5">
-        <div className="max-w-2xl space-y-2">
-          <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">How the flow works</p>
-          <h2 className="text-3xl font-semibold tracking-tight">A simple path from request to review.</h2>
-          <p className="text-muted-foreground">
-            The process stays easy for the client and organized for the team from the moment a request arrives.
-          </p>
-        </div>
+      <section className="space-y-6">
+        <SectionHeader
+          eyebrow="How the flow works"
+          title="A simple path from request to review"
+          description="The client experience stays light, while the team gets a cleaner internal starting point."
+          className="max-w-2xl"
+        />
 
         <div className="grid gap-4 md:grid-cols-3">
-          {flowSteps.map((item) => (
-            <Card key={item.step} className="h-full">
-              <CardHeader className="space-y-3">
-                <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted-foreground">{item.step}</p>
-                <CardTitle className="text-xl">{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
-              </CardContent>
-            </Card>
+          {flowSteps.map((item, index) => (
+            <StepCard
+              key={item.step}
+              step={item.step}
+              title={item.title}
+              description={item.description}
+              variant={index === 0 ? "accent" : index === 1 ? "muted" : "default"}
+            />
           ))}
         </div>
-      </section>
-
-      <section>
-        <Card>
-          <CardHeader>
-            <CardTitle>Why it works better than a standard contact form</CardTitle>
-            <CardDescription>
-              A standard contact form captures interest. This captures the context your team needs to respond well.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-3">
-            {reasonsToChooseIt.map((item) => (
-              <div key={item} className="rounded-xl border bg-background px-4 py-4">
-                <p className="text-sm text-muted-foreground">{item}</p>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
       </section>
     </div>
   );

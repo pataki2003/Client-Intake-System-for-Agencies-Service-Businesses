@@ -6,6 +6,7 @@ import { AdminJsonMetadata } from "@/components/admin/admin-json-metadata";
 import { AdminDetailSectionNav } from "@/components/admin/admin-detail-section-nav";
 import { InternalNotesPanel } from "@/components/admin/internal-notes-panel";
 import { ProjectBriefPanel } from "@/components/admin/project-brief-panel";
+import { InfoTile } from "@/components/shared/info-tile";
 import {
   FormattedBudgetRange,
   FormattedDateTime,
@@ -53,7 +54,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
 
   return (
     <div className="space-y-8">
-      <section className="rounded-2xl border border-border/70 bg-card p-6 shadow-sm">
+      <section className="rounded-3xl border border-border/70 bg-secondary/15 p-5 shadow-sm md:p-7">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="space-y-4">
@@ -77,7 +78,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               <div className="space-y-2">
                 <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">{intake.client.clientName}</h1>
                 <p className="max-w-3xl text-base text-muted-foreground md:text-lg">
-                  Review the client context, request details, project brief, and follow-up status in one place.
+                  Review the request, internal brief, follow-up status, and team notes in one workspace.
                 </p>
               </div>
             </div>
@@ -96,34 +97,36 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
           </div>
 
           <div className="grid gap-3 md:grid-cols-3">
-            <div className="rounded-xl border bg-background px-4 py-4">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Service type</p>
-              <p className="mt-2 text-sm font-medium">{intake.serviceRequested}</p>
-            </div>
-            <div className="rounded-xl border bg-background px-4 py-4">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Budget range</p>
-              <FormattedBudgetRange
-                value={intake.budgetRange}
-                className="mt-2 text-sm font-medium text-foreground"
-                fallbackClassName="mt-2 text-sm font-medium text-muted-foreground"
-              />
-            </div>
-            <div className="rounded-xl border bg-background px-4 py-4">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Submitted</p>
-              <FormattedDateTime
-                value={intake.createdAt}
-                showRelative
-                className="mt-2 space-y-1"
-                valueClassName="font-medium text-foreground"
-              />
-            </div>
+            <InfoTile eyebrow="Service type" title={intake.serviceRequested} variant="accent" />
+            <InfoTile
+              eyebrow="Budget range"
+              title={
+                <FormattedBudgetRange
+                  value={intake.budgetRange}
+                  className="text-sm font-medium text-foreground"
+                  fallbackClassName="text-sm font-medium text-muted-foreground"
+                />
+              }
+              variant="muted"
+            />
+            <InfoTile
+              eyebrow="Submitted"
+              title={
+                <FormattedDateTime
+                  value={intake.createdAt}
+                  showRelative
+                  className="space-y-1"
+                  valueClassName="font-medium text-foreground"
+                />
+              }
+            />
           </div>
 
           <AdminDetailSectionNav items={sectionNavItems} />
         </div>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_380px] xl:items-start">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_380px] xl:items-start">
         <div className="space-y-6">
           <section id="overview" className="scroll-mt-24 space-y-6">
             <Card className="border-border/70 shadow-sm">
@@ -134,40 +137,49 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                 </div>
                 <CardDescription>Primary contact and company details attached to this request.</CardDescription>
               </CardHeader>
-              <CardContent className="grid gap-5 md:grid-cols-2">
-                <AdminDetailField label="Client name" value={intake.client.clientName} />
-                <AdminDetailField label="Company" value={intake.client.companyName ?? "Not provided"} />
-                <AdminDetailField
-                  label="Email"
-                  value={
-                    <a href={`mailto:${intake.client.email}`} className="transition-colors hover:text-primary">
-                      {intake.client.email}
-                    </a>
-                  }
-                />
-                <AdminDetailField label="Phone" value={intake.client.phone ?? "Not provided"} />
-                <AdminDetailField
-                  label="Website"
-                  className="md:col-span-2"
-                  value={
-                    intake.client.website ? (
-                      <a
-                        href={intake.client.website}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="break-all transition-colors hover:text-primary"
-                      >
-                        {intake.client.website}
+              <CardContent className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-xl border bg-secondary/15 p-4">
+                  <AdminDetailField label="Client name" value={intake.client.clientName} />
+                </div>
+                <div className="rounded-xl border bg-secondary/15 p-4">
+                  <AdminDetailField label="Company" value={intake.client.companyName ?? "Not provided"} />
+                </div>
+                <div className="rounded-xl border bg-secondary/15 p-4">
+                  <AdminDetailField
+                    label="Email"
+                    value={
+                      <a href={`mailto:${intake.client.email}`} className="transition-colors hover:text-primary">
+                        {intake.client.email}
                       </a>
-                    ) : (
-                      "Not provided"
-                    )
-                  }
-                />
+                    }
+                  />
+                </div>
+                <div className="rounded-xl border bg-secondary/15 p-4">
+                  <AdminDetailField label="Phone" value={intake.client.phone ?? "Not provided"} />
+                </div>
+                <div className="rounded-xl border bg-secondary/15 p-4 md:col-span-2">
+                  <AdminDetailField
+                    label="Website"
+                    value={
+                      intake.client.website ? (
+                        <a
+                          href={intake.client.website}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="break-all transition-colors hover:text-primary"
+                        >
+                          {intake.client.website}
+                        </a>
+                      ) : (
+                        "Not provided"
+                      )
+                    }
+                  />
+                </div>
               </CardContent>
             </Card>
 
-            <Card className="border-border/70 shadow-sm">
+            <Card className="border-border/70 bg-secondary/10 shadow-sm">
               <CardHeader className="space-y-2">
                 <div className="space-y-1">
                   <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">Request</p>
@@ -176,28 +188,34 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                 <CardDescription>Core request details used for review, scoping, and follow-up.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid gap-5 md:grid-cols-3">
-                  <AdminDetailField label="Service type" value={intake.serviceRequested} />
-                  <AdminDetailField label="Budget range" value={<FormattedBudgetRange value={intake.budgetRange} />} />
-                  <AdminDetailField label="Timeline" value={<FormattedTimeline value={intake.timeline} />} />
+                <div className="grid gap-3 md:grid-cols-3">
+                  <InfoTile eyebrow="Service type" title={intake.serviceRequested} />
+                  <InfoTile eyebrow="Budget range" title={<FormattedBudgetRange value={intake.budgetRange} />} variant="muted" />
+                  <InfoTile eyebrow="Timeline" title={<FormattedTimeline value={intake.timeline} />} />
                 </div>
 
                 <div className="grid gap-6">
-                  <AdminDetailField
-                    label="Goal"
-                    value={intake.projectSummary}
-                    valueClassName="whitespace-pre-wrap text-sm leading-7"
-                  />
-                  <AdminDetailField
-                    label="Problem description"
-                    value={intake.currentChallenges ?? "Not provided"}
-                    valueClassName="whitespace-pre-wrap text-sm leading-7"
-                  />
-                  <AdminDetailField
-                    label="Extra notes"
-                    value={intake.additionalInfo ?? "Not provided"}
-                    valueClassName="whitespace-pre-wrap text-sm leading-7"
-                  />
+                  <div className="rounded-2xl border bg-background p-4 md:p-5">
+                    <AdminDetailField
+                      label="Goal"
+                      value={intake.projectSummary}
+                      valueClassName="whitespace-pre-wrap text-sm leading-7"
+                    />
+                  </div>
+                  <div className="rounded-2xl border bg-background p-4 md:p-5">
+                    <AdminDetailField
+                      label="Problem description"
+                      value={intake.currentChallenges ?? "Not provided"}
+                      valueClassName="whitespace-pre-wrap text-sm leading-7"
+                    />
+                  </div>
+                  <div className="rounded-2xl border bg-background p-4 md:p-5">
+                    <AdminDetailField
+                      label="Extra notes"
+                      value={intake.additionalInfo ?? "Not provided"}
+                      valueClassName="whitespace-pre-wrap text-sm leading-7"
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -222,14 +240,13 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                     No submitted answers were stored for this request.
                   </div>
                 ) : (
-                  <div className="overflow-hidden rounded-2xl border">
+                  <div className="grid gap-3">
                     {intake.answers.map((answer, index) => (
                       <div
                         key={answer.id}
                         className={cn(
-                          "grid gap-3 px-4 py-4 md:grid-cols-[220px_minmax(0,1fr)] md:gap-5",
-                          index > 0 && "border-t",
-                          index % 2 === 1 && "bg-secondary/10"
+                          "grid gap-3 rounded-2xl border bg-background px-4 py-4 md:grid-cols-[220px_minmax(0,1fr)] md:gap-5",
+                          index === 0 && "border-primary/10 bg-primary/[0.03]"
                         )}
                       >
                         <div className="space-y-1">
@@ -252,11 +269,11 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
 
         <div className="space-y-6 xl:sticky xl:top-6">
           <section id="workflow" className="scroll-mt-24">
-            <Card className="border-border/70 shadow-sm">
+            <Card className="border-border/70 bg-secondary/10 shadow-sm">
               <CardHeader className="space-y-2">
                 <div className="space-y-1">
                   <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">Workflow</p>
-                  <CardTitle className="text-2xl">Workflow</CardTitle>
+                  <CardTitle className="text-2xl">Review workflow</CardTitle>
                 </div>
                 <CardDescription>Keep the current status aligned with the latest team action.</CardDescription>
               </CardHeader>
