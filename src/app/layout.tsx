@@ -6,8 +6,11 @@ import { AppShell } from "@/components/layout/app-shell";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Client Intake System",
-  description: "MVP scaffold for an agency and service business intake platform."
+  title: {
+    default: "Client Intake System",
+    template: "%s | Client Intake System"
+  },
+  description: "Structured client intake and review workspace for agencies and service businesses."
 };
 
 type RootLayoutProps = {

@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        formError: "We couldn't read that submission. Please try again."
+        formError: "We couldn't read that request. Please try again."
       },
       { status: 400 }
     );

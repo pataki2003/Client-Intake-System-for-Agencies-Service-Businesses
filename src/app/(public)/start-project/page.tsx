@@ -4,11 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const trustPoints = [
   {
     title: "Response expectations",
-    description: "Every submission is reviewed by the team, not dropped into a generic inbox."
+    description: "Every request is reviewed by the team and handled through a clear process."
   },
   {
     title: "Structured review",
-    description: "We use your answers to evaluate scope, fit, and the most useful next step internally."
+    description: "We use your answers to assess scope, fit, timing, and the best next step."
   },
   {
     title: "No obligation",
@@ -19,15 +19,15 @@ const trustPoints = [
 const expectationBlocks = [
   {
     title: "What we review",
-    description: "We look at your goals, the current challenge, timing, and budget range together so the request has the right internal context."
+    description: "We look at your goals, current challenge, timing, and budget range together so the request is reviewed with the right context."
   },
   {
     title: "What happens next",
-    description: "Once submitted, your request is structured for internal review before we follow up with the most appropriate next step."
+    description: "After submission, the request is reviewed by the team before we follow up with the most appropriate next step."
   },
   {
-    title: "Why this form is more detailed",
-    description: "A little more context upfront leads to a faster, more thoughtful response than a generic contact form."
+    title: "Why we ask for this detail",
+    description: "A little more context upfront leads to a clearer, more useful response than a short inquiry message."
   }
 ];
 
@@ -40,12 +40,12 @@ const flowSteps = [
   {
     step: "02",
     title: "Review internally",
-    description: "Your submission is organized for the team to review against scope, fit, timing, and next-step readiness."
+    description: "Your request is reviewed against scope, fit, timing, and next-step readiness."
   },
   {
     step: "03",
-    title: "Generate AI brief",
-    description: "The intake can be turned into a structured internal brief that helps the team align before responding."
+    title: "Generate brief",
+    description: "The request can be turned into a working brief so the team can align before responding."
   }
 ];
 
@@ -54,14 +54,13 @@ export default function StartProjectPage() {
     <div className="space-y-10 md:space-y-12">
       <section className="space-y-6 border-b pb-8 md:pb-10">
         <div className="max-w-3xl space-y-4">
-          <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">Client onboarding</p>
+          <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">Project request</p>
           <div className="space-y-3">
             <h1 className="max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
-              Start a serious project conversation with the right context from day one.
+              Start your project inquiry with the right context.
             </h1>
             <p className="max-w-2xl text-lg text-muted-foreground">
-              Share the essentials once. We&apos;ll review your request internally, structure it properly, and follow up with
-              a thoughtful next step.
+              Share the essentials once. We&apos;ll review the request carefully and follow up with a clear next step.
             </p>
           </div>
         </div>
@@ -83,11 +82,9 @@ export default function StartProjectPage() {
           <CardHeader className="space-y-3">
             <div className="space-y-1">
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">What to expect</p>
-              <CardTitle className="text-2xl">A practical first step, not a long intake marathon.</CardTitle>
+              <CardTitle className="text-2xl">A practical first step toward a better response.</CardTitle>
             </div>
-            <CardDescription>
-              This form is designed to help us respond with more clarity and less back-and-forth.
-            </CardDescription>
+            <CardDescription>This form helps us review the opportunity properly before we reply.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {expectationBlocks.map((item) => (
@@ -100,7 +97,7 @@ export default function StartProjectPage() {
             <div className="rounded-xl border border-dashed bg-background px-4 py-4">
               <p className="text-sm font-medium">Timing</p>
               <p className="mt-2 text-sm text-muted-foreground">
-                Most teams complete this form in a few minutes. If you are still shaping the brief, a best estimate is completely fine.
+                Most teams complete this in a few minutes. If some details are still taking shape, a best estimate is completely fine.
               </p>
             </div>
           </CardContent>
@@ -110,9 +107,9 @@ export default function StartProjectPage() {
       <section className="space-y-5">
         <div className="max-w-2xl space-y-2">
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">How the flow works</p>
-          <h2 className="text-3xl font-semibold tracking-tight">A simple intake flow with a better internal handoff.</h2>
+          <h2 className="text-3xl font-semibold tracking-tight">A simple path from request to review.</h2>
           <p className="text-muted-foreground">
-            The goal is to make the first step easy for the client and immediately more useful for the team reviewing the request.
+            The first step stays easy for the client and useful for the team evaluating the request.
           </p>
         </div>
 

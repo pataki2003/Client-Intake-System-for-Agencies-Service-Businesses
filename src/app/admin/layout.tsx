@@ -18,7 +18,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-full border bg-secondary/60 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                Protected admin area
+                Admin workspace
               </span>
               <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-emerald-700">
                 Session active
@@ -28,8 +28,8 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
             <div className="space-y-1">
               <p className="text-2xl font-semibold tracking-tight">Operations workspace</p>
               <p className="max-w-2xl text-sm text-muted-foreground">
-                Signed in as {adminUser.email ?? "Admin"}. Review submissions, move requests through the intake workflow,
-                and keep internal context organized in one place.
+                Signed in as {adminUser.email ?? "Admin"}. Review submissions, keep follow-up organized, and move each
+                request through the review process in one place.
               </p>
             </div>
           </div>

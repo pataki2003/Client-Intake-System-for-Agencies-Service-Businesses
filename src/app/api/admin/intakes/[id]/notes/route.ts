@@ -18,7 +18,7 @@ export async function POST(request: NextRequest, { params }: NotesRouteContext) 
   if (!adminUser) {
     return NextResponse.json(
       {
-        error: "You must be signed in as an admin to add internal notes."
+        error: "Sign in as an admin to add notes."
       },
       { status: 401 }
     );
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest, { params }: NotesRouteContext) 
 
     return NextResponse.json(
       {
-        error: "We couldn't save that note right now."
+        error: "We couldn't save this note right now. Please try again."
       },
       { status: 500 }
     );

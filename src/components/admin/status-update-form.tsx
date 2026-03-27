@@ -3,7 +3,8 @@
 import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { FeedbackNotice } from "@/components/shared/feedback-notice";
+import { LoadingIndicator } from "@/components/shared/loading-indicator";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -45,13 +46,13 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
       const result = (await response.json().catch(() => null)) as { error?: string } | null;
 
       if (!response.ok) {
-        setError(result?.error ?? "We couldn't update the intake status right now.");
+        setError(result?.error ?? "We couldn't update the status right now. Please try again.");
         return;
       }
 
       router.refresh();
     } catch {
-      setError("We couldn't update the intake status right now.");
+      setError("We couldn't update the status right now. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -61,17 +62,17 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="space-y-2">
         <Label htmlFor="intake-status" className="text-sm font-medium">
-          Update workflow status
+          Update status
         </Label>
         <p className="text-sm text-muted-foreground">
-          Move the intake forward when the team has reviewed it, generated the brief, or followed up.
+          Move the request forward as the team reviews it, prepares the brief, or follows up.
         </p>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="flex-1 space-y-2">
           <Label htmlFor="intake-status" className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-            New status
+            Status
           </Label>
           <Select
             value={selectedStatus}
@@ -92,14 +93,16 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
         </div>
 
         <Button type="submit" disabled={isSaving || selectedStatus === currentStatus} className="sm:min-w-[132px]">
-          {isSaving ? "Saving..." : "Save status"}
+          {isSaving ? (
+            <LoadingIndicator size="sm" label="Saving status" textClassName="font-medium text-inherit" />
+          ) : (
+            "Save status"
+          )}
         </Button>
       </div>
 
       {error ? (
-        <Alert variant="destructive" className="bg-destructive/5">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
+        <FeedbackNotice tone="error" title="Unable to update status" description={error} />
       ) : null}
     </form>
   );

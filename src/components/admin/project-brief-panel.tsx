@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { BriefGenerationAction } from "@/components/admin/brief-generation-action";
 import { FormattedDateTime } from "@/components/shared/intake-display";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +11,7 @@ type ProjectBriefPanelProps = {
   brief: ProjectBrief | null;
 };
 
-function BriefTextBlock({
+function BriefNarrativeBlock({
   title,
   description,
   value
@@ -19,13 +21,15 @@ function BriefTextBlock({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border bg-background p-5 space-y-3">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{title}</p>
-        <p className="text-sm text-muted-foreground">{description}</p>
+    <section className="rounded-2xl border bg-background p-5 md:p-6">
+      <div className="space-y-2">
+        <div className="space-y-1">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
+          <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
+        <p className="whitespace-pre-wrap text-sm leading-7 text-foreground">{value}</p>
       </div>
-      <p className="whitespace-pre-wrap text-sm leading-6 text-foreground">{value}</p>
-    </div>
+    </section>
   );
 }
 
@@ -33,34 +37,60 @@ function BriefListBlock({
   title,
   description,
   items,
-  emptyFallback
+  emptyFallback,
+  itemLabel
 }: {
   title: string;
   description: string;
   items: string[];
   emptyFallback: string;
+  itemLabel: "Scope" | "Question" | "Step";
 }) {
   return (
-    <div className="rounded-2xl border bg-background p-5 space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{title}</p>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </div>
+    <section className="rounded-2xl border bg-background p-5 md:p-6">
+      <div className="space-y-4">
+        <div className="space-y-1">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
+          <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
 
-      {items.length === 0 ? (
-        <p className="text-sm text-muted-foreground">{emptyFallback}</p>
-      ) : (
-        <ol className="space-y-3">
-          {items.map((item, index) => (
-            <li key={`${item}-${index}`} className="flex gap-3 rounded-xl bg-secondary/20 px-4 py-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-background text-xs font-medium text-muted-foreground">
-                {index + 1}
-              </span>
-              <p className="text-sm leading-6 text-foreground">{item}</p>
-            </li>
-          ))}
-        </ol>
-      )}
+        {items.length === 0 ? (
+          <p className="text-sm text-muted-foreground">{emptyFallback}</p>
+        ) : (
+          <ol className="space-y-3">
+            {items.map((item, index) => (
+              <li key={`${item}-${index}`} className="rounded-xl border bg-secondary/20 px-4 py-4">
+                <div className="flex gap-3">
+                  <div className="flex h-7 min-w-7 items-center justify-center rounded-full border bg-background px-2 text-[11px] font-semibold text-muted-foreground">
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                      {itemLabel} {index + 1}
+                    </p>
+                    <p className="text-sm leading-7 text-foreground">{item}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function BriefMetadataItem({
+  label,
+  children
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="rounded-xl border bg-background px-4 py-4">
+      <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{label}</p>
+      <div className="mt-2 text-sm text-foreground">{children}</div>
     </div>
   );
 }
@@ -68,44 +98,68 @@ function BriefListBlock({
 export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
   return (
     <Card className="border-border/70 shadow-sm">
-      <CardHeader className="space-y-4">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-          <div className="space-y-2">
-            <div className="space-y-1">
-              <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">AI brief</p>
-              <CardTitle className="text-2xl">Structured project brief</CardTitle>
+      <CardHeader className="space-y-5">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+          <div className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs font-medium">
+                AI-assisted
+              </Badge>
+              <Badge variant="outline" className="rounded-full px-3 py-1 text-xs font-medium">
+                Team use
+              </Badge>
             </div>
-            <CardDescription>
-              Generate or refresh an internal brief that turns the intake into a clearer review and delivery handoff.
-            </CardDescription>
+
+            <div className="space-y-2">
+              <CardTitle className="text-2xl md:text-3xl">Project brief</CardTitle>
+              <CardDescription className="max-w-2xl">
+                Summarize the request into a working brief the team can review quickly.
+              </CardDescription>
+            </div>
           </div>
 
-          <BriefGenerationAction intakeId={intakeId} hasExistingBrief={Boolean(brief)} />
+          <div className="rounded-2xl border bg-background p-3">
+            <div className="space-y-1">
+              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Brief action</p>
+              <p className="text-sm text-muted-foreground">
+                {brief ? "Regenerate the brief using the latest request details." : "Generate the first brief from the current request."}
+              </p>
+            </div>
+            <div className="mt-3">
+              <BriefGenerationAction intakeId={intakeId} hasExistingBrief={Boolean(brief)} />
+            </div>
+          </div>
         </div>
       </CardHeader>
+
       <CardContent className="space-y-6">
         {brief ? (
           <>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs font-medium">
-                Model: {brief.model ?? "Not recorded"}
-              </Badge>
-              <Badge variant="outline" className="rounded-full px-3 py-1 text-xs font-medium">
-                Updated <FormattedDateTime value={brief.updatedAt} />
-              </Badge>
+            <div className="grid gap-3 md:grid-cols-2">
+              <BriefMetadataItem label="Model">
+                <p className="font-medium">{brief.model ?? "Not recorded"}</p>
+              </BriefMetadataItem>
+              <BriefMetadataItem label="Last updated">
+                <FormattedDateTime
+                  value={brief.updatedAt}
+                  showRelative
+                  valueClassName="font-medium text-foreground"
+                  relativeClassName="text-xs text-muted-foreground"
+                />
+              </BriefMetadataItem>
             </div>
 
             {brief.briefJson ? (
               <div className="space-y-4">
                 <div className="grid gap-4 lg:grid-cols-2">
-                  <BriefTextBlock
+                  <BriefNarrativeBlock
                     title="Client Summary"
-                    description="Who the client appears to be and what they are asking for."
+                    description="Who the client is and what they are asking for."
                     value={brief.briefJson.clientSummary}
                   />
-                  <BriefTextBlock
+                  <BriefNarrativeBlock
                     title="Business Need"
-                    description="The underlying business problem or opportunity implied by the intake."
+                    description="The problem or opportunity behind the request."
                     value={brief.briefJson.businessNeed}
                   />
                 </div>
@@ -113,44 +167,59 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                 <div className="grid gap-4 xl:grid-cols-2">
                   <BriefListBlock
                     title="Suggested Scope"
-                    description="A practical initial scope based on the information currently available."
+                    description="A practical starting scope based on what has been submitted."
                     items={brief.briefJson.suggestedScope}
-                    emptyFallback="No suggested scope was generated."
+                    emptyFallback="No suggested scope was captured."
+                    itemLabel="Scope"
                   />
                   <BriefListBlock
                     title="Open Questions"
-                    description="Points the team should clarify before finalizing scope or onboarding."
+                    description="Questions that would improve scoping or onboarding."
                     items={brief.briefJson.openQuestions}
-                    emptyFallback="No major open questions identified yet."
+                    emptyFallback="No open questions were highlighted."
+                    itemLabel="Question"
                   />
                 </div>
 
                 <BriefListBlock
                   title="Recommended Next Steps"
-                  description="Concrete internal follow-up steps for moving the intake forward."
+                  description="Suggested internal actions for moving the opportunity forward."
                   items={brief.briefJson.recommendedNextSteps}
-                  emptyFallback="No recommended next steps were generated."
+                  emptyFallback="No next steps were captured."
+                  itemLabel="Step"
                 />
 
-                <details className="rounded-2xl border bg-secondary/20 px-4 py-4">
-                  <summary className="cursor-pointer text-sm font-medium">View stored markdown</summary>
-                  <pre className="mt-4 overflow-x-auto whitespace-pre-wrap rounded-xl border bg-background p-4 text-sm">
-                    {brief.briefMarkdown}
-                  </pre>
+                <details className="rounded-2xl border bg-secondary/15 px-4 py-4">
+                  <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
+                    View stored markdown version
+                  </summary>
+                  <div className="mt-4 rounded-xl border bg-background p-4">
+                    <pre className="overflow-x-auto whitespace-pre-wrap text-sm leading-6">{brief.briefMarkdown}</pre>
+                  </div>
                 </details>
               </div>
             ) : (
-              <div className="rounded-2xl border bg-secondary/20 p-4">
-                <p className="text-sm font-medium">Stored markdown</p>
-                <pre className="mt-3 overflow-x-auto whitespace-pre-wrap rounded-xl border bg-background p-4 text-sm">
-                  {brief.briefMarkdown}
-                </pre>
+              <div className="rounded-2xl border bg-secondary/15 p-4">
+                <div className="space-y-1">
+                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Stored markdown</p>
+                  <p className="text-sm text-muted-foreground">
+                    Structured brief data is not available for this record, so the stored markdown is shown below.
+                  </p>
+                </div>
+                <div className="mt-4 rounded-xl border bg-background p-4">
+                  <pre className="overflow-x-auto whitespace-pre-wrap text-sm leading-6">{brief.briefMarkdown}</pre>
+                </div>
               </div>
             )}
           </>
         ) : (
-          <div className="rounded-2xl border border-dashed px-4 py-6 text-sm text-muted-foreground">
-            No AI brief has been generated for this intake yet.
+          <div className="rounded-2xl border border-dashed px-5 py-7">
+            <div className="space-y-2">
+              <p className="text-sm font-medium">No project brief yet</p>
+              <p className="text-sm text-muted-foreground">
+                Generate a brief to create a concise working summary for the team.
+              </p>
+            </div>
           </div>
         )}
       </CardContent>

@@ -15,7 +15,8 @@ import {
   type PublicIntakeFormValues
 } from "@/lib/validations/public-intake";
 import type { PublicIntakeSubmissionResult } from "@/types";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { FeedbackNotice } from "@/components/shared/feedback-notice";
+import { LoadingIndicator } from "@/components/shared/loading-indicator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -114,14 +115,14 @@ export function PublicIntakeForm() {
         setFormError(
           !responseBody.success
             ? responseBody.formError
-            : "We couldn't submit your request right now. Please try again in a moment."
+            : "We couldn't receive your request right now. Please try again in a moment."
         );
         return;
       }
 
       router.push("/success");
     } catch {
-      setFormError("We couldn't submit your request right now. Please try again in a moment.");
+      setFormError("We couldn't receive your request right now. Please try again in a moment.");
     }
   });
 
@@ -130,25 +131,22 @@ export function PublicIntakeForm() {
       <CardHeader className="space-y-4 pb-6">
         <div className="space-y-2">
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">Project request</p>
-          <CardTitle className="text-2xl tracking-tight md:text-3xl">Tell us what you&apos;re building and why it matters.</CardTitle>
+          <CardTitle className="text-2xl tracking-tight md:text-3xl">Tell us about the project and what you need.</CardTitle>
         </div>
         <CardDescription>
-          A few well-framed details help us review fit, scope, and the most useful next step before we follow up.
+          A few clear details help us review fit, scope, and the right next step before we reply.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-8" onSubmit={onSubmit} noValidate>
           {formError ? (
-            <Alert variant="destructive" className="border-destructive/30 bg-destructive/5">
-              <AlertTitle>We couldn&apos;t send your request</AlertTitle>
-              <AlertDescription>{formError}</AlertDescription>
-            </Alert>
+            <FeedbackNotice tone="error" title="Unable to submit request" description={formError} />
           ) : null}
 
           <FormSection
             eyebrow="Contact"
             title="Who should we follow up with?"
-            description="These details give us the right point of contact once the request has been reviewed."
+            description="These details tell us who to contact once the request has been reviewed."
           >
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
@@ -160,7 +158,7 @@ export function PublicIntakeForm() {
                   disabled={isSubmitting}
                   {...register("name")}
                 />
-                <FieldHint>Use the name you&apos;d like us to address in follow-up.</FieldHint>
+                <FieldHint>Use the name you&apos;d like us to use in follow-up.</FieldHint>
                 <FieldError message={errors.name?.message} />
               </div>
 
@@ -174,7 +172,7 @@ export function PublicIntakeForm() {
                   disabled={isSubmitting}
                   {...register("email")}
                 />
-                <FieldHint>We&apos;ll use this for confirmation and the next step only.</FieldHint>
+                <FieldHint>We&apos;ll use this for confirmation and follow-up only.</FieldHint>
                 <FieldError message={errors.email?.message} />
               </div>
 
@@ -187,7 +185,7 @@ export function PublicIntakeForm() {
                   disabled={isSubmitting}
                   {...register("company_name")}
                 />
-                <FieldHint>Optional, but helpful if you&apos;re inquiring on behalf of a business.</FieldHint>
+                <FieldHint>Optional, but helpful if the work is for a business.</FieldHint>
                 <FieldError message={errors.company_name?.message} />
               </div>
 
@@ -203,7 +201,7 @@ export function PublicIntakeForm() {
           <FormSection
             eyebrow="Scope"
             title="What kind of project is this?"
-            description="We use this to understand the shape of the engagement before we evaluate the details."
+            description="We use this to understand the type of engagement before reviewing the full context."
           >
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
@@ -230,7 +228,7 @@ export function PublicIntakeForm() {
                     </Select>
                   )}
                 />
-                <FieldHint>Choose the closest match. You can clarify below if needed.</FieldHint>
+                <FieldHint>Choose the closest match. You can add context below if needed.</FieldHint>
                 <FieldError message={errors.service_type?.message} />
               </div>
 
@@ -258,21 +256,21 @@ export function PublicIntakeForm() {
                     </Select>
                   )}
                 />
-                <FieldHint>A realistic range helps us assess fit and recommend the right next step.</FieldHint>
+                <FieldHint>A working range helps us assess fit and recommend the right next step.</FieldHint>
                 <FieldError message={errors.budget_range?.message} />
               </div>
             </div>
 
             {selectedServiceType === "other" ? (
               <div className="space-y-2">
-                <Label htmlFor="service_type_other">What service do you need?</Label>
+                <Label htmlFor="service_type_other">What kind of support do you need?</Label>
                 <Input
                   id="service_type_other"
-                  placeholder="Describe the kind of support you are looking for"
+                  placeholder="Describe the kind of support you need"
                   disabled={isSubmitting}
                   {...register("service_type_other")}
                 />
-                <FieldHint>A short description is enough. We&apos;ll use it to categorize the request internally.</FieldHint>
+                <FieldHint>A short description is enough. We&apos;ll use it to categorize the request correctly.</FieldHint>
                 <FieldError message={errors.service_type_other?.message} />
               </div>
             ) : null}
@@ -280,19 +278,19 @@ export function PublicIntakeForm() {
 
           <FormSection
             eyebrow="Context"
-            title="What should we understand before we review this?"
-            description="The strongest submissions explain both the opportunity and the friction behind the request."
+            title="What should we know before we review this?"
+            description="The strongest requests explain both the outcome they want and what is getting in the way today."
           >
             <div className="space-y-2">
               <Label htmlFor="goal">Primary goal</Label>
               <Textarea
                 id="goal"
                 className="min-h-[140px] resize-y"
-                placeholder="For example: clarify our positioning and improve the site so qualified leads understand the offer faster."
+                placeholder="Describe the outcome you want this project to create."
                 disabled={isSubmitting}
                 {...register("goal")}
               />
-              <FieldHint>Focus on the business outcome you want the project to create.</FieldHint>
+              <FieldHint>Focus on the business result you want from the project.</FieldHint>
               <FieldError message={errors.goal?.message} />
             </div>
 
@@ -301,11 +299,11 @@ export function PublicIntakeForm() {
               <Textarea
                 id="problem_description"
                 className="min-h-[150px] resize-y"
-                placeholder="For example: inquiries are inconsistent, the current experience feels dated, or the offer is hard to understand."
+                placeholder="Describe what is not working today, what feels unclear, or what is creating urgency."
                 disabled={isSubmitting}
                 {...register("problem_description")}
               />
-              <FieldHint>Tell us what is not working today and why this feels important now.</FieldHint>
+              <FieldHint>Tell us what is making the request important now.</FieldHint>
               <FieldError message={errors.problem_description?.message} />
             </div>
 
@@ -314,30 +312,48 @@ export function PublicIntakeForm() {
               <Textarea
                 id="extra_notes"
                 className="min-h-[130px] resize-y"
-                placeholder="Share any additional context, constraints, stakeholders, or references that would help us review the request more thoughtfully."
+                placeholder="Add any stakeholders, constraints, references, or context that would help us review the request well."
                 disabled={isSubmitting}
                 {...register("extra_notes")}
               />
-              <FieldHint>Optional. Include anything that would improve internal review quality.</FieldHint>
+              <FieldHint>Optional. Add any detail that would help us review the request well.</FieldHint>
               <FieldError message={errors.extra_notes?.message} />
             </div>
           </FormSection>
 
           <div className="rounded-2xl border bg-secondary/30 p-4 md:p-5">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div className="space-y-2">
-                <p className="text-sm font-medium">What happens after you submit</p>
-                <p className="max-w-xl text-sm text-muted-foreground">
-                  Your request is saved immediately, reviewed internally in a structured format, and followed up with the
-                  appropriate next step. No obligation, no generic inbox handoff.
-                </p>
-                {isSubmitting ? (
-                  <p className="text-sm font-medium text-foreground/80">Submitting your request now...</p>
-                ) : null}
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold">After you submit</p>
+                  <p className="max-w-xl text-sm text-muted-foreground">
+                    Your request is saved immediately, reviewed by the team, and followed up with a clear next step.
+                  </p>
+                </div>
+                <div className="min-h-[2rem]" aria-live="polite">
+                  {isSubmitting ? (
+                    <div className="inline-flex rounded-full border bg-background px-3 py-1.5">
+                      <LoadingIndicator
+                        announce
+                        size="sm"
+                        label="Saving your request"
+                        textClassName="text-xs font-medium text-foreground/80"
+                      />
+                    </div>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">
+                      You&apos;ll see a confirmation screen as soon as your request is received.
+                    </p>
+                  )}
+                </div>
               </div>
 
-              <Button className="w-full md:w-auto" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Submitting your request..." : "Submit project request"}
+              <Button className="w-full md:min-w-[220px] md:w-auto" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <LoadingIndicator size="sm" label="Submitting request" textClassName="font-medium text-inherit" />
+                ) : (
+                  "Submit request"
+                )}
               </Button>
             </div>
           </div>

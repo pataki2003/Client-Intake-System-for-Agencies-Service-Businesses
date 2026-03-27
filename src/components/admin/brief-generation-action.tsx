@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { FeedbackNotice } from "@/components/shared/feedback-notice";
+import { LoadingIndicator } from "@/components/shared/loading-indicator";
 import { Button } from "@/components/ui/button";
 
 type BriefGenerationActionProps = {
@@ -28,34 +29,51 @@ export function BriefGenerationAction({ intakeId, hasExistingBrief }: BriefGener
       const result = (await response.json().catch(() => null)) as { error?: string } | null;
 
       if (!response.ok) {
-        setError(result?.error ?? "We couldn't generate the project brief right now.");
+        setError(result?.error ?? "We couldn't generate the brief right now. Please try again.");
         return;
       }
 
       router.refresh();
     } catch {
-      setError("We couldn't generate the project brief right now.");
+      setError("We couldn't generate the brief right now. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   }
 
   return (
-    <div className="space-y-2 md:max-w-[260px] md:text-right">
+    <div className="space-y-3 md:max-w-[280px] md:text-right">
       <Button
         type="button"
         onClick={handleClick}
         disabled={isSubmitting}
         variant={hasExistingBrief ? "outline" : "secondary"}
         size="sm"
+        className="w-full md:min-w-[190px] md:w-auto"
       >
-        {isSubmitting ? (hasExistingBrief ? "Regenerating..." : "Generating...") : hasExistingBrief ? "Regenerate brief" : "Generate brief"}
+        {isSubmitting ? (
+          <LoadingIndicator
+            size="sm"
+            label={hasExistingBrief ? "Refreshing brief" : "Generating brief"}
+            textClassName="font-medium text-inherit"
+          />
+        ) : hasExistingBrief ? (
+          "Regenerate brief"
+        ) : (
+          "Generate brief"
+        )}
       </Button>
 
+      <p className="text-xs text-muted-foreground" aria-live="polite">
+        {isSubmitting
+          ? "Generating a working summary from the latest request details."
+          : hasExistingBrief
+            ? "Regenerate the brief after the request details change."
+            : "Generate a concise brief for faster team review."}
+      </p>
+
       {error ? (
-        <Alert variant="destructive" className="bg-destructive/5 text-left">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
+        <FeedbackNotice tone="error" title="Unable to generate brief" description={error} className="text-left" />
       ) : null}
     </div>
   );

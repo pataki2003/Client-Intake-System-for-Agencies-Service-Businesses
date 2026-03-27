@@ -54,11 +54,11 @@ export function AdminDashboardFilters({
     <Card className="border-border/70 shadow-sm">
       <CardContent className="flex flex-col gap-4 p-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-1">
-          <p className="text-sm font-medium">Filter the current queue</p>
+          <p className="text-sm font-medium">Filter submissions</p>
           <p className="text-sm text-muted-foreground">
             {hasActiveFilters
-              ? `Showing ${filteredCount} of ${totalCount} submissions in this view.`
-              : `${totalCount} submissions currently in the queue.`}
+              ? `Showing ${filteredCount} of ${totalCount} requests in this view.`
+              : `${totalCount} requests in the current queue.`}
           </p>
         </div>
 
@@ -108,7 +108,7 @@ export function AdminDashboardFilters({
           <div className="flex items-center gap-2 pt-2 sm:pt-0">
             {hasActiveFilters ? (
               <Button asChild variant="ghost">
-                <Link href={pathname}>Clear filters</Link>
+                <Link href={pathname}>Reset filters</Link>
               </Button>
             ) : null}
 
@@ -118,7 +118,7 @@ export function AdminDashboardFilters({
                 isPending ? "opacity-100" : "opacity-0"
               )}
             >
-              Updating view...
+              Updating results...
             </p>
           </div>
         </div>

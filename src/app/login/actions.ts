@@ -34,7 +34,7 @@ export async function loginAdmin(
 
   if (signInError) {
     return {
-      error: "We couldn't sign you in with those credentials."
+      error: "We couldn't sign you in with those details."
     };
   }
 
@@ -47,7 +47,7 @@ export async function loginAdmin(
     await supabase.auth.signOut();
 
     return {
-      error: "This account does not have admin access."
+      error: "This account does not have access to the admin workspace."
     };
   }
 
