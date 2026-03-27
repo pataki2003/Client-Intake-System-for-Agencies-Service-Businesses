@@ -42,14 +42,14 @@ export function BriefGenerationAction({ intakeId, hasExistingBrief }: BriefGener
   }
 
   return (
-    <div className="space-y-3 md:max-w-[280px] md:text-right">
+    <div className="space-y-3 xl:max-w-[280px] xl:text-right">
       <Button
         type="button"
         onClick={handleClick}
         disabled={isSubmitting}
         variant={hasExistingBrief ? "outline" : "secondary"}
         size="sm"
-        className="w-full md:min-w-[190px] md:w-auto"
+        className="w-full xl:min-w-[190px] xl:w-auto"
       >
         {isSubmitting ? (
           <LoadingIndicator

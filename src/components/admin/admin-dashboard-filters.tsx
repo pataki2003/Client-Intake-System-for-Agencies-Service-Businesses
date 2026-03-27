@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -51,19 +52,28 @@ export function AdminDashboardFilters({
   }
 
   return (
-    <Card className="border-border/70 shadow-sm">
-      <CardContent className="flex flex-col gap-4 p-5 lg:flex-row lg:items-end lg:justify-between">
-        <div className="space-y-1">
-          <p className="text-sm font-medium">Filter submissions</p>
+    <Card variant="tinted" className="border-border/70 shadow-sm">
+      <CardContent className="flex flex-col gap-4 sm:gap-5 p-4 sm:p-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-2.5 sm:space-y-3">
+          <div className="space-y-1">
+            <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">View controls</p>
+            <p className="text-lg font-semibold tracking-tight">Filter the queue</p>
+          </div>
           <p className="text-sm text-muted-foreground">
             {hasActiveFilters
               ? `Showing ${filteredCount} of ${totalCount} requests in this view.`
               : `${totalCount} requests in the current queue.`}
           </p>
+          {hasActiveFilters ? (
+            <div className="flex flex-wrap gap-2">
+              {selectedStatus ? <Badge variant="secondary">Status: {formatIntakeStatus(selectedStatus)}</Badge> : null}
+              {selectedService ? <Badge variant="accent">Service: {selectedService}</Badge> : null}
+            </div>
+          ) : null}
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
-          <div className="min-w-[180px] space-y-2">
+          <div className="w-full space-y-2 sm:min-w-[180px] sm:flex-1">
             <Label className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Status</Label>
             <Select
               disabled={isPending}
@@ -84,7 +94,7 @@ export function AdminDashboardFilters({
             </Select>
           </div>
 
-          <div className="min-w-[220px] space-y-2">
+          <div className="w-full space-y-2 sm:min-w-[220px] sm:flex-1">
             <Label className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Service</Label>
             <Select
               disabled={isPending}
@@ -105,9 +115,9 @@ export function AdminDashboardFilters({
             </Select>
           </div>
 
-          <div className="flex items-center gap-2 pt-2 sm:pt-0">
+          <div className="flex flex-col items-start gap-2 pt-1 sm:pt-0">
             {hasActiveFilters ? (
-              <Button asChild variant="ghost">
+              <Button asChild variant="ghost" className="px-0 sm:px-3">
                 <Link href={pathname}>Reset filters</Link>
               </Button>
             ) : null}

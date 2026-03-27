@@ -17,6 +17,7 @@ import {
 import type { PublicIntakeSubmissionResult } from "@/types";
 import { FeedbackNotice } from "@/components/shared/feedback-notice";
 import { LoadingIndicator } from "@/components/shared/loading-indicator";
+import { SectionHeader } from "@/components/shared/section-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -40,23 +41,33 @@ function FormSection({
   eyebrow,
   title,
   description,
+  tone = "cool",
   children
 }: {
   eyebrow: string;
   title: string;
   description: string;
+  tone?: "cool" | "sand";
   children: ReactNode;
 }) {
   return (
-    <section className="space-y-5">
-      <div className="space-y-2 border-b pb-4">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">{eyebrow}</p>
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
-          <p className="text-sm text-muted-foreground">{description}</p>
-        </div>
+    <section
+      className={
+        tone === "sand"
+          ? "rounded-2xl border border-border/70 bg-surface-sand p-4 sm:p-5 md:p-6"
+          : "rounded-2xl border border-border/70 bg-surface-cool p-4 sm:p-5 md:p-6"
+      }
+    >
+      <div className="space-y-4 sm:space-y-5">
+        <SectionHeader
+          eyebrow={eyebrow}
+          title={title}
+          description={description}
+          titleClassName="text-lg sm:text-xl"
+          descriptionClassName="max-w-2xl text-sm"
+        />
+        {children}
       </div>
-      {children}
     </section>
   );
 }
@@ -127,18 +138,18 @@ export function PublicIntakeForm() {
   });
 
   return (
-    <Card className="border-border/80 shadow-sm">
-      <CardHeader className="space-y-4 pb-6">
-        <div className="space-y-2">
+    <Card className="overflow-hidden border-border/80 shadow-sm">
+      <CardHeader className="space-y-3 border-b border-border/60 bg-surface-cool pb-5 sm:space-y-4 sm:pb-6">
+        <div className="space-y-1.5 sm:space-y-2">
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">Project request</p>
-          <CardTitle className="text-2xl tracking-tight md:text-3xl">Tell us about the project and what you need.</CardTitle>
+          <CardTitle className="text-xl tracking-tight sm:text-2xl md:text-3xl">Tell us about the project and what you need.</CardTitle>
         </div>
         <CardDescription>
           A few clear details help us review fit, scope, and the right next step before we reply.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form className="space-y-8" onSubmit={onSubmit} noValidate>
+      <CardContent className="space-y-6 sm:space-y-8">
+        <form className="space-y-6 sm:space-y-8" onSubmit={onSubmit} noValidate>
           {formError ? (
             <FeedbackNotice tone="error" title="Unable to submit request" description={formError} />
           ) : null}
@@ -148,7 +159,7 @@ export function PublicIntakeForm() {
             title="Who should we follow up with?"
             description="These details tell us who to contact once the request has been reviewed."
           >
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="name">Your name</Label>
                 <Input
@@ -202,8 +213,9 @@ export function PublicIntakeForm() {
             eyebrow="Scope"
             title="What kind of project is this?"
             description="We use this to understand the type of engagement before reviewing the full context."
+            tone="sand"
           >
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="service_type">Service type</Label>
                 <Controller
@@ -262,16 +274,18 @@ export function PublicIntakeForm() {
             </div>
 
             {selectedServiceType === "other" ? (
-              <div className="space-y-2">
-                <Label htmlFor="service_type_other">What kind of support do you need?</Label>
-                <Input
-                  id="service_type_other"
-                  placeholder="Describe the kind of support you need"
-                  disabled={isSubmitting}
-                  {...register("service_type_other")}
-                />
-                <FieldHint>A short description is enough. We&apos;ll use it to categorize the request correctly.</FieldHint>
-                <FieldError message={errors.service_type_other?.message} />
+              <div className="rounded-xl border border-border/70 bg-card p-4 shadow-sm">
+                <div className="space-y-2">
+                  <Label htmlFor="service_type_other">What kind of support do you need?</Label>
+                  <Input
+                    id="service_type_other"
+                    placeholder="Describe the kind of support you need"
+                    disabled={isSubmitting}
+                    {...register("service_type_other")}
+                  />
+                  <FieldHint>A short description is enough. We&apos;ll use it to categorize the request correctly.</FieldHint>
+                  <FieldError message={errors.service_type_other?.message} />
+                </div>
               </div>
             ) : null}
           </FormSection>
@@ -281,58 +295,66 @@ export function PublicIntakeForm() {
             title="What should we know before we review this?"
             description="The strongest requests explain both the outcome they want and what is getting in the way today."
           >
-            <div className="space-y-2">
-              <Label htmlFor="goal">Primary goal</Label>
-              <Textarea
-                id="goal"
-                className="min-h-[140px] resize-y"
-                placeholder="Describe the outcome you want this project to create."
-                disabled={isSubmitting}
-                {...register("goal")}
-              />
-              <FieldHint>Focus on the business result you want from the project.</FieldHint>
-              <FieldError message={errors.goal?.message} />
-            </div>
+            <div className="grid gap-3 sm:gap-4">
+              <div className="rounded-xl border border-border/70 bg-card p-4 shadow-sm md:p-5">
+                <div className="space-y-2">
+                  <Label htmlFor="goal">Primary goal</Label>
+                  <Textarea
+                    id="goal"
+                    className="min-h-[140px] resize-y"
+                    placeholder="Describe the result you want this project to create."
+                    disabled={isSubmitting}
+                    {...register("goal")}
+                  />
+                  <FieldHint>Focus on the business outcome you want from the work.</FieldHint>
+                  <FieldError message={errors.goal?.message} />
+                </div>
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="problem_description">Current challenge</Label>
-              <Textarea
-                id="problem_description"
-                className="min-h-[150px] resize-y"
-                placeholder="Describe what is not working today, what feels unclear, or what is creating urgency."
-                disabled={isSubmitting}
-                {...register("problem_description")}
-              />
-              <FieldHint>Tell us what is making the request important now.</FieldHint>
-              <FieldError message={errors.problem_description?.message} />
-            </div>
+              <div className="rounded-xl border border-border/70 bg-card p-4 shadow-sm md:p-5">
+                <div className="space-y-2">
+                  <Label htmlFor="problem_description">Current challenge</Label>
+                  <Textarea
+                    id="problem_description"
+                    className="min-h-[150px] resize-y"
+                    placeholder="Describe what is not working today, what feels unclear, or what is creating urgency."
+                    disabled={isSubmitting}
+                    {...register("problem_description")}
+                  />
+                  <FieldHint>Tell us what is making the request important now.</FieldHint>
+                  <FieldError message={errors.problem_description?.message} />
+                </div>
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="extra_notes">Extra notes</Label>
-              <Textarea
-                id="extra_notes"
-                className="min-h-[130px] resize-y"
-                placeholder="Add any stakeholders, constraints, references, or context that would help us review the request well."
-                disabled={isSubmitting}
-                {...register("extra_notes")}
-              />
-              <FieldHint>Optional. Add any detail that would help us review the request well.</FieldHint>
-              <FieldError message={errors.extra_notes?.message} />
+              <div className="rounded-xl border border-border/70 bg-card p-4 shadow-sm md:p-5">
+                <div className="space-y-2">
+                  <Label htmlFor="extra_notes">Extra notes</Label>
+                  <Textarea
+                    id="extra_notes"
+                    className="min-h-[130px] resize-y"
+                    placeholder="Add any stakeholders, constraints, references, or context that would help us review the request well."
+                    disabled={isSubmitting}
+                    {...register("extra_notes")}
+                  />
+                  <FieldHint>Optional. Add anything that would make the review more useful.</FieldHint>
+                  <FieldError message={errors.extra_notes?.message} />
+                </div>
+              </div>
             </div>
           </FormSection>
 
-          <div className="rounded-2xl border bg-secondary/30 p-4 md:p-5">
+          <div className="rounded-2xl border border-[hsl(var(--surface-highlight-strong)/0.8)] bg-surface-highlight p-4 sm:p-5 md:p-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div className="space-y-3">
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold">After you submit</p>
+              <div className="space-y-2.5 sm:space-y-3">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <p className="text-sm font-semibold text-foreground">After you submit</p>
                   <p className="max-w-xl text-sm text-muted-foreground">
                     Your request is saved immediately, reviewed by the team, and followed up with a clear next step.
                   </p>
                 </div>
                 <div className="min-h-[2rem]" aria-live="polite">
                   {isSubmitting ? (
-                    <div className="inline-flex rounded-full border bg-background px-3 py-1.5">
+                    <div className="inline-flex rounded-full border border-border/70 bg-background px-3 py-1.5 shadow-sm">
                       <LoadingIndicator
                         announce
                         size="sm"
@@ -348,7 +370,7 @@ export function PublicIntakeForm() {
                 </div>
               </div>
 
-              <Button className="w-full md:min-w-[220px] md:w-auto" type="submit" disabled={isSubmitting}>
+              <Button className="w-full md:min-w-[220px] md:w-auto" size="lg" type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <LoadingIndicator size="sm" label="Submitting request" textClassName="font-medium text-inherit" />
                 ) : (

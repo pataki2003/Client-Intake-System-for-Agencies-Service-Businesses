@@ -14,9 +14,14 @@ import { INTAKE_STATUSES, type IntakeStatus } from "@/types";
 type StatusUpdateFormProps = {
   intakeId: string;
   currentStatus: IntakeStatus;
+  idPrefix?: string;
 };
 
-export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormProps) {
+export function StatusUpdateForm({
+  intakeId,
+  currentStatus,
+  idPrefix = "intake-status"
+}: StatusUpdateFormProps) {
   const router = useRouter();
   const [selectedStatus, setSelectedStatus] = useState<IntakeStatus>(currentStatus);
   const [isSaving, setIsSaving] = useState(false);
@@ -61,7 +66,7 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="space-y-2">
-        <Label htmlFor="intake-status" className="text-sm font-medium">
+        <Label htmlFor={idPrefix} className="text-sm font-medium">
           Update status
         </Label>
         <p className="text-sm text-muted-foreground">
@@ -71,7 +76,7 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="flex-1 space-y-2">
-          <Label htmlFor="intake-status" className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+          <Label htmlFor={idPrefix} className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
             Status
           </Label>
           <Select
@@ -79,7 +84,7 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
             onValueChange={(value) => setSelectedStatus(value as IntakeStatus)}
             disabled={isSaving}
           >
-            <SelectTrigger id="intake-status">
+            <SelectTrigger id={idPrefix}>
               <SelectValue placeholder="Select a status" />
             </SelectTrigger>
             <SelectContent>
@@ -92,7 +97,7 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
           </Select>
         </div>
 
-        <Button type="submit" disabled={isSaving || selectedStatus === currentStatus} className="sm:min-w-[132px]">
+        <Button type="submit" disabled={isSaving || selectedStatus === currentStatus} className="w-full sm:min-w-[132px] sm:w-auto">
           {isSaving ? (
             <LoadingIndicator size="sm" label="Saving status" textClassName="font-medium text-inherit" />
           ) : (

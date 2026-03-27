@@ -1,9 +1,9 @@
-import type { ReactNode } from "react";
-
 import { BriefGenerationAction } from "@/components/admin/brief-generation-action";
 import { FormattedDateTime } from "@/components/shared/intake-display";
+import { InfoTile } from "@/components/shared/info-tile";
+import { SectionHeader } from "@/components/shared/section-header";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import type { ProjectBrief } from "@/types";
 
 type ProjectBriefPanelProps = {
@@ -21,13 +21,15 @@ function BriefNarrativeBlock({
   value: string;
 }) {
   return (
-    <section className="rounded-2xl border bg-background p-5 md:p-6">
-      <div className="space-y-2">
+    <section className="rounded-2xl border border-border/70 bg-surface-cool p-4 sm:p-5 md:p-6">
+      <div className="space-y-2.5 sm:space-y-3">
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">{title}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
-        <p className="whitespace-pre-wrap text-sm leading-7 text-foreground">{value}</p>
+        <div className="rounded-xl border border-border/70 bg-background px-4 py-4 shadow-sm">
+          <p className="whitespace-pre-wrap text-sm leading-7 text-foreground">{value}</p>
+        </div>
       </div>
     </section>
   );
@@ -47,21 +49,23 @@ function BriefListBlock({
   itemLabel: "Scope" | "Question" | "Step";
 }) {
   return (
-    <section className="rounded-2xl border bg-background p-5 md:p-6">
-      <div className="space-y-4">
+    <section className="rounded-2xl border border-border/70 bg-surface-sand p-4 sm:p-5 md:p-6">
+      <div className="space-y-3 sm:space-y-4">
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">{title}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
 
         {items.length === 0 ? (
-          <p className="text-sm text-muted-foreground">{emptyFallback}</p>
+          <div className="rounded-xl border border-dashed bg-background px-4 py-4">
+            <p className="text-sm text-muted-foreground">{emptyFallback}</p>
+          </div>
         ) : (
           <ol className="space-y-3">
             {items.map((item, index) => (
-              <li key={`${item}-${index}`} className="rounded-xl border bg-secondary/20 px-4 py-4">
+              <li key={`${item}-${index}`} className="rounded-xl border border-border/70 bg-background px-3.5 py-3.5 shadow-sm sm:px-4 sm:py-4">
                 <div className="flex gap-3">
-                  <div className="flex h-7 min-w-7 items-center justify-center rounded-full border bg-background px-2 text-[11px] font-semibold text-muted-foreground">
+                  <div className="flex h-7 min-w-7 items-center justify-center rounded-full border border-primary/10 bg-surface-cool px-2 text-[11px] font-semibold text-primary/75">
                     {String(index + 1).padStart(2, "0")}
                   </div>
                   <div className="space-y-1">
@@ -80,73 +84,67 @@ function BriefListBlock({
   );
 }
 
-function BriefMetadataItem({
-  label,
-  children
-}: {
-  label: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="rounded-xl border bg-background px-4 py-4">
-      <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{label}</p>
-      <div className="mt-2 text-sm text-foreground">{children}</div>
-    </div>
-  );
-}
-
 export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
   return (
     <Card className="border-border/70 shadow-sm">
-      <CardHeader className="space-y-5">
+      <CardHeader className="space-y-4 sm:space-y-5">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-          <div className="space-y-3">
+          <div className="space-y-3 sm:space-y-4">
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs font-medium">
                 AI-assisted
               </Badge>
-              <Badge variant="outline" className="rounded-full px-3 py-1 text-xs font-medium">
-                Team use
+              <Badge variant="accent" className="rounded-full px-3 py-1 text-xs font-medium">
+                Internal use
               </Badge>
             </div>
 
-            <div className="space-y-2">
-              <CardTitle className="text-2xl md:text-3xl">Project brief</CardTitle>
-              <CardDescription className="max-w-2xl">
-                Summarize the request into a working brief the team can review quickly.
-              </CardDescription>
-            </div>
+            <SectionHeader
+              eyebrow="Project brief"
+              title="Working brief"
+              description="Summarize the request into a cleaner internal brief the team can scan quickly."
+              titleClassName="text-xl sm:text-2xl md:text-3xl"
+              descriptionClassName="max-w-2xl text-sm"
+            />
           </div>
 
-          <div className="rounded-2xl border bg-background p-3">
+          <div className="w-full rounded-2xl border border-primary/10 bg-surface-layered p-4 xl:max-w-[280px]">
             <div className="space-y-1">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Brief action</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">Brief action</p>
               <p className="text-sm text-muted-foreground">
                 {brief ? "Regenerate the brief using the latest request details." : "Generate the first brief from the current request."}
               </p>
             </div>
-            <div className="mt-3">
+            <div className="mt-4">
               <BriefGenerationAction intakeId={intakeId} hasExistingBrief={Boolean(brief)} />
             </div>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-5 sm:space-y-6">
         {brief ? (
           <>
-            <div className="grid gap-3 md:grid-cols-2">
-              <BriefMetadataItem label="Model">
-                <p className="font-medium">{brief.model ?? "Not recorded"}</p>
-              </BriefMetadataItem>
-              <BriefMetadataItem label="Last updated">
-                <FormattedDateTime
-                  value={brief.updatedAt}
-                  showRelative
-                  valueClassName="font-medium text-foreground"
-                  relativeClassName="text-xs text-muted-foreground"
-                />
-              </BriefMetadataItem>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <InfoTile
+                eyebrow="Model"
+                title={brief.model ?? "Not recorded"}
+                variant="muted"
+                titleClassName="text-base font-medium"
+              />
+              <InfoTile
+                eyebrow="Last updated"
+                title={
+                  <FormattedDateTime
+                    value={brief.updatedAt}
+                    showRelative
+                    valueClassName="font-medium text-foreground"
+                    relativeClassName="text-xs text-muted-foreground"
+                  />
+                }
+                variant="accent"
+                titleClassName="text-base font-medium"
+              />
             </div>
 
             {brief.briefJson ? (
@@ -189,31 +187,31 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                   itemLabel="Step"
                 />
 
-                <details className="rounded-2xl border bg-secondary/15 px-4 py-4">
+                <details className="rounded-2xl border border-border/70 bg-surface-sand px-4 py-4">
                   <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
                     View stored markdown version
                   </summary>
-                  <div className="mt-4 rounded-xl border bg-background p-4">
+                  <div className="mt-3 rounded-xl border border-border/70 bg-background p-3.5 shadow-sm sm:mt-4 sm:p-4">
                     <pre className="overflow-x-auto whitespace-pre-wrap text-sm leading-6">{brief.briefMarkdown}</pre>
                   </div>
                 </details>
               </div>
             ) : (
-              <div className="rounded-2xl border bg-secondary/15 p-4">
+              <div className="rounded-2xl border border-border/70 bg-surface-sand p-4">
                 <div className="space-y-1">
-                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Stored markdown</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">Stored markdown</p>
                   <p className="text-sm text-muted-foreground">
                     Structured brief data is not available for this record, so the stored markdown is shown below.
                   </p>
                 </div>
-                <div className="mt-4 rounded-xl border bg-background p-4">
+                <div className="mt-4 rounded-xl border border-border/70 bg-background p-4 shadow-sm">
                   <pre className="overflow-x-auto whitespace-pre-wrap text-sm leading-6">{brief.briefMarkdown}</pre>
                 </div>
               </div>
             )}
           </>
         ) : (
-          <div className="rounded-2xl border border-dashed px-5 py-7">
+          <div className="rounded-2xl border border-dashed bg-surface-cool px-5 py-7">
             <div className="space-y-2">
               <p className="text-sm font-medium">No project brief yet</p>
               <p className="text-sm text-muted-foreground">

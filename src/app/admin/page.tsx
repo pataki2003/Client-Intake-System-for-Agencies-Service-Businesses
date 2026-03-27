@@ -1,7 +1,7 @@
 import { AdminDashboardFilters } from "@/components/admin/admin-dashboard-filters";
 import { IntakesTable } from "@/components/admin/intakes-table";
+import { InfoTile } from "@/components/shared/info-tile";
 import { PageHeader } from "@/components/shared/page-header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAdminIntakeList } from "@/server/admin-intakes/get-admin-intake-list";
 import { INTAKE_STATUSES, type AdminIntakeListItem, type IntakeStatus } from "@/types";
 
@@ -40,27 +40,31 @@ function getDashboardStats(items: AdminIntakeListItem[]) {
 const statCardConfig = [
   {
     key: "totalSubmissions",
-    label: "Total requests",
-    description: "In the current view",
-    tone: "border-border/70"
+    label: "Current queue",
+    description: "Requests in the current view",
+    tone: "highlight",
+    className: "xl:col-span-2"
   },
   {
     key: "needsReview",
     label: "Awaiting review",
     description: "New or currently in review",
-    tone: "border-sky-200/70 bg-sky-50/40"
+    tone: "accent",
+    className: ""
   },
   {
     key: "readyOrContacted",
     label: "Ready to follow up",
     description: "Brief ready or already contacted",
-    tone: "border-emerald-200/70 bg-emerald-50/40"
+    tone: "muted",
+    className: ""
   },
   {
     key: "briefsGenerated",
     label: "Briefs available",
     description: "Requests with stored project briefs",
-    tone: "border-amber-200/70 bg-amber-50/40"
+    tone: "muted",
+    className: ""
   }
 ] as const;
 
@@ -86,28 +90,25 @@ export default async function AdminDashboardPage({ searchParams }: AdminDashboar
   const hasActiveFilters = Boolean(requestedStatus || selectedService);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       <PageHeader
         eyebrow="Admin dashboard"
         title="Operations dashboard"
-        description="Review incoming requests, keep the queue moving, and open the full intake workspace when more context is needed."
+        description="Review incoming requests, keep the queue moving, and open the full workspace when more context is needed."
       />
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-5">
         {statCardConfig.map((stat) => (
-          <Card key={stat.key} className={stat.tone}>
-            <CardHeader className="space-y-3 pb-3">
-              <div className="space-y-1">
-                <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">{stat.label}</p>
-                <CardTitle className="text-4xl font-semibold tracking-tight">
-                  {stats[stat.key]}
-                </CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <p className="text-sm text-muted-foreground">{stat.description}</p>
-            </CardContent>
-          </Card>
+          <InfoTile
+            key={stat.key}
+            eyebrow={stat.label}
+            title={String(stats[stat.key])}
+            description={stat.description}
+            variant={stat.tone}
+            className={stat.className}
+            titleClassName="text-3xl font-semibold tracking-tight sm:text-4xl md:text-[2.5rem]"
+            descriptionClassName="text-sm"
+          />
         ))}
       </div>
 
