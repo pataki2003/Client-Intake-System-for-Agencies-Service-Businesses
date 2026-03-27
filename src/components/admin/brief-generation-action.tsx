@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { FeedbackNotice } from "@/components/shared/feedback-notice";
+import { LoadingIndicator } from "@/components/shared/loading-indicator";
 import { Button } from "@/components/ui/button";
 
 type BriefGenerationActionProps = {
@@ -41,21 +42,38 @@ export function BriefGenerationAction({ intakeId, hasExistingBrief }: BriefGener
   }
 
   return (
-    <div className="space-y-2 md:max-w-[260px] md:text-right">
+    <div className="space-y-3 md:max-w-[280px] md:text-right">
       <Button
         type="button"
         onClick={handleClick}
         disabled={isSubmitting}
         variant={hasExistingBrief ? "outline" : "secondary"}
         size="sm"
+        className="w-full md:min-w-[190px] md:w-auto"
       >
-        {isSubmitting ? (hasExistingBrief ? "Regenerating..." : "Generating...") : hasExistingBrief ? "Regenerate brief" : "Generate brief"}
+        {isSubmitting ? (
+          <LoadingIndicator
+            size="sm"
+            label={hasExistingBrief ? "Refreshing brief" : "Generating brief"}
+            textClassName="font-medium text-inherit"
+          />
+        ) : hasExistingBrief ? (
+          "Regenerate brief"
+        ) : (
+          "Generate brief"
+        )}
       </Button>
 
+      <p className="text-xs text-muted-foreground" aria-live="polite">
+        {isSubmitting
+          ? "Creating a structured internal summary from the latest intake context."
+          : hasExistingBrief
+            ? "Refresh the brief after meaningful intake updates."
+            : "Generate a structured summary for faster internal review."}
+      </p>
+
       {error ? (
-        <Alert variant="destructive" className="bg-destructive/5 text-left">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
+        <FeedbackNotice tone="error" title="Brief unavailable" description={error} className="text-left" />
       ) : null}
     </div>
   );

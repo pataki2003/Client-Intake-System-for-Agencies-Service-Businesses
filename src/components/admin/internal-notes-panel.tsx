@@ -3,8 +3,9 @@
 import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { FeedbackNotice } from "@/components/shared/feedback-notice";
 import { FormattedDateTime } from "@/components/shared/intake-display";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { LoadingIndicator } from "@/components/shared/loading-indicator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -116,15 +117,17 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
           />
 
           {error ? (
-            <Alert variant="destructive" className="bg-destructive/5">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
+            <FeedbackNotice tone="error" title="Note not saved" description={error} />
           ) : null}
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-muted-foreground">Visible to admins only. New notes appear at the top of the list.</p>
             <Button type="submit" disabled={isSaving || noteBody.trim().length === 0} className="sm:min-w-[132px]">
-              {isSaving ? "Saving note..." : "Save note"}
+              {isSaving ? (
+                <LoadingIndicator size="sm" label="Saving note" textClassName="font-medium text-inherit" />
+              ) : (
+                "Save note"
+              )}
             </Button>
           </div>
         </form>

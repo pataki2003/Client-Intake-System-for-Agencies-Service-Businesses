@@ -3,7 +3,8 @@
 import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { FeedbackNotice } from "@/components/shared/feedback-notice";
+import { LoadingIndicator } from "@/components/shared/loading-indicator";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -92,14 +93,16 @@ export function StatusUpdateForm({ intakeId, currentStatus }: StatusUpdateFormPr
         </div>
 
         <Button type="submit" disabled={isSaving || selectedStatus === currentStatus} className="sm:min-w-[132px]">
-          {isSaving ? "Saving..." : "Save status"}
+          {isSaving ? (
+            <LoadingIndicator size="sm" label="Saving status" textClassName="font-medium text-inherit" />
+          ) : (
+            "Save status"
+          )}
         </Button>
       </div>
 
       {error ? (
-        <Alert variant="destructive" className="bg-destructive/5">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
+        <FeedbackNotice tone="error" title="Status update unavailable" description={error} />
       ) : null}
     </form>
   );

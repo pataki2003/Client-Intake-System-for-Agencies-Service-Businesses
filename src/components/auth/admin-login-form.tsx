@@ -4,7 +4,8 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 
 import { loginAdmin, type AdminLoginState } from "@/app/login/actions";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { FeedbackNotice } from "@/components/shared/feedback-notice";
+import { LoadingIndicator } from "@/components/shared/loading-indicator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,7 +20,7 @@ function SubmitButton() {
 
   return (
     <Button className="w-full" type="submit" disabled={pending}>
-      {pending ? "Signing in..." : "Sign in"}
+      {pending ? <LoadingIndicator size="sm" label="Signing in" textClassName="font-medium text-inherit" /> : "Sign in"}
     </Button>
   );
 }
@@ -29,17 +30,17 @@ export function AdminLoginForm() {
 
   return (
     <Card className="mx-auto w-full max-w-md border-border/80 shadow-sm">
-      <CardHeader>
-        <CardTitle>Admin login</CardTitle>
-        <CardDescription>Sign in with your admin account to view and manage intake submissions.</CardDescription>
+      <CardHeader className="space-y-3">
+        <div className="space-y-1">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Admin sign-in</p>
+          <CardTitle className="text-2xl tracking-tight">Access the intake workspace</CardTitle>
+        </div>
+        <CardDescription>Sign in with your admin account to review submissions, notes, statuses, and AI briefs.</CardDescription>
       </CardHeader>
       <CardContent>
         <form action={formAction} className="space-y-5">
           {state.error ? (
-            <Alert variant="destructive">
-              <AlertTitle>Login failed</AlertTitle>
-              <AlertDescription>{state.error}</AlertDescription>
-            </Alert>
+            <FeedbackNotice tone="error" title="Sign-in unavailable" description={state.error} />
           ) : null}
 
           <div className="space-y-2">
@@ -49,10 +50,14 @@ export function AdminLoginForm() {
 
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" name="password" type="password" autoComplete="current-password" />
+            <Input id="password" name="password" type="password" autoComplete="current-password" placeholder="Enter your password" />
           </div>
 
           <SubmitButton />
+
+          <p className="text-xs leading-5 text-muted-foreground">
+            Access is limited to approved admin accounts with active workspace permissions.
+          </p>
         </form>
       </CardContent>
     </Card>

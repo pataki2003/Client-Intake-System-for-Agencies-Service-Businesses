@@ -15,7 +15,8 @@ import {
   type PublicIntakeFormValues
 } from "@/lib/validations/public-intake";
 import type { PublicIntakeSubmissionResult } from "@/types";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { FeedbackNotice } from "@/components/shared/feedback-notice";
+import { LoadingIndicator } from "@/components/shared/loading-indicator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -139,10 +140,7 @@ export function PublicIntakeForm() {
       <CardContent>
         <form className="space-y-8" onSubmit={onSubmit} noValidate>
           {formError ? (
-            <Alert variant="destructive" className="border-destructive/30 bg-destructive/5">
-              <AlertTitle>We couldn&apos;t send your request</AlertTitle>
-              <AlertDescription>{formError}</AlertDescription>
-            </Alert>
+            <FeedbackNotice tone="error" title="Submission unavailable" description={formError} />
           ) : null}
 
           <FormSection
@@ -325,19 +323,38 @@ export function PublicIntakeForm() {
 
           <div className="rounded-2xl border bg-secondary/30 p-4 md:p-5">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div className="space-y-2">
-                <p className="text-sm font-medium">What happens after you submit</p>
-                <p className="max-w-xl text-sm text-muted-foreground">
-                  Your request is saved immediately, reviewed internally in a structured format, and followed up with the
-                  appropriate next step. No obligation, no generic inbox handoff.
-                </p>
-                {isSubmitting ? (
-                  <p className="text-sm font-medium text-foreground/80">Submitting your request now...</p>
-                ) : null}
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold">What happens after you submit</p>
+                  <p className="max-w-xl text-sm text-muted-foreground">
+                    Your request is recorded immediately, reviewed internally in a structured workflow, and followed up
+                    with a clear next step.
+                  </p>
+                </div>
+                <div className="min-h-[2rem]" aria-live="polite">
+                  {isSubmitting ? (
+                    <div className="inline-flex rounded-full border bg-background px-3 py-1.5">
+                      <LoadingIndicator
+                        announce
+                        size="sm"
+                        label="Saving your request and preparing confirmation"
+                        textClassName="text-xs font-medium text-foreground/80"
+                      />
+                    </div>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">
+                      You&apos;ll see a confirmation screen as soon as the request is recorded.
+                    </p>
+                  )}
+                </div>
               </div>
 
-              <Button className="w-full md:w-auto" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Submitting your request..." : "Submit project request"}
+              <Button className="w-full md:min-w-[220px] md:w-auto" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <LoadingIndicator size="sm" label="Submitting request" textClassName="font-medium text-inherit" />
+                ) : (
+                  "Submit project request"
+                )}
               </Button>
             </div>
           </div>
