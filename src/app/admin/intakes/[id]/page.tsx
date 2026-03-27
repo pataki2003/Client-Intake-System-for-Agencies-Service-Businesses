@@ -57,6 +57,16 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="space-y-4">
+              <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                <Link href="/admin" className="transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  Submission queue
+                </Link>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page" className="text-foreground">
+                  Intake detail
+                </span>
+              </nav>
+
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full border bg-secondary/40 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
                   Intake detail
@@ -73,9 +83,17 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               </div>
             </div>
 
-            <Button asChild variant="outline">
-              <Link href="/admin">Back to dashboard</Link>
-            </Button>
+            <div className="flex flex-col items-start gap-3 lg:items-end">
+              <Button asChild variant="outline" className="rounded-full px-4">
+                <Link href="/admin">
+                  <span aria-hidden="true" className="mr-2 text-muted-foreground">
+                    &lt;-
+                  </span>
+                  Back to submissions
+                </Link>
+              </Button>
+              <p className="text-sm text-muted-foreground">Return to the queue and continue triage from the dashboard.</p>
+            </div>
           </div>
 
           <div className="grid gap-3 md:grid-cols-3">

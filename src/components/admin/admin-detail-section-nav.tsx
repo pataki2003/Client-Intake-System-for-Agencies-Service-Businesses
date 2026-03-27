@@ -15,7 +15,7 @@ export function AdminDetailSectionNav({ items }: AdminDetailSectionNavProps) {
           key={item.id}
           href={`#${item.id}`}
           className={cn(
-            "rounded-full border bg-background px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            "rounded-full border bg-background px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           )}
         >
           {item.label}
