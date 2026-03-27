@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { IntakeStatusBadge } from "@/components/admin/intake-status-badge";
 import { InternalNotesPanel } from "@/components/admin/internal-notes-panel";
+import { ProjectBriefPanel } from "@/components/admin/project-brief-panel";
 import { StatusUpdateForm } from "@/components/admin/status-update-form";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
@@ -60,7 +61,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Company</p>
-                <p className="text-sm">{intake.client.companyName ?? "—"}</p>
+                <p className="text-sm">{intake.client.companyName ?? "Not provided"}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Email</p>
@@ -68,11 +69,11 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Phone</p>
-                <p className="text-sm">{intake.client.phone ?? "—"}</p>
+                <p className="text-sm">{intake.client.phone ?? "Not provided"}</p>
               </div>
               <div className="md:col-span-2">
                 <p className="text-sm font-medium text-muted-foreground">Website</p>
-                <p className="text-sm">{intake.client.website ?? "—"}</p>
+                <p className="text-sm">{intake.client.website ?? "Not provided"}</p>
               </div>
             </CardContent>
           </Card>
@@ -109,12 +110,12 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
 
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Problem description</p>
-                <p className="whitespace-pre-wrap text-sm">{intake.currentChallenges ?? "—"}</p>
+                <p className="whitespace-pre-wrap text-sm">{intake.currentChallenges ?? "Not provided"}</p>
               </div>
 
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Extra notes</p>
-                <p className="whitespace-pre-wrap text-sm">{intake.additionalInfo ?? "—"}</p>
+                <p className="whitespace-pre-wrap text-sm">{intake.additionalInfo ?? "Not provided"}</p>
               </div>
             </CardContent>
           </Card>
@@ -142,38 +143,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>AI project brief</CardTitle>
-              <CardDescription>Stored brief content from the generation flow when it becomes available.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {intake.brief ? (
-                <>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Model</p>
-                      <p className="text-sm">{intake.brief.model ?? "—"}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Last updated</p>
-                      <p className="text-sm">{formatDateTime(intake.brief.updatedAt)}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Brief markdown</p>
-                    <pre className="mt-2 overflow-x-auto whitespace-pre-wrap rounded-xl bg-muted p-4 text-sm">
-                      {intake.brief.briefMarkdown}
-                    </pre>
-                  </div>
-                </>
-              ) : (
-                <div className="rounded-xl border border-dashed px-4 py-6 text-sm text-muted-foreground">
-                  No AI brief has been generated for this intake yet.
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <ProjectBriefPanel intakeId={intake.id} brief={intake.brief} />
         </div>
 
         <div className="space-y-6">

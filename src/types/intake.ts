@@ -1,3 +1,5 @@
+import type { GeneratedProjectBrief } from "@/lib/briefs/generated-project-brief";
+
 export const INTAKE_STATUSES = [
   "new",
   "reviewing",
@@ -76,7 +78,7 @@ export interface ProjectBrief {
   id: string;
   intakeId: string;
   briefMarkdown: string;
-  briefJson: JsonValue | null;
+  briefJson: GeneratedProjectBrief | null;
   model: string | null;
   createdAt: string;
   updatedAt: string;

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { parseGeneratedProjectBrief } from "@/lib/briefs/generated-project-brief";
 import { createServiceRoleClient } from "@/lib/supabase/service-role";
 import type {
   AdminIntakeAnswer,
@@ -58,7 +59,7 @@ type RawBriefRow = {
   id: string;
   intake_id: string;
   brief_markdown: string;
-  brief_json: JsonValue | null;
+  brief_json: unknown;
   model: string | null;
   created_at: string;
   updated_at: string;
@@ -109,7 +110,7 @@ function mapBrief(row: RawBriefRow | null): ProjectBrief | null {
     id: row.id,
     intakeId: row.intake_id,
     briefMarkdown: row.brief_markdown,
-    briefJson: row.brief_json,
+    briefJson: parseGeneratedProjectBrief(row.brief_json),
     model: row.model,
     createdAt: row.created_at,
     updatedAt: row.updated_at
