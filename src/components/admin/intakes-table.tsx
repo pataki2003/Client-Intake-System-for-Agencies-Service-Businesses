@@ -25,29 +25,29 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
     <Card className="border-border/70 shadow-sm">
       <CardHeader className="space-y-3">
         <div className="space-y-1">
-          <CardTitle className="text-2xl tracking-tight">Recent submissions</CardTitle>
+          <CardTitle className="text-2xl tracking-tight">Submission queue</CardTitle>
           <CardDescription>
             {hasActiveFilters
-              ? `Showing ${items.length} matching submissions from ${totalCount} total records in the queue.`
-              : "Review incoming requests, scan the current queue, and open the full detail workspace when you need more context."}
+              ? `Showing ${items.length} matching requests from ${totalCount} total submissions.`
+              : "Review incoming requests and open any submission for full context."}
           </CardDescription>
         </div>
-        <p className="text-sm text-muted-foreground">Select any row to open the full intake review workspace.</p>
+        <p className="text-sm text-muted-foreground">Open any row to review the full submission.</p>
       </CardHeader>
       <CardContent>
         {items.length === 0 ? (
           <div className="rounded-2xl border border-dashed px-6 py-12 text-center">
             <p className="text-base font-medium">
-              {hasActiveFilters ? "No submissions match this view yet." : "No intake submissions have been created yet."}
+              {hasActiveFilters ? "No submissions match these filters." : "No submissions yet."}
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
               {hasActiveFilters
-                ? "Try clearing one or both filters to return to the full queue."
-                : "New public intake submissions will appear here once clients start submitting requests."}
+                ? "Try resetting the filters to return to the full queue."
+                : "New project requests will appear here once they are submitted."}
             </p>
             {hasActiveFilters ? (
               <Button asChild variant="outline" className="mt-5">
-                <Link href={clearHref}>Clear filters</Link>
+                <Link href={clearHref}>Reset filters</Link>
               </Button>
             ) : null}
           </div>
@@ -95,7 +95,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                           ) : null}
                         </div>
                         <div className="mt-2 flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                          <span>Open intake workspace</span>
+                          <span>View submission</span>
                           <span
                             aria-hidden="true"
                             className="transition-transform group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5"
@@ -111,7 +111,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                           {item.companyName ?? "Not provided"}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {item.companyName ? "Client organization" : "Independent or not specified"}
+                          {item.companyName ? "Client organization" : "No company provided"}
                         </p>
                       </div>
                     </TableCell>
@@ -119,7 +119,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                       <div className="space-y-1">
                         <p className="text-sm font-medium text-foreground">{item.serviceRequested}</p>
                         <p className="text-xs text-muted-foreground">
-                          {item.hasBrief ? "Brief already generated" : "Awaiting internal brief"}
+                          {item.hasBrief ? "Brief available" : "Brief not generated yet"}
                         </p>
                       </div>
                     </TableCell>
@@ -134,7 +134,7 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
                           fallbackClassName="text-sm font-medium text-muted-foreground"
                         />
                         <p className="text-xs text-muted-foreground">
-                          {item.budgetRange ? "Budget guidance provided" : "Needs confirmation"}
+                          {item.budgetRange ? "Budget range provided" : "Budget not specified"}
                         </p>
                       </div>
                     </TableCell>

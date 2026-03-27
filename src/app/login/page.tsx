@@ -14,9 +14,9 @@ export default async function LoginPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Admin Route"
-        title="Admin access"
-        description="Use your admin credentials to access intake submissions, project notes, and status updates."
+        eyebrow="Admin workspace"
+        title="Sign in to continue"
+        description="Use your admin account to review submissions, notes, statuses, and project briefs."
       />
 
       <AdminLoginForm />

@@ -5,21 +5,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getAdminSessionUser } from "@/server/auth/require-admin";
 
 const productCapabilities = [
-  "Capture structured project requests instead of open-ended messages.",
-  "Keep client details, answers, notes, and status in one admin workflow.",
-  "Generate a usable internal project brief without rewriting the submission by hand."
+  "Capture structured project requests instead of open-ended inquiry messages.",
+  "Keep client details, submitted answers, notes, and status in one review workspace.",
+  "Generate a concise project brief without rewriting the original request by hand."
 ];
 
 const whoItsFor = [
   "Agencies qualifying new project inquiries before the first call.",
-  "Service businesses that need a cleaner intake and internal handoff.",
-  "Small teams that want more structure than a contact form without adopting a heavyweight CRM."
+  "Service businesses that need a more structured intake and follow-up process.",
+  "Small teams that want more structure than a contact form without adopting a full CRM."
 ];
 
 const reasonsToChooseIt = [
-  "A generic contact form creates follow-up work. This captures budget, goals, challenges, and project context up front.",
-  "Submissions move directly into an admin workflow instead of getting buried in an inbox.",
-  "The AI brief turns raw intake data into an internal summary your team can actually act on."
+  "A standard contact form creates avoidable follow-up. This captures budget, goals, challenges, and project context from the start.",
+  "Requests move into a shared review workspace instead of getting buried in an inbox.",
+  "The project brief turns submitted details into a concise working summary for the team."
 ];
 
 const flowSteps = [
@@ -35,15 +35,15 @@ const flowSteps = [
   },
   {
     step: "03",
-    title: "Generate AI brief",
-    description: "Turn the intake into a structured internal brief that sharpens scope, questions, and next steps."
+    title: "Generate brief",
+    description: "Turn the request into a concise project brief that sharpens scope, questions, and next steps."
   }
 ];
 
 export default async function HomePage() {
   const adminUser = await getAdminSessionUser();
   const secondaryCtaHref = adminUser ? "/admin" : "/login";
-  const secondaryCtaLabel = adminUser ? "Open dashboard" : "Admin login";
+  const secondaryCtaLabel = adminUser ? "Open workspace" : "Admin sign in";
 
   return (
     <div className="space-y-12 md:space-y-16">
@@ -53,17 +53,17 @@ export default async function HomePage() {
 
           <div className="space-y-4">
             <h1 className="max-w-3xl text-4xl font-semibold tracking-tight md:text-5xl">
-              A cleaner way to turn project inquiries into qualified, actionable briefs.
+              A better way to collect project requests and review them as a team.
             </h1>
             <p className="max-w-2xl text-lg text-muted-foreground">
-              Capture the right details upfront, review submissions internally, and turn every serious inquiry into a
-              structured next step for your team.
+              Capture the details that matter, keep follow-up organized, and turn every serious inquiry into a clear
+              next step.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link href="/start-project">Start your request</Link>
+              <Link href="/start-project">Start a project request</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
               <Link href={secondaryCtaHref}>{secondaryCtaLabel}</Link>
@@ -73,23 +73,23 @@ export default async function HomePage() {
 
         <Card className="border-border/80 bg-card/70">
           <CardHeader>
-            <CardTitle className="text-xl">Built for a sharper intake handoff</CardTitle>
+            <CardTitle className="text-xl">Built for a more deliberate intake process</CardTitle>
             <CardDescription>
-              Replace vague contact form submissions with a lightweight intake workflow your team can review and act on.
+              Replace vague contact-form submissions with a structured request flow your team can review with confidence.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-xl border bg-background px-4 py-3">
-              <p className="text-sm font-medium">Structured intake</p>
+              <p className="text-sm font-medium">Structured requests</p>
               <p className="mt-1 text-sm text-muted-foreground">Collect scope, budget, goals, and context in one place.</p>
             </div>
             <div className="rounded-xl border bg-background px-4 py-3">
-              <p className="text-sm font-medium">Internal review</p>
-              <p className="mt-1 text-sm text-muted-foreground">Status updates and notes stay tied to the original request.</p>
+              <p className="text-sm font-medium">Team review</p>
+              <p className="mt-1 text-sm text-muted-foreground">Status updates and notes stay attached to the original request.</p>
             </div>
             <div className="rounded-xl border bg-background px-4 py-3">
-              <p className="text-sm font-medium">AI-ready brief</p>
-              <p className="mt-1 text-sm text-muted-foreground">Generate a concise internal brief without reformatting the intake.</p>
+              <p className="text-sm font-medium">Project brief</p>
+              <p className="mt-1 text-sm text-muted-foreground">Generate a concise working brief without reformatting the request.</p>
             </div>
           </CardContent>
         </Card>
@@ -99,7 +99,7 @@ export default async function HomePage() {
         <Card>
           <CardHeader>
             <CardTitle>What it does</CardTitle>
-            <CardDescription>Moves new inquiries from raw submission to internal clarity without adding process overhead.</CardDescription>
+            <CardDescription>Turns new inquiries into a clear review process without adding unnecessary overhead.</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3 text-sm text-muted-foreground">
@@ -115,7 +115,7 @@ export default async function HomePage() {
         <Card>
           <CardHeader>
             <CardTitle>Who it is for</CardTitle>
-            <CardDescription>Best suited to teams that want a more intentional front door for new business.</CardDescription>
+            <CardDescription>Best suited to teams that want a more deliberate front door for new business.</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3 text-sm text-muted-foreground">
@@ -132,9 +132,9 @@ export default async function HomePage() {
       <section className="space-y-5">
         <div className="max-w-2xl space-y-2">
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">How the flow works</p>
-          <h2 className="text-3xl font-semibold tracking-tight">A compact workflow from submission to internal brief.</h2>
+          <h2 className="text-3xl font-semibold tracking-tight">A simple path from request to review.</h2>
           <p className="text-muted-foreground">
-            The intake stays lightweight for the client and structured for your team from the moment it arrives.
+            The process stays easy for the client and organized for the team from the moment a request arrives.
           </p>
         </div>
 
@@ -156,9 +156,9 @@ export default async function HomePage() {
       <section>
         <Card>
           <CardHeader>
-            <CardTitle>Why it is better than a generic contact form</CardTitle>
+            <CardTitle>Why it works better than a standard contact form</CardTitle>
             <CardDescription>
-              A standard contact form captures intent. This product captures the context your team needs to move.
+              A standard contact form captures interest. This captures the context your team needs to respond well.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-3">

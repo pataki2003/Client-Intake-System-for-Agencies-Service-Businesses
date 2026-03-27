@@ -22,15 +22,13 @@ export default function AdminErrorPage({ error, reset }: AdminErrorPageProps) {
         <CardHeader className="space-y-3">
           <div className="space-y-1">
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Admin workspace</p>
-            <CardTitle className="text-3xl tracking-tight">This view could not be loaded.</CardTitle>
+            <CardTitle className="text-3xl tracking-tight">This workspace could not be loaded.</CardTitle>
           </div>
-          <CardDescription>
-            Try the request again or return to the submission queue. No intake data was changed.
-          </CardDescription>
+          <CardDescription>Try again or return to submissions. No request data was changed.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
           <div className="rounded-2xl border bg-secondary/20 px-4 py-4 text-sm text-muted-foreground">
-            If this continues, review your admin session and environment configuration before retrying.
+            If this continues, confirm your session is still active and that the required services are available.
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -38,7 +36,7 @@ export default function AdminErrorPage({ error, reset }: AdminErrorPageProps) {
               Try again
             </Button>
             <Button asChild variant="outline">
-              <Link href="/admin">Back to dashboard</Link>
+              <Link href="/admin">Back to submissions</Link>
             </Button>
           </div>
         </CardContent>

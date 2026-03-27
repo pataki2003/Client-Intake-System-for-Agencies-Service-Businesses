@@ -29,7 +29,7 @@ function getNoteAuthorLabel(note: AdminIntakeNote, currentAdminUserId: string) {
     return "Admin";
   }
 
-  return "Author unavailable";
+  return "Team note";
 }
 
 function getNoteAuthorTone(note: AdminIntakeNote, currentAdminUserId: string) {
@@ -70,14 +70,14 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
       const result = (await response.json().catch(() => null)) as { error?: string } | null;
 
       if (!response.ok) {
-        setError(result?.error ?? "We couldn't save that note right now.");
+        setError(result?.error ?? "We couldn't save this note right now. Please try again.");
         return;
       }
 
       setNoteBody("");
       router.refresh();
     } catch {
-      setError("We couldn't save that note right now.");
+      setError("We couldn't save this note right now. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -91,18 +91,17 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
           <CardTitle className="text-2xl">Internal notes</CardTitle>
         </div>
         <CardDescription>
-          Capture follow-up context, next steps, and internal decisions for anyone reviewing this intake later.
+          Capture follow-up context, decisions, and next steps for anyone picking up this request later.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <form className="space-y-4 rounded-2xl border bg-secondary/20 p-4 md:p-5" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label htmlFor="internal-note" className="text-sm font-medium">
-              Add collaboration note
+              Add note
             </Label>
             <p className="text-sm text-muted-foreground">
-              Notes are private to the admin workspace and are best used for handoff context, follow-up reminders, or
-              review decisions.
+              Notes are visible only to admins and are useful for follow-up context, reminders, or decisions.
             </p>
           </div>
 
@@ -110,18 +109,18 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
             id="internal-note"
             value={noteBody}
             onChange={(event) => setNoteBody(event.target.value)}
-            placeholder="Example: strong fit, but budget may need confirmation before follow-up. Revisit after internal review."
+            placeholder="Add context for the next person reviewing this request. For example: strong fit, but confirm budget before follow-up."
             rows={5}
             className="min-h-[140px] resize-y bg-background"
             disabled={isSaving}
           />
 
           {error ? (
-            <FeedbackNotice tone="error" title="Note not saved" description={error} />
+            <FeedbackNotice tone="error" title="Unable to save note" description={error} />
           ) : null}
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-muted-foreground">Visible to admins only. New notes appear at the top of the list.</p>
+            <p className="text-xs text-muted-foreground">Visible to admins only. New notes appear first.</p>
             <Button type="submit" disabled={isSaving || noteBody.trim().length === 0} className="sm:min-w-[132px]">
               {isSaving ? (
                 <LoadingIndicator size="sm" label="Saving note" textClassName="font-medium text-inherit" />
@@ -135,7 +134,7 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
         <div className="space-y-4">
           <div className="flex items-center justify-between gap-4">
             <div className="space-y-1">
-              <p className="text-sm font-medium">Activity notes</p>
+              <p className="text-sm font-medium">Notes history</p>
               <p className="text-xs text-muted-foreground">Chronological collaboration history, newest first.</p>
             </div>
             <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{notes.length} total</p>
@@ -143,8 +142,7 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
 
           {notes.length === 0 ? (
             <div className="rounded-2xl border border-dashed px-4 py-6 text-sm text-muted-foreground">
-              No internal notes yet. Use this space to capture follow-up ideas, client context, and review decisions as the
-              intake moves forward.
+              No notes yet. Add context, follow-up decisions, or reminders so the next review starts with the right background.
             </div>
           ) : (
             <ol className="space-y-3">

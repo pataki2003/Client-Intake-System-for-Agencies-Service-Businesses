@@ -158,7 +158,7 @@ function buildFieldErrors(error: { flatten: () => { fieldErrors: Record<string, 
 function genericFailureResult(): PublicIntakeSubmissionResult {
   return {
     success: false,
-    formError: "We couldn't submit your request right now. Please try again in a moment."
+    formError: "We couldn't receive your request right now. Please try again in a moment."
   };
 }
 

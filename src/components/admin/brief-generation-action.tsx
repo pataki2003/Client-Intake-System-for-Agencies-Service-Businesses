@@ -29,13 +29,13 @@ export function BriefGenerationAction({ intakeId, hasExistingBrief }: BriefGener
       const result = (await response.json().catch(() => null)) as { error?: string } | null;
 
       if (!response.ok) {
-        setError(result?.error ?? "We couldn't generate the project brief right now.");
+        setError(result?.error ?? "We couldn't generate the brief right now. Please try again.");
         return;
       }
 
       router.refresh();
     } catch {
-      setError("We couldn't generate the project brief right now.");
+      setError("We couldn't generate the brief right now. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -66,14 +66,14 @@ export function BriefGenerationAction({ intakeId, hasExistingBrief }: BriefGener
 
       <p className="text-xs text-muted-foreground" aria-live="polite">
         {isSubmitting
-          ? "Creating a structured internal summary from the latest intake context."
+          ? "Generating a working summary from the latest request details."
           : hasExistingBrief
-            ? "Refresh the brief after meaningful intake updates."
-            : "Generate a structured summary for faster internal review."}
+            ? "Regenerate the brief after the request details change."
+            : "Generate a concise brief for faster team review."}
       </p>
 
       {error ? (
-        <FeedbackNotice tone="error" title="Brief unavailable" description={error} className="text-left" />
+        <FeedbackNotice tone="error" title="Unable to generate brief" description={error} className="text-left" />
       ) : null}
     </div>
   );

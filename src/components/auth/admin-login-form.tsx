@@ -32,20 +32,20 @@ export function AdminLoginForm() {
     <Card className="mx-auto w-full max-w-md border-border/80 shadow-sm">
       <CardHeader className="space-y-3">
         <div className="space-y-1">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Admin sign-in</p>
-          <CardTitle className="text-2xl tracking-tight">Access the intake workspace</CardTitle>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Restricted access</p>
+          <CardTitle className="text-2xl tracking-tight">Sign in to the intake workspace</CardTitle>
         </div>
-        <CardDescription>Sign in with your admin account to review submissions, notes, statuses, and AI briefs.</CardDescription>
+        <CardDescription>Sign in with an approved admin account to review submissions, notes, statuses, and project briefs.</CardDescription>
       </CardHeader>
       <CardContent>
         <form action={formAction} className="space-y-5">
           {state.error ? (
-            <FeedbackNotice tone="error" title="Sign-in unavailable" description={state.error} />
+            <FeedbackNotice tone="error" title="Unable to sign in" description={state.error} />
           ) : null}
 
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" autoComplete="email" placeholder="admin@agency.com" />
+            <Input id="email" name="email" type="email" autoComplete="email" placeholder="admin@studio.com" />
           </div>
 
           <div className="space-y-2">
@@ -56,7 +56,7 @@ export function AdminLoginForm() {
           <SubmitButton />
 
           <p className="text-xs leading-5 text-muted-foreground">
-            Access is limited to approved admin accounts with active workspace permissions.
+            Access is limited to approved admin accounts.
           </p>
         </form>
       </CardContent>

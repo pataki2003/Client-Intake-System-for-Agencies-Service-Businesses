@@ -18,7 +18,7 @@ export async function PATCH(request: NextRequest, { params }: StatusRouteContext
   if (!adminUser) {
     return NextResponse.json(
       {
-        error: "You must be signed in as an admin to update intake statuses."
+        error: "Sign in as an admin to update request status."
       },
       { status: 401 }
     );
@@ -43,7 +43,7 @@ export async function PATCH(request: NextRequest, { params }: StatusRouteContext
   } catch {
     return NextResponse.json(
       {
-        error: "We couldn't read that status update."
+        error: "We couldn't read that update."
       },
       { status: 400 }
     );
@@ -81,7 +81,7 @@ export async function PATCH(request: NextRequest, { params }: StatusRouteContext
 
     return NextResponse.json(
       {
-        error: "We couldn't update the intake status right now."
+        error: "We couldn't update the status right now. Please try again."
       },
       { status: 500 }
     );

@@ -18,7 +18,7 @@ export async function POST(_request: Request, { params }: BriefRouteContext) {
   if (!adminUser) {
     return NextResponse.json(
       {
-        error: "You must be signed in as an admin to generate project briefs."
+        error: "Sign in as an admin to generate a project brief."
       },
       { status: 401 }
     );
@@ -57,7 +57,7 @@ export async function POST(_request: Request, { params }: BriefRouteContext) {
 
     return NextResponse.json(
       {
-        error: "We couldn't generate the project brief right now."
+        error: "We couldn't generate the brief right now. Please try again."
       },
       { status: 500 }
     );

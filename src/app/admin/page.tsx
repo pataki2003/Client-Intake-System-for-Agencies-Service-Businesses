@@ -40,26 +40,26 @@ function getDashboardStats(items: AdminIntakeListItem[]) {
 const statCardConfig = [
   {
     key: "totalSubmissions",
-    label: "Total submissions",
-    description: "Matching the current view",
+    label: "Total requests",
+    description: "In the current view",
     tone: "border-border/70"
   },
   {
     key: "needsReview",
-    label: "Needs review",
-    description: "New or actively being reviewed",
+    label: "Awaiting review",
+    description: "New or currently in review",
     tone: "border-sky-200/70 bg-sky-50/40"
   },
   {
     key: "readyOrContacted",
-    label: "Ready or contacted",
-    description: "Ready for action or already followed up",
+    label: "Ready to follow up",
+    description: "Brief ready or already contacted",
     tone: "border-emerald-200/70 bg-emerald-50/40"
   },
   {
     key: "briefsGenerated",
-    label: "Briefs generated",
-    description: "Submissions with stored AI briefs",
+    label: "Briefs available",
+    description: "Requests with stored project briefs",
     tone: "border-amber-200/70 bg-amber-50/40"
   }
 ] as const;
@@ -90,7 +90,7 @@ export default async function AdminDashboardPage({ searchParams }: AdminDashboar
       <PageHeader
         eyebrow="Admin dashboard"
         title="Operations dashboard"
-        description="Monitor incoming requests, scan the active queue quickly, and move into full submission detail when the team needs more context."
+        description="Review incoming requests, keep the queue moving, and open the full intake workspace when more context is needed."
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

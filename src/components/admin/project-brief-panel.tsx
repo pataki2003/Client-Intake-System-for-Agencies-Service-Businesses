@@ -106,24 +106,23 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                 AI-assisted
               </Badge>
               <Badge variant="outline" className="rounded-full px-3 py-1 text-xs font-medium">
-                Internal review
+                Team use
               </Badge>
             </div>
 
             <div className="space-y-2">
-              <CardTitle className="text-2xl md:text-3xl">AI project brief</CardTitle>
+              <CardTitle className="text-2xl md:text-3xl">Project brief</CardTitle>
               <CardDescription className="max-w-2xl">
-                Turn the intake into a structured internal summary that helps the team align faster on fit, scope,
-                questions, and next steps.
+                Summarize the request into a working brief the team can review quickly.
               </CardDescription>
             </div>
           </div>
 
           <div className="rounded-2xl border bg-background p-3">
             <div className="space-y-1">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Action</p>
+              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Brief action</p>
               <p className="text-sm text-muted-foreground">
-                {brief ? "Refresh the brief using the latest intake data." : "Generate the first structured internal brief."}
+                {brief ? "Regenerate the brief using the latest request details." : "Generate the first brief from the current request."}
               </p>
             </div>
             <div className="mt-3">
@@ -155,12 +154,12 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                 <div className="grid gap-4 lg:grid-cols-2">
                   <BriefNarrativeBlock
                     title="Client Summary"
-                    description="Who the client appears to be and what they are asking for."
+                    description="Who the client is and what they are asking for."
                     value={brief.briefJson.clientSummary}
                   />
                   <BriefNarrativeBlock
                     title="Business Need"
-                    description="The business problem, opportunity, or reason behind the request."
+                    description="The problem or opportunity behind the request."
                     value={brief.briefJson.businessNeed}
                   />
                 </div>
@@ -168,31 +167,31 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                 <div className="grid gap-4 xl:grid-cols-2">
                   <BriefListBlock
                     title="Suggested Scope"
-                    description="A practical starting scope based on the information currently available."
+                    description="A practical starting scope based on what has been submitted."
                     items={brief.briefJson.suggestedScope}
-                    emptyFallback="No suggested scope was generated."
+                    emptyFallback="No suggested scope was captured."
                     itemLabel="Scope"
                   />
                   <BriefListBlock
                     title="Open Questions"
-                    description="Clarifications that would materially improve scoping or onboarding."
+                    description="Questions that would improve scoping or onboarding."
                     items={brief.briefJson.openQuestions}
-                    emptyFallback="No major open questions identified yet."
+                    emptyFallback="No open questions were highlighted."
                     itemLabel="Question"
                   />
                 </div>
 
                 <BriefListBlock
                   title="Recommended Next Steps"
-                  description="Concrete internal actions for moving the opportunity forward."
+                  description="Suggested internal actions for moving the opportunity forward."
                   items={brief.briefJson.recommendedNextSteps}
-                  emptyFallback="No recommended next steps were generated."
+                  emptyFallback="No next steps were captured."
                   itemLabel="Step"
                 />
 
                 <details className="rounded-2xl border bg-secondary/15 px-4 py-4">
                   <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                    View stored markdown
+                    View stored markdown version
                   </summary>
                   <div className="mt-4 rounded-xl border bg-background p-4">
                     <pre className="overflow-x-auto whitespace-pre-wrap text-sm leading-6">{brief.briefMarkdown}</pre>
@@ -204,7 +203,7 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
                 <div className="space-y-1">
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Stored markdown</p>
                   <p className="text-sm text-muted-foreground">
-                    Structured JSON is not available for this brief, so the stored markdown is shown directly.
+                    Structured brief data is not available for this record, so the stored markdown is shown below.
                   </p>
                 </div>
                 <div className="mt-4 rounded-xl border bg-background p-4">
@@ -216,9 +215,9 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
         ) : (
           <div className="rounded-2xl border border-dashed px-5 py-7">
             <div className="space-y-2">
-              <p className="text-sm font-medium">No AI brief generated yet</p>
+              <p className="text-sm font-medium">No project brief yet</p>
               <p className="text-sm text-muted-foreground">
-                Generate a structured summary to turn this intake into a faster internal review and follow-up handoff.
+                Generate a brief to create a concise working summary for the team.
               </p>
             </div>
           </div>
