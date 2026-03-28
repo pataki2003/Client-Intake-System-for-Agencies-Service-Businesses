@@ -4,86 +4,117 @@
 
 @layer base {
   :root {
-    --background: 36 36% 97%;
-    --foreground: 213 30% 17%;
+    color-scheme: light;
+    --background: 0 0% 100%;
+    --foreground: 222 16% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 213 30% 17%;
+    --card-foreground: 222 16% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 213 30% 17%;
-    --primary: 214 33% 28%;
+    --popover-foreground: 222 16% 10%;
+    --primary: 221 83% 53%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 188 29% 92%;
-    --secondary-foreground: 196 30% 24%;
-    --muted: 210 24% 95%;
-    --muted-foreground: 214 14% 42%;
-    --accent: 35 43% 93%;
-    --accent-foreground: 214 25% 24%;
-    --destructive: 0 68% 52%;
+    --secondary: 220 14% 97%;
+    --secondary-foreground: 222 16% 14%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 8% 45%;
+    --accent: 220 14% 95%;
+    --accent-foreground: 222 16% 14%;
+    --destructive: 0 72% 50%;
     --destructive-foreground: 210 40% 98%;
-    --border: 213 19% 87%;
-    --input: 213 19% 87%;
-    --ring: 214 33% 28%;
-    --surface-cool: 190 34% 96%;
-    --surface-cool-strong: 191 31% 91%;
-    --surface-sand: 35 51% 95%;
-    --surface-sand-strong: 34 47% 91%;
-    --surface-highlight: 12 62% 95%;
-    --surface-highlight-strong: 12 49% 89%;
-    --surface-layer-start: 214 30% 28%;
-    --surface-layer-mid: 191 31% 88%;
-    --surface-layer-end: 35 49% 93%;
-    --status-new-bg: 208 57% 94%;
-    --status-new-border: 207 40% 82%;
-    --status-new-foreground: 209 43% 34%;
-    --status-new-dot: 204 53% 46%;
-    --status-reviewing-bg: 40 56% 93%;
-    --status-reviewing-border: 40 38% 80%;
-    --status-reviewing-foreground: 31 39% 35%;
-    --status-reviewing-dot: 35 56% 48%;
-    --status-brief-ready-bg: 173 31% 92%;
-    --status-brief-ready-border: 173 23% 78%;
-    --status-brief-ready-foreground: 180 33% 28%;
-    --status-brief-ready-dot: 180 39% 38%;
-    --status-contacted-bg: 188 21% 91%;
-    --status-contacted-border: 188 15% 78%;
-    --status-contacted-foreground: 198 24% 31%;
-    --status-contacted-dot: 194 27% 41%;
-    --status-archived-bg: 36 18% 92%;
-    --status-archived-border: 32 12% 81%;
-    --status-archived-foreground: 32 10% 40%;
-    --status-archived-dot: 30 10% 52%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 221 83% 53%;
+    --surface-1: 0 0% 100%;
+    --surface-2: 220 14% 98%;
+    --surface-3: 220 14% 96%;
+    --surface-emphasis: 220 14% 94%;
+    --surface-cool: var(--surface-2);
+    --surface-cool-strong: var(--surface-3);
+    --surface-sand: var(--surface-2);
+    --surface-sand-strong: var(--surface-3);
+    --surface-highlight: var(--surface-3);
+    --surface-highlight-strong: var(--surface-emphasis);
+    --surface-layer-start: var(--surface-1);
+    --surface-layer-mid: var(--surface-2);
+    --surface-layer-end: var(--surface-3);
+    --status-new-bg: 221 100% 98%;
+    --status-new-border: 221 80% 88%;
+    --status-new-foreground: 221 67% 42%;
+    --status-new-dot: 221 83% 53%;
+    --status-reviewing-bg: 221 100% 98%;
+    --status-reviewing-border: 221 80% 88%;
+    --status-reviewing-foreground: 221 67% 42%;
+    --status-reviewing-dot: 221 83% 53%;
+    --status-brief-ready-bg: 221 100% 97%;
+    --status-brief-ready-border: 221 80% 86%;
+    --status-brief-ready-foreground: 221 67% 40%;
+    --status-brief-ready-dot: 221 83% 53%;
+    --status-contacted-bg: 220 14% 96%;
+    --status-contacted-border: 220 11% 84%;
+    --status-contacted-foreground: 220 9% 36%;
+    --status-contacted-dot: 220 9% 46%;
+    --status-archived-bg: 220 10% 97%;
+    --status-archived-border: 220 10% 86%;
+    --status-archived-foreground: 220 7% 48%;
+    --status-archived-dot: 220 7% 56%;
     --radius: 0.75rem;
   }
 
-  .dark {
-    --background: 215 28% 11%;
-    --foreground: 210 32% 96%;
-    --card: 216 24% 14%;
-    --card-foreground: 210 32% 96%;
-    --popover: 216 24% 14%;
-    --popover-foreground: 210 32% 96%;
-    --primary: 197 40% 66%;
-    --primary-foreground: 214 30% 18%;
-    --secondary: 191 23% 22%;
-    --secondary-foreground: 210 32% 96%;
-    --muted: 216 18% 18%;
-    --muted-foreground: 214 16% 70%;
-    --accent: 31 24% 23%;
-    --accent-foreground: 210 32% 96%;
-    --destructive: 0 64% 40%;
-    --destructive-foreground: 210 32% 96%;
-    --border: 216 17% 24%;
-    --input: 216 17% 24%;
-    --ring: 197 40% 66%;
-    --surface-cool: 194 23% 18%;
-    --surface-cool-strong: 194 25% 22%;
-    --surface-sand: 29 20% 18%;
-    --surface-sand-strong: 29 22% 22%;
-    --surface-highlight: 13 24% 20%;
-    --surface-highlight-strong: 13 27% 24%;
-    --surface-layer-start: 210 34% 22%;
-    --surface-layer-mid: 192 22% 20%;
-    --surface-layer-end: 30 20% 18%;
+  html.dark,
+  html[data-theme="dark"] {
+    color-scheme: dark;
+    --background: 222 18% 9%;
+    --foreground: 210 18% 90%;
+    --card: 222 18% 12%;
+    --card-foreground: 210 18% 90%;
+    --popover: 222 18% 12%;
+    --popover-foreground: 210 18% 90%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 222 15% 16%;
+    --secondary-foreground: 210 18% 90%;
+    --muted: 222 15% 15%;
+    --muted-foreground: 220 10% 68%;
+    --accent: 222 14% 18%;
+    --accent-foreground: 210 18% 90%;
+    --destructive: 0 64% 44%;
+    --destructive-foreground: 210 18% 96%;
+    --border: 222 12% 23%;
+    --input: 222 12% 23%;
+    --ring: 221 83% 53%;
+    --surface-1: 222 18% 12%;
+    --surface-2: 222 16% 15%;
+    --surface-3: 222 15% 18%;
+    --surface-emphasis: 222 14% 21%;
+    --surface-cool: var(--surface-2);
+    --surface-cool-strong: var(--surface-3);
+    --surface-sand: var(--surface-2);
+    --surface-sand-strong: var(--surface-3);
+    --surface-highlight: var(--surface-3);
+    --surface-highlight-strong: var(--surface-emphasis);
+    --surface-layer-start: var(--surface-1);
+    --surface-layer-mid: var(--surface-2);
+    --surface-layer-end: var(--surface-3);
+    --status-new-bg: 222 24% 16%;
+    --status-new-border: 221 37% 31%;
+    --status-new-foreground: 214 87% 73%;
+    --status-new-dot: 221 83% 53%;
+    --status-reviewing-bg: 222 24% 16%;
+    --status-reviewing-border: 221 37% 31%;
+    --status-reviewing-foreground: 214 87% 73%;
+    --status-reviewing-dot: 221 83% 53%;
+    --status-brief-ready-bg: 222 24% 17%;
+    --status-brief-ready-border: 221 37% 31%;
+    --status-brief-ready-foreground: 214 87% 73%;
+    --status-brief-ready-dot: 221 83% 53%;
+    --status-contacted-bg: 222 15% 16%;
+    --status-contacted-border: 222 10% 27%;
+    --status-contacted-foreground: 220 12% 72%;
+    --status-contacted-dot: 220 12% 62%;
+    --status-archived-bg: 222 15% 14%;
+    --status-archived-border: 222 10% 24%;
+    --status-archived-foreground: 220 8% 62%;
+    --status-archived-dot: 220 8% 52%;
   }
 
   * {
@@ -92,6 +123,11 @@
 
   body {
     @apply min-h-screen bg-background text-foreground;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.18);
+    color: hsl(var(--foreground));
   }
 }
 
@@ -124,10 +160,42 @@
     background-color: hsl(var(--card));
     background-image: linear-gradient(
       160deg,
-      hsl(var(--surface-layer-start) / 0.12) 0%,
-      hsl(var(--surface-layer-mid) / 0.78) 52%,
-      hsl(var(--surface-layer-end) / 0.94) 100%
+      hsl(var(--surface-layer-start)) 0%,
+      hsl(var(--surface-layer-mid)) 52%,
+      hsl(var(--surface-layer-end)) 100%
     );
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-theme-ready="true"] body,
+  html[data-theme-ready="true"] header,
+  html[data-theme-ready="true"] main,
+  html[data-theme-ready="true"] section,
+  html[data-theme-ready="true"] article,
+  html[data-theme-ready="true"] aside,
+  html[data-theme-ready="true"] nav,
+  html[data-theme-ready="true"] div,
+  html[data-theme-ready="true"] form,
+  html[data-theme-ready="true"] button,
+  html[data-theme-ready="true"] a,
+  html[data-theme-ready="true"] input,
+  html[data-theme-ready="true"] textarea,
+  html[data-theme-ready="true"] table,
+  html[data-theme-ready="true"] thead,
+  html[data-theme-ready="true"] tbody,
+  html[data-theme-ready="true"] tr,
+  html[data-theme-ready="true"] td,
+  html[data-theme-ready="true"] th,
+  html[data-theme-ready="true"] summary,
+  html[data-theme-ready="true"] svg {
+    transition:
+      background-color 140ms ease,
+      color 140ms ease,
+      border-color 140ms ease,
+      box-shadow 140ms ease,
+      fill 140ms ease,
+      stroke 140ms ease;
   }
 }
 

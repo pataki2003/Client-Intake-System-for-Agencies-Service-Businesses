@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { logoutAdmin } from "@/app/login/actions";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { requireAdminUser } from "@/server/auth/require-admin";
 
@@ -17,12 +18,12 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border bg-secondary/60 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              <Badge variant="accent" className="px-3 py-1 text-xs uppercase tracking-[0.16em]">
                 Admin workspace
-              </span>
-              <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-emerald-700">
+              </Badge>
+              <Badge variant="highlight" className="px-3 py-1 text-xs uppercase tracking-[0.16em]">
                 Session active
-              </span>
+              </Badge>
             </div>
 
             <div className="space-y-1">

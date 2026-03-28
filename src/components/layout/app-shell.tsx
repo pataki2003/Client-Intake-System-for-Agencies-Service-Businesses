@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 
 const navigationItems = [
@@ -16,7 +17,7 @@ type AppShellProps = {
 export function AppShell({ children }: AppShellProps) {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <header className="border-b bg-background/92 backdrop-blur supports-[backdrop-filter]:bg-background/82">
         <div className="container flex min-h-14 flex-col gap-3 py-3 sm:min-h-16 sm:gap-4 sm:py-4 md:min-h-[4.5rem] md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
             <Link href="/" className="text-lg font-semibold tracking-tight transition-colors hover:text-primary">
@@ -27,12 +28,13 @@ export function AppShell({ children }: AppShellProps) {
             </p>
           </div>
 
-          <nav className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
+          <nav className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
             {navigationItems.map((item) => (
-              <Button key={item.href} asChild size="sm" variant={item.variant}>
+              <Button key={item.href} asChild size="sm" variant={item.variant} className="w-full justify-center sm:w-auto">
                 <Link href={item.href}>{item.label}</Link>
               </Button>
             ))}
+            <ThemeToggle />
           </nav>
         </div>
       </header>

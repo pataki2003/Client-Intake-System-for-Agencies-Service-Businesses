@@ -54,7 +54,7 @@ export default async function HomePage() {
       <section className="grid gap-6 rounded-[32px] border border-border/75 bg-surface-cool p-5 sm:gap-8 sm:p-7 md:p-8 lg:grid-cols-[minmax(0,1.15fr)_360px] lg:items-start">
         <div className="space-y-6 sm:space-y-8">
           <div className="space-y-3 sm:space-y-4">
-            <Badge variant="outline" className="border-primary/10 bg-background/90 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-primary/80">
+            <Badge variant="outline" className="px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
               Client Intake System
             </Badge>
             <div className="space-y-3 sm:space-y-4">
@@ -111,7 +111,7 @@ export default async function HomePage() {
               <InfoTile
                 title="Structured requests"
                 description="Collect scope, budget, goals, and decision-making context in one place."
-                variant="highlight"
+                variant="default"
               />
               <InfoTile
                 title="Shared review"
@@ -143,7 +143,7 @@ export default async function HomePage() {
                   key={item}
                   eyebrow={`Benefit ${index + 1}`}
                   title={item}
-                  variant={index === 0 ? "highlight" : index === 1 ? "accent" : "default"}
+                  variant={index === 0 ? "default" : index === 1 ? "muted" : "default"}
                 />
               ))}
             </div>
@@ -202,7 +202,7 @@ export default async function HomePage() {
               step={item.step}
               title={item.title}
               description={item.description}
-              variant={index === 0 ? "highlight" : index === 1 ? "muted" : "accent"}
+              variant={index === 0 ? "default" : index === 1 ? "muted" : "accent"}
             />
           ))}
         </div>

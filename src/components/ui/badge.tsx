@@ -11,8 +11,8 @@ const badgeVariants = cva(
         default: "border-transparent bg-primary text-primary-foreground",
         secondary: "border-transparent bg-secondary text-secondary-foreground",
         outline: "border-border/80 bg-background/95 text-foreground",
-        accent: "border-[hsl(var(--accent-foreground)/0.08)] bg-surface-sand text-accent-foreground",
-        highlight: "border-[hsl(var(--surface-highlight-strong)/0.55)] bg-surface-highlight text-[hsl(var(--primary))]",
+        accent: "border-border/80 bg-muted text-foreground",
+        highlight: "border-primary/20 bg-primary/5 text-primary",
         muted: "border-border/75 bg-muted text-muted-foreground"
       }
     },

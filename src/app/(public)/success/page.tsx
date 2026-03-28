@@ -14,8 +14,8 @@ export default function SuccessPage() {
     <div className="space-y-10 md:space-y-12">
       <section className="space-y-5 border-b pb-8 md:pb-10">
         <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border bg-secondary/20 px-3 py-1 text-sm font-medium text-foreground">
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-sm font-medium text-foreground">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
             Request received
           </div>
           <div className="space-y-3">
@@ -27,7 +27,7 @@ export default function SuccessPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border bg-secondary/20 px-4 py-4 text-sm">
+        <div className="rounded-2xl border bg-surface-cool px-4 py-4 text-sm">
           <p className="font-medium text-foreground">Your request has been saved.</p>
           <p className="mt-1 text-muted-foreground">We&apos;ll review it and follow up by email with the appropriate next step.</p>
         </div>
@@ -53,8 +53,8 @@ export default function SuccessPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             {nextSteps.map((step, index) => (
-              <div key={step} className="flex gap-4 rounded-xl border bg-secondary/20 px-4 py-4">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-sm font-medium">
+              <div key={step} className="flex gap-4 rounded-xl border bg-surface-cool px-4 py-4">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-background text-sm font-medium">
                   {index + 1}
                 </div>
                 <p className="text-sm text-muted-foreground">{step}</p>
@@ -63,7 +63,7 @@ export default function SuccessPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-border/70 bg-secondary/30">
+        <Card variant="accent" className="border-border/70">
           <CardHeader className="space-y-3">
             <div className="space-y-1">
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Good to know</p>

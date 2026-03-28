@@ -14,9 +14,9 @@ type InfoTileProps = {
 
 const variantStyles = {
   default: "border-border/75 bg-background shadow-sm",
-  muted: "border-border/75 bg-surface-cool shadow-sm",
-  accent: "border-border/75 bg-surface-sand shadow-sm",
-  highlight: "border-primary/10 bg-surface-layered shadow-[0_18px_36px_-28px_hsl(var(--primary)/0.4)]"
+  muted: "border-border/75 bg-muted/45 shadow-sm",
+  accent: "border-border/75 bg-muted/35 shadow-sm",
+  highlight: "border-primary/20 bg-background shadow-[0_20px_36px_-28px_rgba(15,23,42,0.28)]"
 };
 
 export function InfoTile({
@@ -32,7 +32,7 @@ export function InfoTile({
     <div className={cn("rounded-2xl border p-4 sm:p-5", variantStyles[variant], className)}>
       <div className="space-y-2">
         {eyebrow ? (
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">{eyebrow}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{eyebrow}</p>
         ) : null}
         <div className="space-y-1.5">
           <div className={cn("text-sm font-semibold text-foreground sm:text-base", titleClassName)}>{title}</div>
