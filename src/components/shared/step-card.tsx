@@ -11,9 +11,9 @@ type StepCardProps = {
 
 const variantStyles = {
   default: "border-border/75 bg-card",
-  accent: "border-border/75 bg-muted/35",
-  muted: "border-border/75 bg-muted/45",
-  highlight: "border-primary/20 bg-background shadow-[0_22px_40px_-30px_rgba(15,23,42,0.28)]"
+  accent: "border-border/75 bg-card",
+  muted: "border-border/75 bg-card",
+  highlight: "border-border/75 bg-card"
 };
 
 export function StepCard({

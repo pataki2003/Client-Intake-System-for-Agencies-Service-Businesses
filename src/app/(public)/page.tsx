@@ -51,7 +51,7 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-10 sm:space-y-12 md:space-y-16">
-      <section className="grid gap-6 rounded-[32px] border border-border/75 bg-surface-cool p-5 sm:gap-8 sm:p-7 md:p-8 lg:grid-cols-[minmax(0,1.15fr)_360px] lg:items-start">
+      <section className="grid gap-6 rounded-[32px] border border-border/75 bg-background p-5 sm:gap-8 sm:p-7 md:p-8 lg:grid-cols-[minmax(0,1.15fr)_360px] lg:items-start">
         <div className="space-y-6 sm:space-y-8">
           <div className="space-y-3 sm:space-y-4">
             <Badge variant="outline" className="px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
@@ -82,13 +82,11 @@ export default async function HomePage() {
               eyebrow="Request"
               title="Structured from the start"
               description="Goals, budget, timing, and current challenges arrive together."
-              variant="accent"
             />
             <InfoTile
               eyebrow="Review"
               title="Built for team use"
               description="Notes and workflow status stay attached to the original submission."
-              variant="muted"
             />
             <InfoTile
               eyebrow="Brief"
@@ -98,7 +96,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <Card variant="highlight" className="border-border/70">
+        <Card className="border-border/70">
           <CardContent className="space-y-5 p-5 sm:p-6">
             <SectionHeader
               eyebrow="Product overview"
@@ -111,12 +109,10 @@ export default async function HomePage() {
               <InfoTile
                 title="Structured requests"
                 description="Collect scope, budget, goals, and decision-making context in one place."
-                variant="default"
               />
               <InfoTile
                 title="Shared review"
                 description="Keep status updates, notes, and submitted answers in one workspace."
-                variant="muted"
               />
               <InfoTile
                 title="Concise internal brief"
@@ -127,7 +123,7 @@ export default async function HomePage() {
         </Card>
       </section>
 
-      <section className="grid gap-5 rounded-[32px] bg-surface-sand p-5 sm:gap-6 sm:p-6 xl:grid-cols-[minmax(0,1.15fr)_0.95fr]">
+      <section className="grid gap-5 rounded-[32px] border border-border/75 bg-background p-5 sm:gap-6 sm:p-6 xl:grid-cols-[minmax(0,1.15fr)_0.95fr]">
         <Card className="border-border/70 shadow-sm">
           <CardContent className="space-y-5 sm:space-y-6 p-4 sm:p-6">
             <SectionHeader
@@ -139,19 +135,14 @@ export default async function HomePage() {
 
             <div className="grid gap-3">
               {productCapabilities.map((item, index) => (
-                <InfoTile
-                  key={item}
-                  eyebrow={`Benefit ${index + 1}`}
-                  title={item}
-                  variant={index === 0 ? "default" : index === 1 ? "muted" : "default"}
-                />
+                <InfoTile key={item} eyebrow={`Benefit ${index + 1}`} title={item} />
               ))}
             </div>
           </CardContent>
         </Card>
 
         <div className="grid gap-6">
-          <Card variant="tinted" className="border-border/70 shadow-sm">
+          <Card className="border-border/70 shadow-sm">
             <CardContent className="space-y-4 sm:space-y-5 p-4 sm:p-6">
               <SectionHeader
                 eyebrow="Who it is for"
@@ -162,7 +153,7 @@ export default async function HomePage() {
 
               <div className="grid gap-3">
                 {whoItsFor.map((item) => (
-                  <InfoTile key={item} title={item} variant="muted" />
+                  <InfoTile key={item} title={item} />
                 ))}
               </div>
             </CardContent>
@@ -196,14 +187,8 @@ export default async function HomePage() {
         />
 
         <div className="grid gap-4 md:grid-cols-3">
-          {flowSteps.map((item, index) => (
-            <StepCard
-              key={item.step}
-              step={item.step}
-              title={item.title}
-              description={item.description}
-              variant={index === 0 ? "default" : index === 1 ? "muted" : "accent"}
-            />
+          {flowSteps.map((item) => (
+            <StepCard key={item.step} step={item.step} title={item.title} description={item.description} />
           ))}
         </div>
       </section>

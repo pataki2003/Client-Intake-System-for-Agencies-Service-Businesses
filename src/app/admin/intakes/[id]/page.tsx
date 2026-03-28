@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { extractAnswerValue } from "@/lib/intake/formatters";
 import { adminIntakeIdSchema } from "@/lib/validations/admin-intakes";
-import { cn } from "@/lib/utils";
 import { requireAdminUser } from "@/server/auth/require-admin";
 import { getAdminIntakeDetail } from "@/server/admin-intakes/get-admin-intake-detail";
 
@@ -267,13 +266,10 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
                   </div>
                 ) : (
                   <div className="grid gap-3">
-                    {intake.answers.map((answer, index) => (
+                    {intake.answers.map((answer) => (
                       <div
                         key={answer.id}
-                        className={cn(
-                          "grid gap-3 rounded-2xl border border-border/70 bg-background px-4 py-4 shadow-sm md:grid-cols-[220px_minmax(0,1fr)] md:gap-5",
-                          index === 0 && "border-[hsl(var(--surface-highlight-strong)/0.9)] bg-surface-highlight"
-                        )}
+                        className="grid gap-3 rounded-2xl border border-border/70 bg-background px-4 py-4 shadow-sm md:grid-cols-[220px_minmax(0,1fr)] md:gap-5"
                       >
                         <div className="space-y-1">
                           <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">

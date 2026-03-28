@@ -14,9 +14,9 @@ type InfoTileProps = {
 
 const variantStyles = {
   default: "border-border/75 bg-background shadow-sm",
-  muted: "border-border/75 bg-muted/45 shadow-sm",
-  accent: "border-border/75 bg-muted/35 shadow-sm",
-  highlight: "border-primary/20 bg-background shadow-[0_20px_36px_-28px_rgba(15,23,42,0.28)]"
+  muted: "border-border/75 bg-background shadow-sm",
+  accent: "border-border/75 bg-background shadow-sm",
+  highlight: "border-border/75 bg-background shadow-sm"
 };
 
 export function InfoTile({
