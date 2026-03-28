@@ -18,13 +18,13 @@ const toneStyles = {
   },
   info: {
     variant: "default" as const,
-    className: "border-border/70 bg-secondary/20 text-foreground shadow-sm",
+    className: "border-border/70 bg-surface-cool text-foreground shadow-sm",
     titleClassName: "text-foreground"
   },
   success: {
     variant: "default" as const,
-    className: "border-emerald-500/20 bg-emerald-500/[0.06] text-foreground shadow-sm",
-    titleClassName: "text-emerald-700"
+    className: "border-primary/15 bg-primary/5 text-foreground shadow-sm",
+    titleClassName: "text-foreground"
   }
 };
 

@@ -95,7 +95,7 @@ export function InternalNotesPanel({ intakeId, notes, currentAdminUserId }: Inte
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-5 sm:space-y-6">
-        <form className="space-y-4 rounded-2xl border bg-secondary/20 p-4 sm:p-5" onSubmit={handleSubmit}>
+        <form className="space-y-4 rounded-2xl border bg-surface-cool p-4 sm:p-5" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label htmlFor="internal-note" className="text-sm font-medium">
               Add note

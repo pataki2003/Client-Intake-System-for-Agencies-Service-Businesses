@@ -27,7 +27,7 @@ export default function AdminErrorPage({ error, reset }: AdminErrorPageProps) {
           <CardDescription>Try again or return to submissions. No request data was changed.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
-          <div className="rounded-2xl border bg-secondary/20 px-4 py-4 text-sm text-muted-foreground">
+          <div className="rounded-2xl border bg-surface-cool px-4 py-4 text-sm text-muted-foreground">
             If this continues, confirm your session is still active and that the required services are available.
           </div>
 
