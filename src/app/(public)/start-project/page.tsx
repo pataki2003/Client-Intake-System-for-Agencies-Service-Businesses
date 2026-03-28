@@ -58,7 +58,7 @@ export default function StartProjectPage() {
     <div className="space-y-10 sm:space-y-12 md:space-y-14">
       <section className="space-y-6 rounded-[32px] border border-border/75 bg-surface-cool p-5 sm:space-y-8 sm:p-7 md:p-8">
         <div className="space-y-4 sm:space-y-5">
-          <Badge variant="outline" className="border-primary/10 bg-background/90 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-primary/80">
+          <Badge variant="outline" className="px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
             Project request
           </Badge>
 
@@ -136,7 +136,7 @@ export default function StartProjectPage() {
               step={item.step}
               title={item.title}
               description={item.description}
-              variant={index === 0 ? "highlight" : index === 1 ? "muted" : "accent"}
+              variant={index === 0 ? "default" : index === 1 ? "muted" : "accent"}
             />
           ))}
         </div>

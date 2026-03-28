@@ -24,7 +24,7 @@ function BriefNarrativeBlock({
     <section className="rounded-2xl border border-border/70 bg-surface-cool p-4 sm:p-5 md:p-6">
       <div className="space-y-2.5 sm:space-y-3">
         <div className="space-y-1">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">{title}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
         <div className="rounded-xl border border-border/70 bg-background px-4 py-4 shadow-sm">
@@ -52,7 +52,7 @@ function BriefListBlock({
     <section className="rounded-2xl border border-border/70 bg-surface-sand p-4 sm:p-5 md:p-6">
       <div className="space-y-3 sm:space-y-4">
         <div className="space-y-1">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">{title}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{title}</p>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
 
@@ -65,7 +65,7 @@ function BriefListBlock({
             {items.map((item, index) => (
               <li key={`${item}-${index}`} className="rounded-xl border border-border/70 bg-background px-3.5 py-3.5 shadow-sm sm:px-4 sm:py-4">
                 <div className="flex gap-3">
-                  <div className="flex h-7 min-w-7 items-center justify-center rounded-full border border-primary/10 bg-surface-cool px-2 text-[11px] font-semibold text-primary/75">
+                  <div className="flex h-7 min-w-7 items-center justify-center rounded-full border border-border/70 bg-muted/50 px-2 text-[11px] font-semibold text-foreground">
                     {String(index + 1).padStart(2, "0")}
                   </div>
                   <div className="space-y-1">
@@ -108,9 +108,9 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
             />
           </div>
 
-          <div className="w-full rounded-2xl border border-primary/10 bg-surface-layered p-4 xl:max-w-[280px]">
+          <div className="w-full rounded-2xl border border-border/70 bg-surface-layered p-4 xl:max-w-[280px]">
             <div className="space-y-1">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">Brief action</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Brief action</p>
               <p className="text-sm text-muted-foreground">
                 {brief ? "Regenerate the brief using the latest request details." : "Generate the first brief from the current request."}
               </p>
@@ -199,7 +199,7 @@ export function ProjectBriefPanel({ intakeId, brief }: ProjectBriefPanelProps) {
             ) : (
               <div className="rounded-2xl border border-border/70 bg-surface-sand p-4">
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/70">Stored markdown</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Stored markdown</p>
                   <p className="text-sm text-muted-foreground">
                     Structured brief data is not available for this record, so the stored markdown is shown below.
                   </p>

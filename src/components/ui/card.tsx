@@ -9,7 +9,7 @@ const cardVariants = cva("rounded-2xl border text-card-foreground shadow-sm", {
       default: "border-border/75 bg-card",
       tinted: "border-border/75 bg-surface-cool",
       accent: "border-border/75 bg-surface-sand",
-      highlight: "border-primary/10 bg-surface-layered shadow-[0_20px_40px_-28px_hsl(var(--primary)/0.32)]"
+      highlight: "border-border/80 bg-background shadow-[0_22px_44px_-30px_rgba(15,23,42,0.22)]"
     }
   },
   defaultVariants: {

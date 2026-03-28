@@ -62,12 +62,12 @@ export function IntakesTable({ items, totalCount, hasActiveFilters, clearHref }:
             <Table className="min-w-[760px] lg:min-w-[860px]">
               <TableHeader className="bg-surface-cool">
                 <TableRow className="hover:bg-transparent">
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Client</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Company</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Service</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Status</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Budget</TableHead>
-                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-primary/75">Created</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-muted-foreground">Client</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-muted-foreground">Company</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-muted-foreground">Service</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-muted-foreground">Status</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-muted-foreground">Budget</TableHead>
+                  <TableHead className="h-11 text-xs uppercase tracking-[0.16em] text-muted-foreground">Created</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

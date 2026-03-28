@@ -69,7 +69,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
               </nav>
 
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full border border-border/70 bg-background/85 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-primary/75">
+                <span className="rounded-full border border-border/70 bg-background/85 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
                   Review workspace
                 </span>
                 <IntakeStatusBadge status={intake.status} />
@@ -97,7 +97,7 @@ export default async function IntakeDetailPage({ params }: IntakeDetailPageProps
           </div>
 
           <div className="grid gap-3 md:grid-cols-3">
-            <InfoTile eyebrow="Service type" title={intake.serviceRequested} variant="highlight" />
+            <InfoTile eyebrow="Service type" title={intake.serviceRequested} variant="default" />
             <InfoTile
               eyebrow="Budget range"
               title={
