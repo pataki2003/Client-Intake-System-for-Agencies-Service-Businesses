@@ -19,7 +19,7 @@ function renderMetadataValue(value: JsonValue, depth = 0): ReactNode {
   }
 
   if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-    return <p className="break-words text-sm leading-6 text-foreground">{String(value)}</p>;
+    return <p className="min-w-0 whitespace-pre-wrap break-words [overflow-wrap:anywhere] text-sm leading-6 text-foreground">{String(value)}</p>;
   }
 
   if (Array.isArray(value)) {
@@ -28,9 +28,9 @@ function renderMetadataValue(value: JsonValue, depth = 0): ReactNode {
     }
 
     return (
-      <ul className="space-y-2">
+      <ul className="space-y-2.5">
         {value.map((entry, index) => (
-          <li key={`${index}-${String(entry)}`} className="rounded-xl border bg-background px-3 py-2">
+          <li key={`${index}-${String(entry)}`} className="min-w-0 rounded-xl border border-border/70 bg-background px-3 py-2.5">
             {renderMetadataValue(entry, depth + 1)}
           </li>
         ))}
@@ -45,13 +45,20 @@ function renderMetadataValue(value: JsonValue, depth = 0): ReactNode {
   }
 
   return (
-    <dl className={depth > 0 ? "space-y-3 rounded-xl border bg-background px-4 py-3" : "space-y-3"}>
+    <dl className={depth > 0 ? "space-y-3 rounded-xl border border-border/70 bg-background px-3 py-3 sm:px-4" : "space-y-3"}>
       {entries.map(([key, entryValue]) => (
-        <div key={key} className="grid gap-1.5 sm:grid-cols-[140px_minmax(0,1fr)] sm:gap-4">
+        <div
+          key={key}
+          className={
+            depth === 0
+              ? "grid gap-1.5 md:grid-cols-[140px_minmax(0,1fr)] md:items-start md:gap-4"
+              : "space-y-2"
+          }
+        >
           <dt className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
             {formatMetadataKey(key)}
           </dt>
-          <dd>{renderMetadataValue(entryValue, depth + 1)}</dd>
+          <dd className="min-w-0">{renderMetadataValue(entryValue, depth + 1)}</dd>
         </div>
       ))}
     </dl>

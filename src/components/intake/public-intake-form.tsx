@@ -41,23 +41,15 @@ function FormSection({
   eyebrow,
   title,
   description,
-  tone = "cool",
   children
 }: {
   eyebrow: string;
   title: string;
   description: string;
-  tone?: "cool" | "sand";
   children: ReactNode;
 }) {
   return (
-    <section
-      className={
-        tone === "sand"
-          ? "rounded-2xl border border-border/70 bg-surface-sand p-4 sm:p-5 md:p-6"
-          : "rounded-2xl border border-border/70 bg-surface-cool p-4 sm:p-5 md:p-6"
-      }
-    >
+    <section className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5 md:p-6">
       <div className="space-y-4 sm:space-y-5">
         <SectionHeader
           eyebrow={eyebrow}
@@ -139,7 +131,7 @@ export function PublicIntakeForm() {
 
   return (
     <Card className="overflow-hidden border-border/80 shadow-sm">
-      <CardHeader className="space-y-3 border-b border-border/60 bg-surface-cool pb-5 sm:space-y-4 sm:pb-6">
+      <CardHeader className="space-y-3 border-b border-border/60 bg-card pb-5 sm:space-y-4 sm:pb-6">
         <div className="space-y-1.5 sm:space-y-2">
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-muted-foreground">Project request</p>
           <CardTitle className="text-xl tracking-tight sm:text-2xl md:text-3xl">Tell us about the project and what you need.</CardTitle>
@@ -148,7 +140,7 @@ export function PublicIntakeForm() {
           A few clear details help us review fit, scope, and the right next step before we reply.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6 sm:space-y-8">
+      <CardContent className="space-y-6 pt-4 sm:space-y-8 sm:pt-6 md:pt-8">
         <form className="space-y-6 sm:space-y-8" onSubmit={onSubmit} noValidate>
           {formError ? (
             <FeedbackNotice tone="error" title="Unable to submit request" description={formError} />
@@ -213,7 +205,6 @@ export function PublicIntakeForm() {
             eyebrow="Scope"
             title="What kind of project is this?"
             description="We use this to understand the type of engagement before reviewing the full context."
-            tone="sand"
           >
             <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
               <div className="space-y-2">
@@ -343,7 +334,7 @@ export function PublicIntakeForm() {
             </div>
           </FormSection>
 
-          <div className="rounded-2xl border border-[hsl(var(--surface-highlight-strong)/0.8)] bg-surface-highlight p-4 sm:p-5 md:p-6">
+          <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5 md:p-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div className="space-y-2.5 sm:space-y-3">
                 <div className="space-y-1.5 sm:space-y-2">
